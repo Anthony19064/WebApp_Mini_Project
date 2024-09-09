@@ -27,4 +27,3 @@ app.MapControllerRoute(
 app.Run();
 
 
-Console.WriteLine("A");
