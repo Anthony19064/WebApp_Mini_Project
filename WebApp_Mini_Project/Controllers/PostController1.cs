@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using WebApp_Mini_Project.Models;
 
 namespace WebApp_Mini_Project.Controllers
@@ -18,6 +20,14 @@ namespace WebApp_Mini_Project.Controllers
         public ActionResult Index()
         {
             return View(posts);
+        }
+
+        // GET: Post/GetPosts
+        public ContentResult GetPosts()
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true }; // Pretty-print JSON
+            string jsonString = JsonSerializer.Serialize(posts, options);
+            return Content(jsonString, "application/json"); // ส่ง JSON พร้อม MIME type
         }
 
         // GET: Post/Details/5
