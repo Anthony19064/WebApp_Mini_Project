@@ -1,0 +1,25 @@
+﻿@model WebApp_Mini_Project.Models.Post
+
+<h2>Post Details</h2>
+
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>เลขห้อง</dt>
+        <dd>@Model.id_room</dd>
+
+        <dt>จำนวนคน</dt>
+        <dd>@Model.person_count</dd>
+
+        <dt>รายละเอียด</dt>
+        <dd>@Model.details</dd>
+
+        <dt>เกม</dt>
+        <dd>@Model.game_name</dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

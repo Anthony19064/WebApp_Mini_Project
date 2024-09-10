@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebApp_Mini_Project.Models.Post>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px; /* ระยะห่างระหว่างการ์ด */
+            padding: 16px;
+        }
+
+        .card {
+            flex: 1 1 300px; /* การ์ดจะมีความกว้างขั้นต่ำ 300px แต่สามารถขยายได้ */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+            .card img {
+                max-width: 100px; /* ขนาดภาพเล็กที่สุดที่แสดงในการ์ด */
+                border-radius: 4px;
+            }
+
+        .card-content {
+            flex: 1;
+        }
+
+            .card-content h3 {
+                margin-top: 0;
+            }
+
+            .card-content p {
+                margin: 4px 0;
+            }
+
+            .card-content a {
+                color: #007bff;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                .card-content a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+
+<body>
+    <h2>Posts Mockup</h2>
+
+    <div class="card-container">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var post = Model.ElementAt(i);
+            <div class="card">
+                <div class="card-content">
+                    <h3>เลขห้อง: @post.id_room</h3>
+                    <p><strong>จำนวนคน:</strong> @post.person_count</p>
+                    <p><strong>รายละเอียด:</strong> @post.details</p>
+                    <p><strong>เกม:</strong> @post.game_name</p>
+                    @Html.ActionLink("Details", "Details", new { id = i })
+                </div>
+            </div>
+        }
+    </div>
+</body>
