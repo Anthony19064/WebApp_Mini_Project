@@ -2,63 +2,75 @@
 
 <head>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        body {
+            font-family: Arial, sans-serif;
         }
 
-        th, td {
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px; /* ระยะห่างระหว่างการ์ด */
+            padding: 16px;
+        }
+
+        .card {
+            flex: 1 1 300px; /* การ์ดจะมีความกว้างขั้นต่ำ 300px แต่สามารถขยายได้ */
             border: 1px solid #ddd;
-            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 16px;
         }
 
-        th {
-            background-color: #f4f4f4;
-            text-align: left;
+            .card img {
+                max-width: 100px; /* ขนาดภาพเล็กที่สุดที่แสดงในการ์ด */
+                border-radius: 4px;
+            }
+
+        .card-content {
+            flex: 1;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+            .card-content h3 {
+                margin-top: 0;
+            }
 
-        tr:hover {
-            background-color: #f1f1f1;
-        }
+            .card-content p {
+                margin: 4px 0;
+            }
 
-        table, th, td {
-            border: 1px solid black;
-        }
+            .card-content a {
+                color: #007bff;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                .card-content a:hover {
+                    text-decoration: underline;
+                }
     </style>
 </head>
 
 <body>
     <h2>Posts Mockup</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>เลขห้อง</th>
-                <th>จำนวนคน</th>
-                <th>รายละเอียด</th>
-                <th>เกม</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < Model.Count(); i++)
-            {
-                var post = Model.ElementAt(i);
-                <tr>
-                    <td>@post.id_room</td>
-                    <td>@post.person_count</td>
-                    <td>@post.details</td>
-                    <td>@post.game_name</td>
-                    <td>
-                        @Html.ActionLink("Details", "Details", new { id = i })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card-container">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var post = Model.ElementAt(i);
+            <div class="card">
+                <div class="card-content">
+                    <h3>เลขห้อง: @post.id_room</h3>
+                    <p><strong>จำนวนคน:</strong> @post.person_count</p>
+                    <p><strong>รายละเอียด:</strong> @post.details</p>
+                    <p><strong>เกม:</strong> @post.game_name</p>
+                    @Html.ActionLink("Details", "Details", new { id = i })
+                </div>
+            </div>
+        }
+    </div>
 </body>
-
