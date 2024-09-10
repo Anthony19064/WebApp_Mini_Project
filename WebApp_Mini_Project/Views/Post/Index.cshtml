@@ -64,11 +64,12 @@
             var post = Model.ElementAt(i);
             <div class="card">
                 <div class="card-content">
+
                     <h3>เลขห้อง: @post.id_room</h3>
                     <p><strong>จำนวนคน:</strong> @post.person_count</p>
                     <p><strong>รายละเอียด:</strong> @post.details</p>
                     <p><strong>เกม:</strong> @post.game_name</p>
-                    @Html.ActionLink("Details", "Details", new { id = i })
+                    @Html.ActionLink("Details", "Details", new { id = i})
                 </div>
             </div>
         }
