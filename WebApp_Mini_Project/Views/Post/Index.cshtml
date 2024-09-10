@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebApp_Mini_Project.Models.Post>
+
+<head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Posts Mockup</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>เลขห้อง</th>
+                <th>จำนวนคน</th>
+                <th>รายละเอียด</th>
+                <th>เกม</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                var post = Model.ElementAt(i);
+                <tr>
+                    <td>@post.id_room</td>
+                    <td>@post.person_count</td>
+                    <td>@post.details</td>
+                    <td>@post.game_name</td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = i })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+
