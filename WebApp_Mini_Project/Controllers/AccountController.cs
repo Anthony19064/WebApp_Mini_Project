@@ -42,7 +42,8 @@ namespace WebApp_Mini_Project.Controllers
             else
             {
                 // การเข้าสู่ระบบล้มเหลว: แสดงข้อความข้อผิดพลาด
-                ViewBag.ErrorMessage = "Invalid username or password.";
+                @ViewBag.ErrorMessage = "Invalid username or password.";
+
                 return View();
             }
         }
