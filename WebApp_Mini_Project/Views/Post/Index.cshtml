@@ -4,6 +4,51 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background-color: #880505;
+            color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+            .header h1 {
+                margin: 0;
+            }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+            .card img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                margin-right: 20px;
+            }
+
+        .card-content {
+            padding: 20px;
         }
 
         .card-container {
@@ -37,12 +82,45 @@
 
             .card-content h3 {
                 margin-top: 0;
+
+                margin-bottom: 10px;
             }
 
             .card-content p {
                 margin: 4px 0;
             }
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
 
+        .btn {
+            background-color: #000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: right;
+        }
+
+            .btn:hover {
+                background-color: #333;
+            }
+
+        .join {
+            background-color: #000;
+            color: white;
+            padding: 12px 24px; /* ขนาดปุ่ม */
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            float: right; /* จัดปุ่มให้อยู่ทางขวาสุด */
+            margin-left: 200px; /* เขยิบห่างจากขอบขวา 10px */
+        }
             .card-content a {
                 color: #007bff;
                 text-decoration: none;
@@ -56,22 +134,29 @@
 </head>
 
 <body>
-    <h2>Posts Mockup</h2>
+    <div class="container">
+        <div class="header">
+            <h1>หาเพื่อนเล่นเกมส์ดีที่สุดในประเทศไทยมั้ง</h1>
+            <input type="text" placeholder="ค้นหาห้องเล่นเกม" style="padding: 10px; width: 100%; max-width: 500px; margin-top: 20px; border-radius: 20px;">
+        </div>
+        
+        <div class="btn-container">
+            <button class="btn">สร้างโพส</button>
+        </div>
 
-    <div class="card-container">
-        @for (int i = 0; i < Model.Count(); i++)
-        {
-            var post = Model.ElementAt(i);
-            <div class="card">
-                <div class="card-content">
-
-                    <h3>เลขห้อง: @post.id_room</h3>
-                    <p><strong>จำนวนคน:</strong> @post.person_count</p>
-                    <p><strong>รายละเอียด:</strong> @post.details</p>
-                    <p><strong>เกม:</strong> @post.game_name</p>
-                    @Html.ActionLink("Details", "Details", new { id = i})
+        <div class="card-container">
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                var post = Model.ElementAt(i);
+                <div class="card">
+                    <div class="card-content">
+                        <h3>เลขห้อง: @post.id_room</h3>
+                        <p><strong>จำนวนคน:</strong> @post.person_count</p>
+                        <p><strong>รายละเอียด:</strong> @post.details</p>
+                        <p><strong>เกม:</strong> @post.game_name</p>
+                        @Html.ActionLink("เข้าร่วม", "Details", new { id = i }, new { @class = "join" })
+                    </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
 </body>

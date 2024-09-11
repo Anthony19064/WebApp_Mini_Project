@@ -20,7 +20,6 @@
             game_name = Game_name;
         }
 
-
         public void Displayinfo()
         {
             Console.WriteLine($"Id room   : {this.id_room}");
@@ -30,6 +29,7 @@
         }
 
 
-        
+
+
     }
 }
