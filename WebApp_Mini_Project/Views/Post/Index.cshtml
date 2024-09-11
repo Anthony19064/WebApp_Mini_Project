@@ -49,18 +49,46 @@
 
         .card-content {
             padding: 20px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px; /* ระยะห่างระหว่างการ์ด */
+            padding: 16px;
+        }
+
+        .card {
+            flex: 1 1 300px; /* การ์ดจะมีความกว้างขั้นต่ำ 300px แต่สามารถขยายได้ */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+            .card img {
+                max-width: 100px; /* ขนาดภาพเล็กที่สุดที่แสดงในการ์ด */
+                border-radius: 4px;
+            }
+
+        .card-content {
             flex: 1;
         }
 
             .card-content h3 {
                 margin-top: 0;
+
                 margin-bottom: 10px;
             }
 
             .card-content p {
                 margin: 4px 0;
             }
-
         .btn-container {
             text-align: center;
             margin-top: 20px;
@@ -93,7 +121,15 @@
             float: right; /* จัดปุ่มให้อยู่ทางขวาสุด */
             margin-left: 200px; /* เขยิบห่างจากขอบขวา 10px */
         }
+            .card-content a {
+                color: #007bff;
+                text-decoration: none;
+                font-weight: bold;
+            }
 
+                .card-content a:hover {
+                    text-decoration: underline;
+                }
     </style>
 </head>
 
@@ -123,5 +159,4 @@
                 </div>
             }
         </div>
-    </div>
 </body>
