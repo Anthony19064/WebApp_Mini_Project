@@ -12,8 +12,12 @@ namespace WebApp_Mini_Project.Controllers
         private static List<Post> posts = new List<Post>
         {
             new Post("AJMCJ19", 5, "หาสาวเสียงน่ารักๆ", "Valorant"),
-            new Post("1748200", 3, "หาควายให้แบกขอแรงค์ iron", "Rov"),
-            new Post("xxxxxxx", 2, "Gold - Plat ชิลๆ ไม่ซี", "Valorant"),
+            new Post("OQG710", 3, "หาควายให้แบกขอแรงค์ iron", "Valorant"),
+            new Post("ZLD174 ", 2, "Gold - Plat ชิลๆ ไม่ซี", "Valorant"),
+            new Post("MPY439", 5, "ขาด1ครับ S-G", "Valorant"),
+            new Post("SIG009", 3, "ขาด 2 งับ", "Valorant"),
+            new Post("VID862", 2, "D-As -25% ขาด 1 จอยตี้ได้เลยครับ", "Valorant"),
+
         };
 
         // GET: Post
