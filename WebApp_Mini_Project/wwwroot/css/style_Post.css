@@ -59,7 +59,9 @@
     flex-wrap: wrap;
     gap: 5px;
     padding: 0 20px;
+    flex-direction: row-reverse;
 }
+
 
 .card {
     background-color: white;
@@ -281,3 +283,4 @@
         color: white;
         cursor: pointer;
     }
+

@@ -21,7 +21,7 @@ namespace WebApp_Mini_Project.Controllers
         {
             var newAccount = new Account(Username, Password, Email);
             accounts.Add(newAccount);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Post");
         }
         [HttpGet]
         public IActionResult Login()
@@ -37,13 +37,12 @@ namespace WebApp_Mini_Project.Controllers
             {
                 // การเข้าสู่ระบบสำเร็จ: ตั้งค่า session หรือ cookie
                 // ในกรณีนี้, เราจะเปลี่ยนเส้นทางไปที่หน้า Home
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Post");
             }
             else
             {
                 // การเข้าสู่ระบบล้มเหลว: แสดงข้อความข้อผิดพลาด
                 @ViewBag.ErrorMessage = "Invalid username or password.";
-
                 return View();
             }
         }

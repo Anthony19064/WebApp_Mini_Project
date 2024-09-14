@@ -1,44 +1,66 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
+using WebApp_Mini_Project.Data;
 using WebApp_Mini_Project.Models;
+using WebApp_Mini_Project.ViewModels;
 
-namespace WebApp_Mini_Project.Controllers
+public class PostController : Controller
 {
-    public class PostController : Controller
-    {
-        // ตัวอย่างข้อมูลจำลอง
-        private static List<Post> posts = new List<Post>
-        {
-            new Post("AJMCJ19", 5, "หาสาวเสียงน่ารักๆ", "Valorant"),
-            new Post("OQG710", 3, "หาควายให้แบกขอแรงค์ iron", "Valorant"),
-            new Post("ZLD174 ", 2, "Gold - Plat ชิลๆ ไม่ซี", "Valorant"),
-            new Post("MPY439", 5, "ขาด1ครับ S-G", "Valorant"),
-            new Post("SIG009", 3, "ขาด 2 งับ", "Valorant"),
-            new Post("VID862", 2, "D-As -25% ขาด 1 จอยตี้ได้เลยครับ", "Valorant"),
+    public readonly ApplicationDBContext _db;
 
+    public PostController(ApplicationDBContext db)
+    {
+        _db = db;
+    }
+
+    public ActionResult Index()
+    {
+        var posts = _db.Posts; // ข้อมูลใน DB เก็บลง ตัวแปร posts
+        var newPost = new Post(); // ข้อมูลที่รับมาจากฟอรม์ เก็บลง ตัวแปร newPost
+
+        var viewModel = new PostViewModel // เอาสองตัวบนมาเก็บลง object ViewModel
+        {
+            Posts = posts,
+            NewPost = newPost
         };
 
-        // GET: Post
-        public ActionResult Index()
-        {
-            return View(posts);
-        }
-
-        // GET: Post/GetPosts
-        public ContentResult GetPosts()
-        {
-            var options = new JsonSerializerOptions { WriteIndented = true }; // Pretty-print JSON
-            string jsonString = JsonSerializer.Serialize(posts, options);
-            return Content(jsonString, "application/json"); // ส่ง JSON พร้อม MIME type
-        }
-
-        // GET: Post/Details/5
-        public ActionResult Details(int id)
-        {
-            var post = posts[id];
-            return View(post);
-        }
+        return View(viewModel); // ส่ง ViewModel ไปยัง View index
     }
+
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Create(PostViewModel model) // สร้างตัวแปร PostViewModel ที่รับค่าจากสองตัวเมื่อกี้ มาเก็บลงตัวแปร model
+    {
+  
+            _db.Posts.Add(model.NewPost); // เอาเฉพาะ Newpost มาเก็บลง DB
+            _db.SaveChanges(); // บันทึกข้อมูล
+            return RedirectToAction("Index"); // กลับไปหน้า Index
+
+    }
+
+    [HttpPost]
+    public IActionResult Joinroom(int? id)
+    {
+        if (id == null || id == 0)
+        {
+            return NotFound();
+        }
+
+        var obj = _db.Posts.Find(id);
+
+        if (obj == null)
+        {
+            return NotFound(); // ถ้าไม่พบโพสต์
+        }
+
+        obj.Count_person++;
+        _db.SaveChanges();
+
+        // คืนค่าตอบกลับ JSON ที่มีข้อมูลใหม่
+        return Json(new { success = true, newCount = obj.Count_person });
+    }
+
+
+
 }
