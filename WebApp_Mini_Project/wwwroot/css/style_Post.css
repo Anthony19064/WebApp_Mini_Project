@@ -59,7 +59,6 @@
     flex-wrap: wrap;
     gap: 5px;
     padding: 0 20px;
-    flex-direction: row-reverse;
 }
 
 
@@ -222,7 +221,7 @@
     right: 20px;
     width: 70px;
     height: 70px;
-    background-color: #fafafa; /*  ’ È¡ */
+    background-color: #fafafa; /* √ä√ï√ä√©√Å */
     border-radius: 50%;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
     display: flex;
