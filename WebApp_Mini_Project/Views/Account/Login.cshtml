@@ -1,19 +1,101 @@
 ﻿@{
-    ViewBag.Title = "Login";
+    Layout = null;
 }
 
-<h2>Login</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 
-<form method="post" action="/Account/Login">
-    <div>
-        <label for="Username">Username:</label>
-        <input type="text" id="Username" name="Username" required />
+    <style>
+        /* Updated CSS to match the provided design */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #FF6699, #FF66CC, #FFFF33);
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+            padding: 2em;
+            border-radius: 8px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 1em;
+            color: white; /* Logo color */
+        }
+
+        .form-group {
+            margin-bottom: 1.5em;
+            position: relative;
+        }
+
+            .form-group input {
+                width: 100%;
+                padding: 0.8em;
+                border: none; /* Remove all borders */
+                border-bottom: 1px solid #FF66CC; /* Dark red border only at the bottom */
+                border-radius: 0; /* Remove border radius */
+                margin-top: 0.5em;
+                background-color: rgba(255, 255, 255, 0); /* 50% transparent white background */
+                outline: none; /* Remove default outline on focus */
+
+            }
+
+        .login-container button {
+            width: 45%;
+            padding: 0.8em;
+            border: 1px solid #FF66CC; /* Dark red border */
+            border-radius: 20px;
+            background-color: transparent;
+            color: #FF66CC; /* Dark red text */
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+            .login-container button:hover {
+                background-color: #FF66CC; /* Dark red background */
+                color: white; /* White text */
+            }
+
+        .register-link {
+            display: block;
+            margin-top: 1em;
+            font-size: 0.9em;
+            color: #FF66CC; /* White text for the register link */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>LOGO</h1>
+        <form method="post" action="/Account/Login">
+            <div class="form-group">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit">Login</button>
+            <button type="button">Cancel</button>
+            <a href="#" class="register-link" >No account yet? Register</a>
+        </form>
     </div>
-
-    <div>
-        <label for="Password">Password:</label>
-        <input type="password" id="Password" name="Password" required />
-    </div>
-
-    <button type="submit">Login</button>
-</form>
+</body>
+</html>
