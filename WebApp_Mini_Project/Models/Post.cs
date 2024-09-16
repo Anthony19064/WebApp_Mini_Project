@@ -1,32 +1,25 @@
-﻿namespace WebApp_Mini_Project.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApp_Mini_Project.Models
 {
     public class Post
     {
-        public static int id_count = 0;
-        
-        public int id { get; set; }
-        public string id_room { get; private set; }
-        public int person_count { get; set; }
-        public string  details { get; set; }
-        public string game_name { get; set; }
+        [Key]
+        public int ID { get; set; }
+        [Required]
+        public string Id_room { get; set; }
+        [Required]
+        public int Count_person { get; set; } = 0;
+        [Required]
+        public int Max_person { get; set; }
+        [Required]
+        public string  Details { get; set; }
+        [Required]
+        public string Game { get; set; }
 
-        public Post(string Id_room , int Person_count , string Details , string Game_name)
-        {
-            id_count++;
-            id = id_count;
-            id_room = Id_room;
-            person_count = Person_count;
-            details = Details;
-            game_name = Game_name;
-        }
 
-        public void Displayinfo()
-        {
-            Console.WriteLine($"Id room   : {this.id_room}");
-            Console.WriteLine($"Count     : {this.person_count}");
-            Console.WriteLine($"Details   : {this.details}");
-            Console.WriteLine($"Game name : {this.game_name}");
-        }
+
+
 
 
 
