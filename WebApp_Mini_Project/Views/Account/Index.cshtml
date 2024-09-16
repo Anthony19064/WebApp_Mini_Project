@@ -1,0 +1,28 @@
+﻿@model IEnumerable<WebApp_Mini_Project.Models.Account>
+
+@{
+    ViewBag.Title = "User List";
+}
+
+<h2>User List</h2>
+
+<ul>
+    @foreach (var account in Model)
+    {
+        <li>
+            <div>
+                <h3>@account.Username</h3>
+                <div>
+                    @if (account.ProfilePicture != null && account.ProfilePicture.Length > 0)
+                    {
+                        <img src="@Url.Action("ProfilePicture", "Account", new { id = account.ID })" alt="Profile Picture" style="width:100px; height:auto;" />
+                    }
+                    else
+                    {
+                        <span>No Profile Picture</span>
+                    }
+                </div>
+            </div>
+        </li>
+    }
+</ul>
