@@ -1,8 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
-
+@model Account
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +69,7 @@
             margin: 0 5px;
         }
 
-            .login-container button:hover {
+        .login-container button:hover {
                 background-color: #FF66CC; /* Dark red background */
                 color: white; /* White text */
             }
@@ -101,31 +100,8 @@
 </body>
 </html>
 
-@model Account
-<h2>Login</h2>
 
-<form method="POST" asp-controller="Account" asp-action="Login">
-    <div>
-        <label asp-for="Username">Username:</label>
-        <input type="text" asp-for="Username" name="username" required />
-        <span asp-validation-for="Username" class="text-danger"></span>
-    </div>
 
-    <div>
-        <label asp-for="Password">Password:</label>
-        <input type="password" asp-for="Password" name="password" required />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
 
-    <button type="submit">Login</button>
-
-    <!-- แสดงข้อผิดพลาดทั้งหมด -->
-    <div asp-validation-summary="All" class="text-danger"></div>
-</form>
-
-<!-- แสดงข้อผิดพลาดที่เฉพาะเจาะจงสำหรับฟิลด์ -->
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
 
 

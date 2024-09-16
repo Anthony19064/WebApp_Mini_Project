@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@model Account
 
 <!DOCTYPE html>
 <html lang="en">
@@ -117,24 +117,9 @@
             <a href="#" class="login-link">Already have an account? Login</a>
         </form>
 
-@model Account
-<h2>Register</h2>
 
-<form method="POST" asp-controller="Account" asp-action="Register">
-    <div>
-        <label asp-for="Username">Username:</label>
-        <input type="text" asp-for="Username" required/>
-    </div>
 
-    <div>
-        <label asp-for="Password">Password:</label>
-        <input type="password" asp-for="Password" required />
-    </div>
 
-    <div>
-        <label asp-for="Email">Email:</label>
-        <input type="email" asp-for="Email" required />
-    </div> -->
 
     <script>
         // JavaScript function to preview the selected image
