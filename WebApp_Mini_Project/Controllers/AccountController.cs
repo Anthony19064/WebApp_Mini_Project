@@ -27,12 +27,37 @@ namespace WebApp_Mini_Project.Controllers
             // ตรวจสอบว่า ModelState ถูกต้องหรือไม่
             if (ModelState.IsValid)
             {
-                // เพิ่มข้อมูลผู้ใช้ลงในฐานข้อมูล
-                _db.Accounts.Add(obj);
-                _db.SaveChanges();
+                bool usernameExists = _db.Accounts.Any(a => a.Username == obj.Username);
+                bool EmailExists = _db.Accounts.Any(b => b.Email == obj.Email);
+                // หาว่า Username ที่รับมาเคยมีในฐานข้อมูลแล้วหรือยัง
+                if (usernameExists)
+                {
+                    ModelState.AddModelError("Username", "Username already exists.");
+                }
+                else
+                {
+                    if (EmailExists)
+                    {
+                        ModelState.AddModelError("Emaill", "Username already exists.");
+                    }
+                    else
+                    {
+                        // ตรวจสอบว่า password และ reply password ตรงกันหรือไม่
+                        if (obj.Password == obj.ReplyPassword)
+                        {
+                            // เพิ่มข้อมูลผู้ใช้ลงในฐานข้อมูล
+                            _db.Accounts.Add(obj);
+                            _db.SaveChanges();
+                            return RedirectToAction("Login", "Account");
+                        }
+                        else
+                        {
+                            // เพิ่มข้อผิดพลาดในการตรวจสอบรหัสผ่าน
+                            ModelState.AddModelError("ReplyPassword", "Reply password does not match the password.");
+                        }
 
-                // เปลี่ยนเส้นทางไปยังหน้าหรือการกระทำอื่นๆ ตามที่ต้องการ
-                return RedirectToAction("Index", "Post"); // หรือหน้าลงทะเบียนสำเร็จ
+                    }
+                }   
             }
             // หากข้อมูลไม่ถูกต้อง ให้คืนค่ากลับไปที่ฟอร์มและแสดงข้อผิดพลาด
             return View(obj);
