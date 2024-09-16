@@ -5,9 +5,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDBContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-    );
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
+// Add Session service
+builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true; // Make the session cookie HTTP-only
+    options.Cookie.IsEssential = true; // Make the session cookie essential
+});
 
 var app = builder.Build();
 
@@ -24,6 +33,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Enable session before authorization
+app.UseSession();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -31,4 +43,3 @@ app.MapControllerRoute(
     pattern: "{controller=Post}/{action=Index}/{id?}");
 
 app.Run();
-

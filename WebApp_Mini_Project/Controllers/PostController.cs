@@ -14,14 +14,32 @@ public class PostController : Controller
 
     public ActionResult Index()
     {
+        var adminAccount = new Account
+        {
+            Username = "admin",
+            Password = "admin",
+            Email    = "admin@gmail.com"
+        };
+
+        var check_admin = _db.Accounts.SingleOrDefault(a => a.Username == adminAccount.Username && a.Password == adminAccount.Password && a.Email == adminAccount.Email);
+        if (check_admin == null)
+        {
+            _db.Accounts.Add(adminAccount);
+            _db.SaveChanges();
+        }
+     
+        
+        string usersession = HttpContext.Session.GetString("Usersession");
         var posts = _db.Posts; // ข้อมูลใน DB เก็บลง ตัวแปร posts
         var newPost = new Post(); // ข้อมูลที่รับมาจากฟอรม์ เก็บลง ตัวแปร newPost
+
 
         var viewModel = new PostViewModel // เอาสองตัวบนมาเก็บลง object ViewModel
         {
             Posts = posts,
             NewPost = newPost
         };
+        ViewBag.Usersession = usersession;
 
         return View(viewModel); // ส่ง ViewModel ไปยัง View index
     }
@@ -32,7 +50,6 @@ public class PostController : Controller
     [ValidateAntiForgeryToken]
     public ActionResult Create(PostViewModel model) // สร้างตัวแปร PostViewModel ที่รับค่าจากสองตัวเมื่อกี้ มาเก็บลงตัวแปร model
     {
-  
             _db.Posts.Add(model.NewPost); // เอาเฉพาะ Newpost มาเก็บลง DB
             _db.SaveChanges(); // บันทึกข้อมูล
             return RedirectToAction("Index"); // กลับไปหน้า Index

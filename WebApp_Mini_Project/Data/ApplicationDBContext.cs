@@ -8,7 +8,8 @@ namespace WebApp_Mini_Project.Data
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) :base(options) { 
 
         }
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Post> Posts { get; set; }  
+        public DbSet<Account> Accounts { get; set; }
         
     }
 }

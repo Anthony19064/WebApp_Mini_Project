@@ -11,8 +11,8 @@ using WebApp_Mini_Project.Data;
 namespace WebApp_Mini_Project.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240914142301_addPostDB")]
-    partial class addPostDB
+    [Migration("20240916022052_addPostDB_AccountDB")]
+    partial class addPostDB_AccountDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,31 @@ namespace WebApp_Mini_Project.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("WebApp_Mini_Project.Models.Account", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Accounts");
+                });
 
             modelBuilder.Entity("WebApp_Mini_Project.Models.Post", b =>
                 {

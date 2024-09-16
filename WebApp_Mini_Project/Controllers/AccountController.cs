@@ -1,14 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApp_Mini_Project.Data;
 using WebApp_Mini_Project.Models;
 
 namespace WebApp_Mini_Project.Controllers
 {
     public class AccountController : Controller
     {
-        public static List<Account> accounts = new List<Account>
+        public readonly ApplicationDBContext _db;
+
+        public AccountController(ApplicationDBContext db)
         {
-            new Account("admin", "admin", "admin@gmail.com"),
-        };
+            _db = db;
+        }
+
 
         [HttpGet]
         public IActionResult Register()
@@ -17,12 +22,23 @@ namespace WebApp_Mini_Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(string Username, string Password, string Email)
+        public IActionResult Register(Account obj)
         {
-            var newAccount = new Account(Username, Password, Email);
-            accounts.Add(newAccount);
-            return RedirectToAction("Index", "Post");
+            // ตรวจสอบว่า ModelState ถูกต้องหรือไม่
+            if (ModelState.IsValid)
+            {
+                // เพิ่มข้อมูลผู้ใช้ลงในฐานข้อมูล
+                _db.Accounts.Add(obj);
+                _db.SaveChanges();
+
+                // เปลี่ยนเส้นทางไปยังหน้าหรือการกระทำอื่นๆ ตามที่ต้องการ
+                return RedirectToAction("Index", "Post"); // หรือหน้าลงทะเบียนสำเร็จ
+            }
+            // หากข้อมูลไม่ถูกต้อง ให้คืนค่ากลับไปที่ฟอร์มและแสดงข้อผิดพลาด
+            return View(obj);
         }
+
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -30,21 +46,31 @@ namespace WebApp_Mini_Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string Username, string Password)
+        public IActionResult Login(string username, string password)
         {
-            var user = accounts.SingleOrDefault(a => a.Username == Username && a.Password == Password);
-            if (user != null)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                // การเข้าสู่ระบบสำเร็จ: ตั้งค่า session หรือ cookie
-                // ในกรณีนี้, เราจะเปลี่ยนเส้นทางไปที่หน้า Home
-                return RedirectToAction("Index", "Post");
-            }
-            else
-            {
-                // การเข้าสู่ระบบล้มเหลว: แสดงข้อความข้อผิดพลาด
-                @ViewBag.ErrorMessage = "Invalid username or password.";
+                ModelState.AddModelError("", "Please enter both username and password.");
                 return View();
             }
+            // ตรวจสอบข้อมูลผู้ใช้จากฐานข้อมูล
+            var user = _db.Accounts.SingleOrDefault(a => a.Username == username);
+            // การเข้าสู่ระบบสำเร็จ
+            if (user != null && user.Password == password)
+            {
+                // ตั้งค่า session 
+                HttpContext.Session.SetString("Usersession", user.Username);
+                // เปลี่ยนเส้นทางไปยังหน้าหรือการกระทำอื่นๆ ตามที่ต้องการ
+                return RedirectToAction("Index", "Post");
+            }
+            // หากข้อมูลไม่ถูกต้อง
+            ModelState.AddModelError("", "Invalid username or password");
+            // คืนค่ากลับไปที่ฟอร์มและแสดงข้อผิดพลาด
+            return View();
         }
+
+
+
+
     }
 }
