@@ -11,7 +11,8 @@ namespace WebApp_Mini_Project.Controllers
 
         public AccountController(ApplicationDBContext db)
         {
-            _db = db
+            _db = db;
+
         }
 
 
