@@ -10,6 +10,8 @@ namespace WebApp_Mini_Project.Data
         }
         public DbSet<Post> Posts { get; set; }  
         public DbSet<Account> Accounts { get; set; }
-        
+
+
+
     }
 }
