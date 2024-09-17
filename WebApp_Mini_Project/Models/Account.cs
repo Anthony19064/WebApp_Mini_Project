@@ -20,7 +20,6 @@ namespace WebApp_Mini_Project.Models
         [Required]
         public string Email { get; set; }
 
-        
         public byte[]? ProfilePicture { get; set; }  
     }
 }

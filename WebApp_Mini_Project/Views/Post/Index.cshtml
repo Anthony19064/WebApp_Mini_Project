@@ -20,11 +20,13 @@
         <div class="popup-form">
             <h3>กรอกข้อมูลห้อง</h3>
             <form method="POST" asp-controller="Post" asp-action="Create">
-                <label asp-for="NewPost.Id_room">ชื่อห้อง:</label>
+                <label asp-for="NewPost.Name_room">ชื่อห้อง :</label>
+                <input type="text" asp-for="NewPost.Name_room">
+                <label asp-for="NewPost.Id_room">เลขห้อง :</label>
                 <input type="text" asp-for="NewPost.Id_room">
 
 
-                <label asp-for="NewPost.Game">เกม:</label>
+                <label asp-for="NewPost.Game">เกม :</label>
                 <select asp-for="NewPost.Game">
                     <option value="Valorant">Valorant</option>
                     <option value="PUBG">PUBG</option>
@@ -32,10 +34,10 @@
                     <option value="Rov">Rov</option>
                 </select>
 
-                <label asp-for="NewPost.Details">รายละเอียด:</label>
+                <label asp-for="NewPost.Details">รายละเอียด :</label>
                 <input type="text" asp-for="NewPost.Details">
 
-                <label asp-for="NewPost.Max_person">จำนวนสมาชิก:</label>
+                <label asp-for="NewPost.Max_person">จำนวนสมาชิก :</label>
                 <select asp-for="NewPost.Max_person">
                     <option value="1">1 คน</option>
                     <option value="2">2 คน</option>
@@ -43,7 +45,7 @@
                     <option value="4">4 คน</option>
                 </select>
 
-                <label for="duration">ระยะเวลา:</label>
+                <label for="duration">ระยะเวลา :</label>
                 <select id="duration" name="duration">
                     <option value="1">1 ชั่วโมง</option>
                     <option value="2">2 ชั่วโมง</option>
@@ -62,18 +64,26 @@
         {
         <div class="card-container" id="card-container">
                 <div class="card">
-                    <img src="https://w0.peakpx.com/wallpaper/16/995/HD-wallpaper-valorant-logo.jpg" alt="logo" class="card-logo">
+                    @{
+                        if (post.User_Picture != null)
+                        {
+                            var base64String = Convert.ToBase64String(post.User_Picture);
+                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                            <img src="@imgSrc" alt="logo" class="card-logo" />
+                        }
+                        else
+                        {
+                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                        }
+                    }
                     <div class="card-content">
-                        <p>เลขห้อง: @post.Id_room</p>
-                        <p>รายละเอียด: @post.Details</p>
-                        <p>เกม: @post.Game</p>
-                        <div class="status">
-                           
-                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                        </div>
+                        <p id="user"> @post.User_Post</p>
+                        <p>ชื่อห้อง : @post.Name_room</p>
+                        <p>เกม : @post.Game</p>
+                        <p>รายละเอียด : @post.Details</p>
                     </div>
                     <button class="card-button join-room-button" data-id="@post.ID">
-                        เข้าร่วม
+                        <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                     </button>
             </div>
         </div>
@@ -121,7 +131,7 @@
     // ตรวจสอบข้อมูล Count_person ว่ามากกว่าหรือเท่ากับ Max_person ไหมเมื่อเปิดหน้าเว็บ
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".card-container").forEach(function (container) {
-            var countSpan = container.querySelector(".status span");
+            var countSpan = container.querySelector(".card-button");
             var button = container.querySelector(".card-button");
 
             var countMax = countSpan.textContent.split('/').map(Number);
