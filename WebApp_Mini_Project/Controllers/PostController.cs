@@ -39,7 +39,7 @@ public class PostController : Controller
             Posts = posts,
             NewPost = newPost
         };
-        ViewBag.Usersession = usersession;
+        ViewBag.Usersession = usersession; // ViewBag ส่งค่า session ที่เก็บไว้ออกไป
 
         return View(viewModel); // ส่ง ViewModel ไปยัง View index
     }

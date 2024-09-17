@@ -94,6 +94,15 @@ namespace WebApp_Mini_Project.Controllers
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            // ลบข้อมูลของเซสชัน
+            HttpContext.Session.Clear(); 
+
+            
+            return RedirectToAction("Index", "Post");
+        }
+
 
 
 

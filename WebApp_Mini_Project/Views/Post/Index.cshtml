@@ -55,7 +55,7 @@
             <div class="close-popup" id="closePopup">ปิด</div>
         </div>
     </div>
-    <p> User Session: @ViewBag.Usersession</p>
+
     
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
@@ -98,6 +98,26 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    const popupBtn = document.getElementById('openPopupBtn'); // ปุ่มเปิด form
+    const closePopup = document.getElementById('closePopup'); // ปุ่มปิด form
+    const userSession = '@ViewBag.Usersession'; // session 
+    const popup = document.getElementById('popup'); // form
+    
+    // ฟังก์ชั่นเปิด Form Post
+    popupBtn.addEventListener('click', function () {
+        if (!userSession) { // เช็คว่ามี session ในระบบไหม 
+            window.location.href = '/Account/Login'; //ถ้าไม่มีจะให้ไป login
+        } else {
+            popup.style.display = 'flex'; // ถ้ามีจะให้เปิด form
+        }
+    });
+
+
+    // ฟังก์ชั่นปิด Form Post
+    closePopup.addEventListener('click', function () {
+        popup.style.display = 'none';
+    });
+
     // ตรวจสอบข้อมูล Count_person ว่ามากกว่าหรือเท่ากับ Max_person ไหมเมื่อเปิดหน้าเว็บ
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".card-container").forEach(function (container) {
@@ -117,7 +137,7 @@
         });
     });
 
-
+    // เช็คจำนวนคนใน Post
     $(document).ready(function () {
         $('.join-room-button').click(function (e) {
             e.preventDefault(); // หยุดการทำงานของลิงก์ปกติ
@@ -166,6 +186,8 @@
             });
         });
     });
+
+    
 </script>
 <script src="~/js/script_Post.js"></script>
 

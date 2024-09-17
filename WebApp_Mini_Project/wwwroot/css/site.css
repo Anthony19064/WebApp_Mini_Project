@@ -23,4 +23,52 @@ body {
   color: #333;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
 
+header {
+    background-color: #FF66FF;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+}
+
+header .nav-left {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header .nav-right button, header .nav-right a {
+    background-color: #fff;
+    color: #000099;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 40px;
+    background-color: #333;
+    color: #fff;
+    margin-top: 10px;
+}
+
+footer a {
+    color: #FF66FF;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
