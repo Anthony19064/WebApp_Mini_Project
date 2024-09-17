@@ -7,15 +7,14 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp_Mini_Project.styles.css" asp-append-version="true" />
-
 </head>
 <body>
     <header>
-        <div class="nav-left">เพื่อไทย</div>
+        <div class="nav-left" onclick="window.location.href='/Post/Index'">เพื่อไทย</div>
         <div class="nav-right">
             @if (ViewBag.Usersession != null)
             {
-                <button><a href="/Account/Logout">@ViewBag.Usersession</a></button>
+                <button><a href="/Account/Profile">@ViewBag.Usersession</a></button>
             }
             else
             {
@@ -31,7 +30,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - WebApp_Mini_Project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - WebApp_Mini_Project -
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

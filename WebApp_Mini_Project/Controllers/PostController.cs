@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApp_Mini_Project.Controllers;
 using WebApp_Mini_Project.Data;
 using WebApp_Mini_Project.Models;
 using WebApp_Mini_Project.ViewModels;
 
-public class PostController : Controller
+public class PostController : HomeController
 {
     public readonly ApplicationDBContext _db;
 
@@ -18,7 +19,8 @@ public class PostController : Controller
         {
             Username = "admin",
             Password = "admin",
-            Email    = "admin@gmail.com"
+            Email    = "admin@gmail.com",
+            ProfilePicture = null,
         };
 
         var check_admin = _db.Accounts.SingleOrDefault(a => a.Username == adminAccount.Username && a.Password == adminAccount.Password && a.Email == adminAccount.Email);

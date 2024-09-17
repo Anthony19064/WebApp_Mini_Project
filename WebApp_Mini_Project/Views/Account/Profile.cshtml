@@ -1,0 +1,25 @@
+﻿@using WebApp_Mini_Project.ViewModels
+@model Account
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Username's Profile</title>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>@Model.Username</h1>
+        <p>Email: @Model.Email</p>
+        <!-- Display profile picture if available -->
+        @if (Model.ProfilePicture != null && Model.ProfilePicture.Length > 0)
+        {
+            var base64String = Convert.ToBase64String(Model.ProfilePicture);
+            var imgSrc = $"data:image/jpeg;base64,{base64String}";
+            <img src="@imgSrc" alt="Profile Picture" />
+        }
+    </div>
+    <button><a href="/Account/Logout">Log out</a></button>
+</body>
+</html>

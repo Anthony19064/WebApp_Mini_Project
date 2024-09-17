@@ -72,3 +72,7 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+.nav-left {
+    cursor: pointer;
+}
