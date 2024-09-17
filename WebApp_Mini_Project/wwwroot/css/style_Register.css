@@ -1,4 +1,4 @@
-
+﻿/* Updated CSS to match the provided design */
 html, body {
     height: 100%;
     margin: 0;
@@ -12,7 +12,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.login-container {
+.register-container {
     background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
     padding: 2em;
     border-radius: 8px;
@@ -21,11 +21,15 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
-h1 {
-    font-size: 2em;
+.profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover;
     margin-bottom: 1em;
-    color: white; /* Logo color */
+    border: 2px solid #FF66CC; /* Border around the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds slight shadow for more depth */
+    cursor: pointer; /* Changes cursor to pointer to indicate clickable */
 }
 
 .form-group {
@@ -44,7 +48,7 @@ h1 {
     outline: none; /* Remove default outline on focus */
 }
 
-.login-container button {
+.register-container button {
     width: 45%;
     padding: 0.8em;
     border: 1px solid #FF66CC; /* Dark red border */
@@ -56,14 +60,19 @@ h1 {
     margin: 0 5px;
 }
 
-.login-container button:hover {
-    background-color: #FF66CC; /* Dark red background */
-    color: white; /* White text */
+.register-container button:hover {
+        background-color: #FF66CC; /* Dark red background */
+        color: white; /* White text */
 }
 
-.register-link {
+.login-link {
     display: block;
     margin-top: 1em;
     font-size: 0.9em;
     color: #FF66CC; /* White text for the register link */
+}
+
+/* Hide the actual file input */
+#file-input {
+    display: none;
 }
