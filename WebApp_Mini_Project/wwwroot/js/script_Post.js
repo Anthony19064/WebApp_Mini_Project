@@ -1,16 +1,3 @@
-const popupBtn = document.getElementById('openPopupBtn');
-const popup = document.getElementById('popup');
-const closePopup = document.getElementById('closePopup');
-
-
-popupBtn.addEventListener('click', function () {
-   popup.style.display = 'flex';
-});
-
-closePopup.addEventListener('click', function () {
-   popup.style.display = 'none';
-});
-
 // ¿Ñ§¡ìªÑè¹ joinRoom
 function joinRoom(id_room, countPersons, maxPersons) {
     var personCountElement = document.getElementById('person-count-' + id_room);
@@ -32,7 +19,7 @@ function joinRoom(id_room, countPersons, maxPersons) {
 };
 
 
-// ¿Ñ§¡ìªÑ¹à»Ô´/»Ô´ popup
+// ¿Ñ§¡ìªÑ¹à»Ô´/»Ô´ popupchat
 function toggleChatPopup() {
    var chatPopup = document.getElementById("chatPopup");
    if (chatPopup.style.display === "none" || chatPopup.style.display === "") {

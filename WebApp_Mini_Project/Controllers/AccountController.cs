@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApp_Mini_Project.Data;
 using WebApp_Mini_Project.Models;
 
 namespace WebApp_Mini_Project.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : HomeController
     {
         public readonly ApplicationDBContext _db;
 
@@ -14,7 +13,6 @@ namespace WebApp_Mini_Project.Controllers
             _db = db;
         }
 
-
         [HttpGet]
         public IActionResult Register()
         {
@@ -22,47 +20,52 @@ namespace WebApp_Mini_Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(Account obj)
+        public async Task<IActionResult> Register(Account obj, IFormFile profilePicture)
         {
-            // ตรวจสอบว่า ModelState ถูกต้องหรือไม่
             if (ModelState.IsValid)
             {
                 bool usernameExists = _db.Accounts.Any(a => a.Username == obj.Username);
-                bool EmailExists = _db.Accounts.Any(b => b.Email == obj.Email);
-                // หาว่า Username ที่รับมาเคยมีในฐานข้อมูลแล้วหรือยัง
+                bool emailExists = _db.Accounts.Any(b => b.Email == obj.Email);
+
                 if (usernameExists)
                 {
                     ModelState.AddModelError("Username", "Username already exists.");
                 }
+                else if (emailExists)
+                {
+                    ModelState.AddModelError("Email", "Email already exists.");
+                }
                 else
                 {
-                    if (EmailExists)
+                    if (obj.Password == obj.ReplyPassword)
                     {
-                        ModelState.AddModelError("Emaill", "Username already exists.");
-                    }
-                    else
-                    {
-                        // ตรวจสอบว่า password และ reply password ตรงกันหรือไม่
-                        if (obj.Password == obj.ReplyPassword)
+                        // Handle the image file
+                        if (profilePicture != null && profilePicture.Length > 0)
                         {
-                            // เพิ่มข้อมูลผู้ใช้ลงในฐานข้อมูล
-                            _db.Accounts.Add(obj);
-                            _db.SaveChanges();
-                            return RedirectToAction("Login", "Account");
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                await profilePicture.CopyToAsync(memoryStream);
+                                obj.ProfilePicture = memoryStream.ToArray();
+                            }
                         }
                         else
                         {
-                            // เพิ่มข้อผิดพลาดในการตรวจสอบรหัสผ่าน
-                            ModelState.AddModelError("ReplyPassword", "Reply password does not match the password.");
+                            ModelState.AddModelError("Picture", "Picture Error.");
                         }
 
+                        // Save the account to the database
+                        _db.Accounts.Add(obj);
+                        await _db.SaveChangesAsync();
+                        return RedirectToAction("Login", "Account");
                     }
-                }   
+                    else
+                    {
+                        ModelState.AddModelError("ReplyPassword", "Reply password does not match the password.");
+                    }
+                }
             }
-            // หากข้อมูลไม่ถูกต้อง ให้คืนค่ากลับไปที่ฟอร์มและแสดงข้อผิดพลาด
             return View(obj);
         }
-
 
         [HttpGet]
         public IActionResult Login()
@@ -78,24 +81,35 @@ namespace WebApp_Mini_Project.Controllers
                 ModelState.AddModelError("", "Please enter both username and password.");
                 return View();
             }
-            // ตรวจสอบข้อมูลผู้ใช้จากฐานข้อมูล
+
             var user = _db.Accounts.SingleOrDefault(a => a.Username == username);
-            // การเข้าสู่ระบบสำเร็จ
+
             if (user != null && user.Password == password)
             {
-                // ตั้งค่า session 
                 HttpContext.Session.SetString("Usersession", user.Username);
-                // เปลี่ยนเส้นทางไปยังหน้าหรือการกระทำอื่นๆ ตามที่ต้องการ
                 return RedirectToAction("Index", "Post");
             }
-            // หากข้อมูลไม่ถูกต้อง
+
             ModelState.AddModelError("", "Invalid username or password");
-            // คืนค่ากลับไปที่ฟอร์มและแสดงข้อผิดพลาด
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Post");
+        }
 
-
-
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            string usersession = HttpContext.Session.GetString("Usersession");
+            var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            return View(account);
+        }
     }
 }
