@@ -12,7 +12,6 @@ public class PostController : HomeController
     {
         _db = db;
     }
-
     public ActionResult Index()
     {
         var adminAccount = new Account
@@ -52,9 +51,14 @@ public class PostController : HomeController
     [ValidateAntiForgeryToken]
     public ActionResult Create(PostViewModel model) // สร้างตัวแปร PostViewModel ที่รับค่าจากสองตัวเมื่อกี้ มาเก็บลงตัวแปร model
     {
-            _db.Posts.Add(model.NewPost); // เอาเฉพาะ Newpost มาเก็บลง DB
-            _db.SaveChanges(); // บันทึกข้อมูล
-            return RedirectToAction("Index"); // กลับไปหน้า Index
+        string usersession = HttpContext.Session.GetString("Usersession");
+        var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
+        model.NewPost.User_Post = account.Username;
+        model.NewPost.User_Picture = account.ProfilePicture;
+
+        _db.Posts.Add(model.NewPost); // เอาเฉพาะ Newpost มาเก็บลง DB
+        _db.SaveChanges(); // บันทึกข้อมูล
+        return RedirectToAction("Index"); // กลับไปหน้า Index
 
     }
 
