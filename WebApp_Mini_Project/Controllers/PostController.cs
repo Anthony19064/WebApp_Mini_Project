@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using WebApp_Mini_Project.Controllers;
 using WebApp_Mini_Project.Data;
 using WebApp_Mini_Project.Models;
@@ -31,7 +32,8 @@ public class PostController : HomeController
      
         
         string usersession = HttpContext.Session.GetString("Usersession");
-        var posts = _db.Posts; // ข้อมูลใน DB เก็บลง ตัวแปร posts
+        var posts = _db.Posts.ToList(); // ข้อมูลใน DB เก็บลง ตัวแปร posts
+        posts.Reverse();
         var newPost = new Post(); // ข้อมูลที่รับมาจากฟอรม์ เก็บลง ตัวแปร newPost
 
 
@@ -63,7 +65,7 @@ public class PostController : HomeController
     }
 
     [HttpPost]
-    public IActionResult Joinroom(int? id)
+    public IActionResult Joinroom(int? id, string user)
     {
         if (id == null || id == 0)
         {
@@ -71,18 +73,27 @@ public class PostController : HomeController
         }
 
         var obj = _db.Posts.Find(id);
-
         if (obj == null)
         {
             return NotFound(); // ถ้าไม่พบโพสต์
         }
 
-        obj.Count_person++;
+        if (obj.User_list.Contains(user))
+        {
+            return Json(new { success = false});
+        }
+        else
+        {
+            obj.Count_person++;
+            obj.User_list.Add(user);
+        }
+
         _db.SaveChanges();
 
         // คืนค่าตอบกลับ JSON ที่มีข้อมูลใหม่
         return Json(new { success = true, newCount = obj.Count_person });
     }
+
 
 
 

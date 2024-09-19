@@ -21,5 +21,6 @@ namespace WebApp_Mini_Project.Models
         public string Email { get; set; }
 
         public byte[]? ProfilePicture { get; set; }  
+
     }
 }

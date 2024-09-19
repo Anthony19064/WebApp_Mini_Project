@@ -14,7 +14,7 @@
         <input type="text" placeholder="พิมพ์เพื่อค้นหา..." class="search-bar">
     </section>
 
-    <button class="refresh-btn" id="openPopupBtn">Posts</button>
+    <button class="refresh-btn" id="openPopupBtn"><span>Posts</span></button>
     <!-- Popup Form -->
     <div class="popup-background" id="popup">
         <div class="popup-form">
@@ -58,40 +58,57 @@
         </div>
     </div>
 
-    
+
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
         {
-        <div class="card-container" id="card-container">
+            <div class="card-container" id="card-container">
                 <div class="card">
                     @{
                         if (post.User_Picture != null)
                         {
                             var base64String = Convert.ToBase64String(post.User_Picture);
                             var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                            <img src="@imgSrc" alt="logo" class="card-logo" />
+                                                <img src="@imgSrc" alt="logo" class="card-logo" />
                         }
                         else
                         {
-                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                                                <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                         }
                     }
                     <div class="card-content">
                         <p id="user"> @post.User_Post</p>
-                        <p>ชื่อห้อง : @post.Name_room</p>
-                        <p>เกม : @post.Game</p>
-                        <p>รายละเอียด : @post.Details</p>
+                        <p><b>ชื่อห้อง</b> : @post.Name_room</p>
+                        <p><b>เกม</b> : @post.Game</p>
+                        <p><b>รายละเอียด</b> : @post.Details</p>
                     </div>
-                    <button class="card-button join-room-button" data-id="@post.ID">
-                        <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                    </button>
+                    @if (post.User_list.Contains(ViewBag.Usersession))
+                    {
+                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="opacity: 0.6; cursor: default;">
+                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                        </button>
+                    }
+                    else if (post.User_Post != ViewBag.Usersession)
+                    {
+                        <button class="card-button join-room-button" data-id="@post.ID">
+                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
+                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                        </button>
+                    }
+
+
+                </div>
             </div>
-        </div>
-            
+
         }
     </div>
 
-    
+
     <div class="floating-button" onclick="toggleChatPopup()">
         <img src="https://png.pngtree.com/png-clipart/20190617/original/pngtree-chat-vector-icon-png-image_3876224.jpg" alt="icon">
     </div>
@@ -110,23 +127,24 @@
 <script>
     const popupBtn = document.getElementById('openPopupBtn'); // ปุ่มเปิด form
     const closePopup = document.getElementById('closePopup'); // ปุ่มปิด form
-    const userSession = '@ViewBag.Usersession'; // session 
+    const userSession = '@ViewBag.Usersession'; // session
     const popup = document.getElementById('popup'); // form
-    
+
     // ฟังก์ชั่นเปิด Form Post
     popupBtn.addEventListener('click', function () {
-        if (!userSession) { // เช็คว่ามี session ในระบบไหม 
+        if (!userSession) { // เช็คว่ามี session ในระบบไหม
             window.location.href = '/Account/Login'; //ถ้าไม่มีจะให้ไป login
         } else {
             popup.style.display = 'flex'; // ถ้ามีจะให้เปิด form
         }
     });
-
-
     // ฟังก์ชั่นปิด Form Post
     closePopup.addEventListener('click', function () {
         popup.style.display = 'none';
     });
+
+    //---------------------------------------------------------------------------------------------------
+
 
     // ตรวจสอบข้อมูล Count_person ว่ามากกว่าหรือเท่ากับ Max_person ไหมเมื่อเปิดหน้าเว็บ
     document.addEventListener("DOMContentLoaded", function () {
@@ -137,7 +155,6 @@
             var countMax = countSpan.textContent.split('/').map(Number);
             var countPerson = countMax[0];
             var maxPerson = countMax[1];
-
             if (countPerson >= maxPerson) {
                 button.style.backgroundColor = "red";
                 button.style.pointerEvents = "none";
@@ -146,6 +163,8 @@
             }
         });
     });
+
+    // --------------------------------------------------------------------------------------------------------
 
     // เช็คจำนวนคนใน Post
     $(document).ready(function () {
@@ -158,46 +177,50 @@
             var personCountText = personCountSpan.text();
             var currentCount = parseInt(personCountText.split('/')[0]);
             var maxPerson = parseInt(personCountText.split('/')[1]);
-
-            // ตรวจสอบว่า จำนวนคนในห้องเกินหรือตรงกับ Max_person หรือไม่
-            if (currentCount >= maxPerson) {
-                // เปลี่ยนลักษณะของปุ่มเพื่อทำให้เป็นสีแดงและไม่สามารถคลิกได้
-                button.css({
-                    'background-color': 'red',     // เปลี่ยนสีพื้นหลังเป็นสีแดง
-                    'pointer-events': 'none',       // ป้องกันการคลิก
-                    'cursor': 'not-allowed',        // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
-                    'opacity': '0.6'                // ทำให้ปุ่มโปร่งแสง
-                });
-                return; // หยุดการทำงานของฟังก์ชันหากห้องเต็ม
+            
+            if (!userSession) {
+                window.location.href = '/Account/Login';
+                return;
             }
+
 
             $.ajax({
                 url: '@Url.Action("Joinroom", "Post")',
                 type: 'POST',
-                data: { id: postId },
+                data: { id: postId, user: '@ViewBag.Usersession' },
                 success: function (response) {
                     if (response.success) {
                         var newCount = response.newCount;
                         personCountSpan.text(newCount + '/' + maxPerson);
-
-                        // ตรวจสอบอีกครั้งเพื่ออัปเดตสถานะปุ่ม
+                        //ตรวจสอบอีกครั้งเพื่ออัปเดตสถานะปุ่ม
                         if (newCount >= maxPerson) {
                             button.css({
                                 'background-color': 'red',     // เปลี่ยนสีพื้นหลังเป็นสีแดง
-                                'pointer-events': 'none',       // ป้องกันการคลิก
-                                'cursor': 'not-allowed',        // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
-                                'opacity': '0.6'                // ทำให้ปุ่มโปร่งแสง
+                                'pointer-events': 'none',      // ป้องกันการคลิก
+                                'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
+                                'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
+                            });
+                        }else{
+                            button.css({
+                                'pointer-events': 'none',      // ป้องกันการคลิก
+                                'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
+                                'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
                             });
                         }
                     } else {
-                        alert('เกิดข้อผิดพลาด!');
+                        button.css({
+                            'pointer-events': 'none',      // ป้องกันการคลิก
+                            'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
+                            'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
+                        });
+                        return;
                     }
                 },
             });
         });
     });
 
-    
+
 </script>
 <script src="~/js/script_Post.js"></script>
 

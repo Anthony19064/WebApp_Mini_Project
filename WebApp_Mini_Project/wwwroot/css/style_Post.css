@@ -27,32 +27,6 @@
     border-radius: 20px;
 }
 
-.refresh-btn {
-    position: absolute;
-    top: 248px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff;
-    color: #000099;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    width: 200px;
-    height: 65px;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.refresh-btn:hover {
-    background-color: #f60000;
-    color: #fff;
-    transform: translateX(-50%) scale(1.05);
-}
-
 .card-container {
     display: flex;
     justify-content: center;
@@ -101,18 +75,20 @@
     font-size: 17px;
     color: #333;
 }
-
-#user {
-    font-size: 20px; /* ขนาดตัวอักษรที่ต้องการ */
-    font-weight: bold; /* ตัวหนา */
-    color: #333; /* สีตัวอักษร (เลือกสีที่คุณต้องการ) */
-    margin-bottom: 5px;
-    text-decoration: underline;
-}
-
 #user::first-letter {
     text-transform: uppercase; /* ทำให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่ */
 }
+#user {
+    font-size: 20px; /* ขนาดตัวอักษรที่ต้องการ */
+    background: linear-gradient(to right, #FF6699, #FFFF33); /* ไล่สี */
+    font-family: 'Impact', sans-serif;
+    text-decoration: underline;
+    -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
+    color: transparent; /* ทำให้สีพื้นหลังโปร่งใส */
+    margin-bottom: 5px;
+}
+
+
 
 .card-button {
     background-color: #333;
@@ -201,8 +177,7 @@
     top: 248px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #fff;
-    color: #000099;
+    background-color: #fff; /* สีพื้นหลังปุ่ม */
     border: none;
     padding: 10px;
     cursor: pointer;
@@ -214,6 +189,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 1s; /* เพิ่มการเปลี่ยนแปลงสีพื้นหลัง */
+}
+
+.refresh-btn span {
+    font-size: 25px; /* ขนาดตัวอักษรที่ต้องการ */
+    background: linear-gradient(to right, #FF6699, #f89b28); /* ไล่สี */
+    font-family: 'Impact', sans-serif;
+    text-decoration: underline;
+    -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
+    color: transparent; /* ทำให้สีพื้นหลังโปร่งใส */
+    margin-bottom: 5px;
+    transition: color 1s; /* เพิ่มการเปลี่ยนแปลงสี */
+}
+
+.refresh-btn:hover {
+    background: linear-gradient(to right, #FF6699, #f89b28); /* ไล่สีเมื่อ hover */
+    transform: translateX(-50%) scale(1.05);
+}
+
+.refresh-btn:hover span {
+    color: white; /* เปลี่ยนสีข้อความเป็นขาวเมื่อ hover */
 }
 
 .popup-background {
