@@ -14,11 +14,11 @@
         <div class="nav-right">
             @if (ViewBag.Usersession != null)
             {
-                <button><a href="/Account/Profile">@ViewBag.Usersession</a></button>
+                <button><a href="/Account/Profile" id="users">@ViewBag.Usersession</a></button>
             }
             else
             {
-                <button><a href="/Account/Login">เข้าสู่ระบบ</a></button>
+                <button><a href="/Account/Login" id="users" >Login </a></button>
             }
         </div>
     </header>

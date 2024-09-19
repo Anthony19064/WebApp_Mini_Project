@@ -12,30 +12,38 @@
     <link rel="stylesheet" href="~/css/style_Regiter.css">
 </head>
 <body>
+
+
+
     <div class="register-container">
+        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.ReplyPassword, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         <form method="POST" action="/Account/Register" enctype="multipart/form-data">
         <!-- Profile image with onClick to trigger file input -->
         <img src="https://cdn-icons-png.flaticon.com/512/10141/10141012.png" alt="Profile Picture" class="profile-pic" id="profileImage" onclick="document.getElementById('file-input').click();">
 
         <!-- Hidden file input for image upload -->
             <input type="file" id="file-input" name="ProfilePicture" accept="image/*" onchange="previewImage(event)">
-            @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
+            
         
             <div class="form-group">
                 <input type="text" id="username" asp-for="Username" name="Username" placeholder="Username" required>
-                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                
             </div>
             <div class="form-group">
                 <input type="password" id="password" asp-for="Password" name="Password" placeholder="Password" required>
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                
             </div>
             <div class="form-group">
                 <input type="password" id="replyPassword" asp-for="ReplyPassword" name="ReplyPassword" placeholder="Reply password" required>
-                @Html.ValidationMessageFor(model => model.ReplyPassword, "", new { @class = "text-danger" })
+                
             </div>
             <div class="form-group">
                 <input type="email" id="email" asp-for="Email" name="Email" placeholder="Email" required>
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                
             </div>
             <button type="submit">Register</button>
             <button type="button" onclick="window.location.href='/Account/Login';">Cancel</button>

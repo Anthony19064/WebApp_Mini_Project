@@ -76,3 +76,14 @@ footer a:hover {
 .nav-left {
     cursor: pointer;
 }
+#users::first-letter {
+    text-transform: uppercase; /* ทำให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่ */
+}
+#users {
+    font-size: 20px; /* ขนาดตัวอักษรที่ต้องการ */
+    background: linear-gradient(to right, #FF6699,#FF6699, #FFFF33); /* ไล่สี */
+    text-decoration: underline;
+    -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
+    color: transparent; /* ทำให้สีพื้นหลังโปร่งใส */
+    margin-bottom: 5px;
+}
