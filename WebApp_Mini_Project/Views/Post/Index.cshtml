@@ -157,6 +157,7 @@
             var maxPerson = countMax[1];
             if (countPerson >= maxPerson) {
                 button.style.backgroundColor = "red";
+                button.style.color = 'white';
                 button.style.pointerEvents = "none";
                 button.style.cursor = "not-allowed";
                 button.style.opacity = "0.6";
@@ -195,14 +196,16 @@
                         //ตรวจสอบอีกครั้งเพื่ออัปเดตสถานะปุ่ม
                         if (newCount >= maxPerson) {
                             button.css({
-                                'background-color': 'red',     // เปลี่ยนสีพื้นหลังเป็นสีแดง
+                                'background-color': 'red',
+                                'color' : 'white',// เปลี่ยนสีพื้นหลังเป็นสีแดง
                                 'pointer-events': 'none',      // ป้องกันการคลิก
                                 'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
                                 'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
                             });
                         }else{
                             button.css({
-                                'pointer-events': 'none',      // ป้องกันการคลิก
+                                'pointer-events': 'none',  
+                                'color': 'white',// ป้องกันการคลิก
                                 'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
                                 'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
                             });
@@ -210,6 +213,7 @@
                     } else {
                         button.css({
                             'pointer-events': 'none',      // ป้องกันการคลิก
+                            'color': 'white',
                             'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
                             'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
                         });
