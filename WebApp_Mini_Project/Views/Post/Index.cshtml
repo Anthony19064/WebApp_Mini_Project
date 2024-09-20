@@ -58,11 +58,12 @@
         </div>
     </div>
 
-
-    <div class="card-container" id="card-container">
+    <div class="content-container">
+        <div class="scrollable-cards-wrapper">
+            <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
         {
-            <div class="card-container" id="card-container">
+            
                 <div class="card">
                     @{
                         if (post.User_Picture != null)
@@ -103,10 +104,29 @@
 
 
                 </div>
-            </div>
+           
 
         }
     </div>
+        </div>
+        <div class="chat-board-container">
+            <div class="chat-board-header">
+                <h3>Chat Board</h3>
+            </div>
+            <div class="chat-board-messages" id="chatMessages">
+                <div class="chat-message"><strong>เหนือ:</strong> 1-1 กะกูป่าวมึงอะ</div>
+            </div>
+            <div class="chat-board-input">
+                <input type="text" id="chatInput" placeholder="Type your message here...">
+                <button id="sendMessageBtn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+
 
 
     <div class="floating-button" onclick="toggleChatPopup()">
