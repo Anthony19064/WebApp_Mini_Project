@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp_Mini_Project.styles.css" asp-append-version="true" />
+    
 </head>
 <body>
     <header>
@@ -14,11 +15,18 @@
         <div class="nav-right">
             @if (ViewBag.Usersession != null)
             {
-                <button><a href="/Account/Profile" id="users">@ViewBag.Usersession</a></button>
+                <div class="dropdown">
+                    <button class="dropbtn"><span>@ViewBag.Usersession</span></button>
+                    <div class="dropdown-content">
+                        <a href="/Account/Profile"><span>Profile</span></a>
+                        <a href="/Account/Logout"><span>Logout</span></a>
+                    </div>
+                </div>
+
             }
             else
             {
-                <button><a href="/Account/Login" id="users" >Login </a></button>
+                <button><a href="/Account/Login" id="users">Login</a></button>
             }
         </div>
     </header>

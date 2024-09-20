@@ -1,89 +1,155 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-      font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb; /* เงาเมื่อมีการโฟกัส */
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%; /* ให้ความสูงขั้นต่ำของ html เท่ากับ 100% */
 }
 
 body {
-  margin-bottom: 200px;
-  background-color: #f9f9f9;
-  color: #333;
+    margin-bottom: 200px; /* ระยะห่างที่ด้านล่างของ body */
+    background-color: #f9f9f9; /* สีพื้นหลัง */
+    color: #333; /* สีตัวอักษร */
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    margin: 0; /* ลบ margin */
+    padding: 0; /* ลบ padding */
+    box-sizing: border-box; /* ตั้งค่าการคำนวณขนาดกล่อง */
+    font-family: 'Arial', sans-serif; /* ฟอนต์ที่ใช้ */
 }
 
 header {
-    background-color: #FF66FF;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
+    background-color: #FF66FF; /* สีพื้นหลังของ header */
+    padding: 15px 30px; /* ระยะห่างภายใน header */
+    display: flex; /* ใช้ flexbox */
+    justify-content: space-between; /* จัดเรียงให้มีระยะห่างระหว่างองค์ประกอบ */
+    align-items: center; /* จัดให้อยู่กลางแนวตั้ง */
+    color: #fff; /* สีตัวอักษร */
+    position: relative;
+    z-index: 1; /* ให้แน่ใจว่า header อยู่ในลำดับที่สูง */
 }
 
-header .nav-left {
-    font-size: 24px;
-    font-weight: bold;
-}
+    header .nav-left {
+        font-size: 24px; /* ขนาดตัวอักษร */
+        font-weight: bold; /* น้ำหนักตัวอักษร */
+    }
 
-header .nav-right button, header .nav-right a {
-    background-color: #fff;
-    color: #000099;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 20px;
-    text-decoration: none;
-}
+    header .nav-right button, header .nav-right a {
+        background-color: #fff; /* สีพื้นหลังของปุ่มและลิงก์ */
+        color: #000099; /* สีตัวอักษร */
+        border: none; /* ไม่มีขอบ */
+        padding: 8px 16px; /* ระยะห่างภายใน */
+        cursor: pointer; /* เปลี่ยนเป็นมือเมื่อ hover */
+        font-weight: bold; /* น้ำหนักตัวอักษร */
+        border-radius: 20px; /* มุมมน */
+        text-decoration: none; /* ไม่มีการขีดเส้นใต้ */
+    }
 
 footer {
-    text-align: center;
-    padding: 10px;
-    margin-top: 40px;
-    background-color: #333;
-    color: #fff;
-    margin-top: 10px;
+    text-align: center; /* จัดข้อความกลาง */
+    padding: 10px; /* ระยะห่างภายใน */
+    margin-top: 40px; /* ระยะห่างด้านบน */
+    background-color: #333; /* สีพื้นหลัง */
+    color: #fff; /* สีตัวอักษร */
+    margin-top: 10px; /* ระยะห่างด้านบน */
 }
 
-footer a {
-    color: #FF66FF;
-    text-decoration: none;
-}
+    footer a {
+        color: #FF66FF; /* สีตัวอักษรของลิงก์ใน footer */
+        text-decoration: none; /* ไม่มีการขีดเส้นใต้ */
+    }
 
-footer a:hover {
-    text-decoration: underline;
-}
+        footer a:hover {
+            text-decoration: underline; /* ขีดเส้นใต้เมื่อ hover */
+        }
 
 .nav-left {
-    cursor: pointer;
+    cursor: pointer; /* เปลี่ยนเป็นมือเมื่อ hover */
 }
+
 #users::first-letter {
     text-transform: uppercase; /* ทำให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่ */
 }
+
 #users {
     font-size: 20px; /* ขนาดตัวอักษรที่ต้องการ */
-    background: linear-gradient(to right, #FF6699,#FF6699, #FFFF33); /* ไล่สี */
-    text-decoration: underline;
+    background: linear-gradient(to right, #FF6699, #FF6699, #FFFF33); /* ไล่สี */
+    text-decoration: underline; /* ขีดเส้นใต้ */
     -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
     color: transparent; /* ทำให้สีพื้นหลังโปร่งใส */
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* ระยะห่างด้านล่าง */
+}
+
+.dropdown {
+    position: relative; /* ตำแหน่งสัมพันธ์ */
+    display: inline-block; /* แสดงเป็น inline-block */
+    overflow: visible; /* ให้ dropdown แสดงผลอย่างถูกต้อง */
+}
+
+.dropdown-content {
+    display: none; /* ซ่อนเมนูดรอปดาวน์เริ่มต้น */
+    position: absolute; /* ตำแหน่งสัมบูรณ์ */
+    background-color: #f9f9f9; /* สีพื้นหลังของเมนู */
+    min-width: 50px; /* ความกว้างขั้นต่ำ */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* เงา */
+    z-index: 10; /* ให้ dropdown อยู่บน header */
+    
+}
+
+
+    .dropdown-content a {
+        color: #FF66FF !important; /* เปลี่ยนเป็นสีที่ต้องการ */
+        padding: 12px 16px; /* ระยะห่างภายในของลิงก์ */
+        text-decoration: none; /* ไม่มีการขีดเส้นใต้ */
+        display: block; /* แสดงเป็น block */
+        border-radius: 0 !important; /* ไม่ให้มุมโค้ง */
+    }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1; /* สีพื้นหลังเมื่อ hover */
+            color: #FF66FF !important; /* เปลี่ยนสีตัวหนังสือเมื่อ hover */
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block; /* แสดงเมนูดรอปดาวน์เมื่อ hover */
+}
+
+.dropdown:hover .dropbtn {
+    background: linear-gradient(to right, #FF6699, #f89b28); /* ไล่สีเมื่อ hover */
+}
+
+.dropbtn {
+    font-size: 20px; /* ขนาดตัวอักษร */
+    background-color: #fff; /* สีพื้นหลังของปุ่ม */
+    border: none; /* ไม่มีขอบ */
+    padding: 8px 16px; /* ระยะห่างภายใน */
+    cursor: pointer; /* เปลี่ยนเป็นมือเมื่อ hover */
+    font-weight: bold; /* น้ำหนักตัวอักษร */
+    border-radius: 20px; /* มุมมน */
+    margin-bottom: 5px; /* ระยะห่างด้านล่าง */
+    text-decoration: none; /* ไม่มีการขีดเส้นใต้ */
+    position: relative; /* สำหรับการจัดตำแหน่งข้อความ */
+}
+
+    .dropbtn span {
+        background: linear-gradient(to right, #FF6699, #FFFF33); /* ไล่สี */
+        -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
+        color: transparent; /* ทำให้สีตัวอักษรโปร่งใส */
+        display: inline-block; /* แสดงเป็น inline-block */
+    }
+
+.dropdown:hover .dropbtn span {
+    color: white; /* เปลี่ยนสีเมื่อ hover */
 }
