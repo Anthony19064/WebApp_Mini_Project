@@ -6,24 +6,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@Model.Username's Profile</title>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="~/css/style_Profile.css">
 </head>
 <body>
     <div class="profile-container">
-        <h1>@Model.Username</h1>
-        <p>Email: @Model.Email</p>
-        <!-- Display profile picture if available -->
-        @if (Model.ProfilePicture != null && Model.ProfilePicture.Length > 0)
-        {
-            var base64String = Convert.ToBase64String(Model.ProfilePicture);
-            var imgSrc = $"data:image/jpeg;base64,{base64String}";
-            <img src="@imgSrc" alt="Profile Picture" />
-        }
-        else
-        {
-            <img src="~/Image/User_icon.png" alt="Profile Picture" />
-        }
+        <!-- Icon ฟันเฟือง -->
+        <div class="settings-icon" onclick="togglePopup()">
+            <img src="https://img5.pic.in.th/file/secure-sv1/Pngtreewhite-edit-icon_4559214.png" alt="Settings Icon">
+        </div>
+
+        <div class="content-section">
+            <!-- Avatar Section (Left) -->
+            <div class="avatar-section">
+                @if (Model.ProfilePicture != null)
+                {
+                    var imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
+                    <img src="data:image/png;base64,@imageBase64" alt="Avatar">
+                }
+                else
+                {
+                    <img src="https://cdn-icons-png.flaticon.com/512/10141/10141012.png" alt="Avatar">
+                }
+            </div>
+
+            <!-- Form Section (Right) -->
+            <div class="form-section">
+                <form id="profileForm" class="profile-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="@Model.Username" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" value="********" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="@Model.Email" disabled>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <button><a href="/Account/Logout">Log out</a></button>
+    <div class="card-container">
+        <div class="card">
+            <!-- จุดสามจุด -->
+            <div class="card-menu" onclick="toggleCardMenu(this)">
+                <span>⋮</span>
+                <ul class="card-menu-options">
+                    <li onclick="openEditPopup()">Edit</li>
+                    <li>delete</li>
+                    <li>kuy</li>
+                </ul>
+            </div>
+
+            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+            <div class="card-content">
+                <p id="user">test</p>
+                <p><b>ชื่อห้อง</b> : test</p>
+                <p><b>เกม</b> : test</p>
+                <p><b>รายละเอียด</b> : test</p>
+            </div>
+            <button class="card-button join-room-button" data-id="test" disabled style="opacity: 0.6; cursor: default;">
+                <span id="test">0/test</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Popup ฟอร์มกรอกข้อมูล -->
+    <div id="editPopup" class="edit-popup">
+        <div class="edit-popup-content">
+            <span class="close" onclick="closeEditPopup()">&times;</span>
+            <h2>Edit Information</h2>
+            <form>
+                <div class="form-group">
+                    <label for="editUsername">Username</label>
+                    <input type="text" id="editUsername" name="editUsername" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="editRoomName">ชื่อห้อง</label>
+                    <input type="text" id="editRoomName" name="editRoomName" placeholder="Enter room name">
+                </div>
+                <div class="form-group">
+                    <label for="editGame">เกม</label>
+                    <input type="text" id="editGame" name="editGame" placeholder="Enter game">
+                </div>
+                <div class="form-group">
+                    <label for="editDetails">รายละเอียด</label>
+                    <textarea id="editDetails" name="editDetails" placeholder="Enter details"></textarea>
+                </div>
+                <div class="popup-actions">
+                    <button type="submit" class="btn-save">Save</button>
+                    <button type="button" class="btn-cancel" onclick="closeEditPopup()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Pop-up และ overlay -->
+    <div class="popup-overlay" id="popupOverlay"></div>
+    <div class="popup" id="popup">
+
+        <form id="popupForm" class="popup-form">
+            <div class="popup-header">
+                @if (Model.ProfilePicture != null)
+                {
+                    var imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
+                    <img id="popupProfileImage" src="data:image/png;base64,@imageBase64" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
+                }
+                else
+                {
+                    <img id="popupProfileImage" src="https://cdn-icons-png.flaticon.com/512/10141/10141012.png" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
+                }
+                <h3>Settings</h3>
+            </div>
+            <div class="form-group">
+                <label for="popupUsername">Username</label>
+                <input type="text" id="popupUsername" name="popupUsername" placeholder="@Model.Username" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="popupPassword">Password</label>
+                <input type="password" id="popupPassword" name="popupPassword" placeholder="********" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="popupEmail">Email</label>
+                <input type="email" id="popupEmail" name="popupEmail" placeholder="@Model.Email" value="" required>
+            </div>
+            <div class="popup-buttons">
+                <button type="submit">Save</button>
+                <button type="button" onclick="togglePopup()">Close</button>
+            </div>
+            <!-- Input สำหรับเลือกไฟล์ -->
+            <input type="file" id="fileInput" style="display: none;" onchange="previewImage(event)">
+        </form>
+    </div>
+
+    <script>
+        function togglePopup() {
+            var popup = document.getElementById("popup");
+            var overlay = document.getElementById("popupOverlay");
+
+            if (popup.style.display === "none" || popup.style.display === "") {
+                popup.style.display = "block";
+                overlay.classList.add("show"); // เพิ่มคลาส show เพื่อแสดง
+            } else {
+                popup.style.display = "none";
+                overlay.classList.remove("show"); // ลบคลาส show เมื่อลบ popup
+            }
+        }
+
+        function triggerFileInput() {
+            document.getElementById('fileInput').click();
+        }
+
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('popupProfileImage');
+                if (output) {
+                    output.src = reader.result;
+                }
+            }
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
+        function toggleCardMenu(element) {
+            var menu = element.querySelector('.card-menu-options');
+            // เช็คว่าเมนูถูกแสดงอยู่หรือไม่
+            if (menu.style.display === "none" || menu.style.display === "") {
+                menu.style.display = "block";  // แสดงเมนู
+            } else {
+                menu.style.display = "none";   // ซ่อนเมนู
+            }
+        }
+
+        // คลิกข้างนอกเพื่อปิดเมนู
+        window.onclick = function (event) {
+            var editPopup = document.getElementById("editPopup");
+            var popup = document.getElementById("popup");
+            if (event.target == editPopup) {
+                editPopup.style.display = "none";
+            }
+            if (event.target == popup) {
+                popup.style.display = "none";
+            }
+
+            // ปิดเมนูการ์ดถ้าคลิกนอกเมนู
+            if (!event.target.closest('.card-menu')) {
+                var dropdowns = document.getElementsByClassName("card-menu-options");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    openDropdown.style.display = "none";
+                }
+            }
+        }
+
+        function openEditPopup() {
+            document.getElementById("editPopup").style.display = "block";
+        }
+
+        function closeEditPopup() {
+            document.getElementById("editPopup").style.display = "none";
+        }
+    </script>
+
 </body>
 </html>
