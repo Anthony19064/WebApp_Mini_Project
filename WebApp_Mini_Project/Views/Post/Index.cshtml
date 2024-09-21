@@ -1,11 +1,11 @@
-﻿
+﻿﻿﻿
 @using WebApp_Mini_Project.ViewModels
 @model PostViewModel
 
 
 <head>
     <link rel="stylesheet" href="~/css/style_Post.css">
-    
+
 </head>
 
 <main class="main-container">
@@ -61,60 +61,60 @@
     <div class="content-container">
         <div class="scrollable-cards-wrapper">
             <div class="card-container" id="card-container">
-        @foreach (var post in Model.Posts)
-        {
-            
-                <div class="card">
-                    @{
-                        if (post.User_Picture != null)
+                @foreach (var post in Model.Posts)
+                {
+
+                    <div class="card">
+                        @{
+                            if (post.User_Picture != null)
+                            {
+                                var base64String = Convert.ToBase64String(post.User_Picture);
+                                var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                                <img src="@imgSrc" alt="logo" class="card-logo" />
+                            }
+                            else
+                            {
+                                <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                            }
+                        }
+                        <div class="card-content">
+                            <p id="user"> @post.User_Post</p>
+                            <p><b>ชื่อห้อง</b> : @post.Name_room</p>
+                            <p><b>เกม</b> : @post.Game</p>
+                            <p><b>รายละเอียด</b> : @post.Details</p>
+                        </div>
+                        @if (post.User_list.Contains(ViewBag.Usersession))
                         {
-                            var base64String = Convert.ToBase64String(post.User_Picture);
-                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                                                <img src="@imgSrc" alt="logo" class="card-logo" />
+                            <button class="card-button join-room-button" data-id="@post.ID" disabled style="opacity: 0.6; cursor: default;">
+                                <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                            </button>
+                        }
+                        else if (post.User_Post != ViewBag.Usersession)
+                        {
+                            <button class="card-button join-room-button" data-id="@post.ID">
+                                <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                            </button>
                         }
                         else
                         {
-                                                <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                            <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
+                                <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                            </button>
                         }
-                    }
-                    <div class="card-content">
-                        <p id="user"> @post.User_Post</p>
-                        <p><b>ชื่อห้อง</b> : @post.Name_room</p>
-                        <p><b>เกม</b> : @post.Game</p>
-                        <p><b>รายละเอียด</b> : @post.Details</p>
+
+
                     </div>
-                    @if (post.User_list.Contains(ViewBag.Usersession))
-                    {
-                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="opacity: 0.6; cursor: default;">
-                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                        </button>
-                    }
-                    else if (post.User_Post != ViewBag.Usersession)
-                    {
-                        <button class="card-button join-room-button" data-id="@post.ID">
-                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                        </button>
-                    }
-                    else
-                    {
-                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
-                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                        </button>
-                    }
 
 
-                </div>
-           
-
-        }
-    </div>
+                }
+            </div>
         </div>
         <div class="chat-board-container">
             <div class="chat-board-header">
                 <h3>Chat Board</h3>
             </div>
             <div class="chat-board-messages" id="chatMessages">
-                <div class="chat-message"><strong>เหนือ:</strong> 1-1 กะกูป่าวมึงอะ</div>
+                <!-- Messages will be dynamically loaded here -->
             </div>
             <div class="chat-board-input">
                 <input type="text" id="chatInput" placeholder="Type your message here...">
@@ -123,24 +123,6 @@
         </div>
     </div>
 
-    
-
-
-
-
-
-    <div class="floating-button" onclick="toggleChatPopup()">
-        <img src="https://png.pngtree.com/png-clipart/20190617/original/pngtree-chat-vector-icon-png-image_3876224.jpg" alt="icon">
-    </div>
-
-    <div class="chat-popup" id="chatPopup">
-        <div class="chat-popup-header">
-            แชทแจ้งเตือน
-        </div>
-        <div class="chat-popup-body" id="chatBody">
-            @* ข้อความแชท  *@
-        </div>
-    </div>
 
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -247,4 +229,83 @@
 
 </script>
 <script src="~/js/script_Post.js"></script>
+<script>
+    // ฟังก์ชันเพื่อจัดรูปแบบเวลา
+    function formatTime(dateString) {
+        const options = { hour: '2-digit', minute: '2-digit', hour12: false }; // 24 ชั่วโมง
+        const timeString = new Date(dateString).toLocaleString('en-US', options);
+        return timeString + ' นาที'; // เพิ่มคำว่า "นาที" หลังจากเวลา
+    }
 
+    // โหลดข้อความทั้งหมดเมื่อเปิดหน้าเว็บ
+    $(document).ready(function () {
+        loadMessages();
+
+        // Event listener for send button
+        $('#sendMessageBtn').click(function () {
+            sendMessage();
+        });
+
+        // Pressing 'Enter' triggers send message
+        $('#chatInput').keypress(function (e) {
+            if (e.which === 13) { // 13 is the Enter key
+                sendMessage();
+            }
+        });
+    });
+
+    function loadMessages() {
+        $.get("/Chat/GetMessages", function (data) {
+            $('#chatMessages').html(''); // Clear previous messages
+            data.forEach(function (msg) {
+                const formattedTime = formatTime(msg.createdAt);
+                // Check if the message is from the current user
+                const isOwnMessage = msg.user === '@ViewBag.Usersession';
+                // Assign appropriate CSS class
+                const messageClass = isOwnMessage ? 'chat-message own-message' : 'chat-message other-message';
+                // Define the URL for the user icon
+                const userIconUrl = 'https://img.icons8.com/ios/50/000000/user-male.png';
+
+
+
+                $('#chatMessages').append(
+                    `<div class="${messageClass}">
+                            <img src="${userIconUrl}" alt="User Icon" class="user-icon">
+                            <strong>${msg.user}:</strong> ${msg.message}
+                            <span class="message-time">(${formattedTime})</span>
+                        </div>`
+                );
+            });
+            // Ensure the view scrolls to the bottom after new messages are added
+            $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
+        });
+    }
+
+
+
+    function sendMessage() {
+        var message = $('#chatInput').val();
+
+        if (message.trim() !== "") {
+            $.ajax({
+                url: '/Chat/SendMessage',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ message: message, user: '@ViewBag.Usersession' }),
+                success: function () {
+                    $('#chatInput').val(''); // Clear input field after sending
+                    loadMessages(); // Reload messages to reflect the new message
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status === 401) { // If 401 Unauthorized is returned
+                        window.location.href = '/Account/Login'; // Redirect to login page
+                    } else {
+                        console.error("Error sending message: " + error);
+                    }
+                }
+            });
+        }
+    }
+
+
+</script>
