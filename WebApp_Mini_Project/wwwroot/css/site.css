@@ -12,14 +12,6 @@ body {
     flex: 1;
 }
 
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
-    margin-top: auto;
-}
-
 html {
     font-size: 14px;
 }
@@ -81,7 +73,8 @@ header {
 
 footer {
     text-align: center;
-    padding: 10px;
+    padding: 30px;
+    margin-top: 70px;
     background-color: #333;
     color: #fff;
     margin-top: 10px;
@@ -117,6 +110,7 @@ footer {
     position: relative;
     display: inline-block;
     overflow: visible;
+   
 }
 
 .dropdown-content {
@@ -147,6 +141,7 @@ footer {
 
 .dropdown:hover .dropbtn {
     background: linear-gradient(to right, #FF6699, #f89b28);
+
 }
 
 .dropbtn {
