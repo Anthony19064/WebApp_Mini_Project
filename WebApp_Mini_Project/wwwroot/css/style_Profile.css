@@ -1,0 +1,496 @@
+﻿/* Profile Container */
+.profile-container {
+    background: linear-gradient(#FF66FF, #FF66CC, #FF6699);
+    color: white;
+    width: 80vw; /* ลดความกว้างจาก 100vw เป็น 80vw */
+    max-width: 1200px; /* กำหนดความกว้างสูงสุด */
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    margin: 0 auto; /* จัดกึ่งกลางแนวนอน */
+    margin-top: 40px;
+    border-radius: 40px;
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        width: 90vw; /* ปรับความกว้างสำหรับหน้าจอขนาดเล็ก */
+        padding: 15px;
+    }
+}
+
+/* Settings Icon */
+.settings-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 0.5s ease-in-out; /* ปรับเวลาแอนิเมชันได้ */
+    opacity: 1; /* แสดงผลปกติ */
+    transition: transform 0.3s ease;
+
+}
+
+    .settings-icon:hover {
+        transform: rotate(20deg); /* เพิ่มหมุนเมื่อ hover */
+    }
+
+    .settings-icon img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px; /* เว้นระยะระหว่างไอคอนตั้งค่าและรูปโปรไฟล์ */
+    }
+
+/* Pop-up Styling */
+.popup {
+    display: none; /* ซ่อน pop-up ตอนแรก */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* ให้อยู่ด้านบนสุด */
+    width: 60%; /* ปรับความกว้างตามต้องการ */
+    max-width: 600px; /* จำกัดความกว้างสูงสุด */
+    box-sizing: border-box;
+}
+
+    .popup button {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #FF3399;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+        .popup button:hover {
+            background-color: #FF66CC;
+        }
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.popup-overlay {
+    display: none; /* ซ่อนเริ่มต้น */
+    position: fixed;
+    z-index: 998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* สีดำโปร่งแสง */
+}
+
+    /* แสดง overlay ด้วยแอนิเมชัน fade in */
+    .popup-overlay.show {
+        display: block; /* แสดง */
+        animation: fadeInOverlay 0.5s ease-in-out; /* เอฟเฟกต์ fade in */
+        opacity: 1; /* ค่าเริ่มต้นเมื่อแสดง */
+    }
+
+/* Content Section */
+.content-section {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap; /* อนุญาตให้ห่อในหน้าจอขนาดเล็ก */
+    justify-content: center; /* จัดกึ่งกลางแนวนอน */
+    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+}
+
+.avatar-section {
+    width: 30%; /* กำหนดความกว้างเป็นเปอร์เซ็นต์เพื่อปรับตาม container */
+    text-align: center;
+    margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+    .avatar-section, .form-section {
+        flex: 1 1 100%; /* ความกว้างเต็มเมื่อหน้าจอเล็ก */
+        margin-right: 0;
+    }
+}
+
+.avatar-section img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin: 0 auto; /* จัดกึ่งกลางแนวนอน */
+    display: block; /* ทำให้ margin auto ทำงาน */
+    border: 5px solid white;
+    margin-left: 70px;
+    object-fit: cover;
+}
+
+/* Form Section */
+.form-section {
+    width: 70%; /* กำหนดความกว้างเป็นเปอร์เซ็นต์เพื่อปรับตาม container */
+    display: flex;
+    justify-content: center; /* จัดกึ่งกลางแนวนอน */
+    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+}
+
+.profile-form {
+    width: 100%; /* ทำให้ฟอร์มใช้พื้นที่ทั้งหมดของ form-section */
+    max-width: 500px; /* กำหนดความกว้างสูงสุด */
+    
+}
+
+    .profile-form .form-group {
+        margin: 15px 0;
+        width: 100%; /* ทำให้กลุ่มฟอร์มมีความกว้างเต็ม */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* จัดกึ่งกลางแนวนอน */
+        margin-left:70px;
+    }
+
+        .profile-form .form-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+            text-align: left !important; /* จัดกึ่งกลางข้อความ */
+            color:white;
+        }
+
+        .profile-form .form-group input {
+            width: 80%;
+            padding: 8px;
+            font-size: 14px;
+            border: none;
+            border-radius: 15px; /* ลบ border radius */
+            color: white;
+            text-align: left; /* จัดกึ่งกลางข้อความภายใน input */
+        }
+
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .buttons button {
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        .buttons button:hover {
+            background-color: #ccc;
+        }
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Pop-up Form Styling */
+.popup-form .form-group {
+    margin: 15px 0;
+    padding-bottom: 10px;
+}
+
+    .popup-form .form-group label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    .popup-form .form-group input {
+        width: 100%; /* ใช้พื้นที่ทั้งหมดของกรอบ */
+        padding: 8px;
+        font-size: 14px;
+        border: none;
+        border-bottom: 1px solid #FF66CC; /* Dark red border only at the bottom */
+        border-radius: 0; /* Remove border radius */
+        box-sizing: border-box;
+    }
+
+.popup-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .popup-buttons button {
+        background-color: #FF3399;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        .popup-buttons button:hover {
+            background-color: #FF66CC;
+        }
+
+/* Popup Header */
+.popup-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .popup-header img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+        cursor: pointer; /* เพิ่ม cursor pointer เมื่อคลิกที่ภาพ */
+    }
+
+/* Body Styles */
+body {
+    margin-bottom: 200px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Card Container */
+.card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+/* Card Styles */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 4px 7px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    width: 400px;
+    height: 180px;
+    margin: 20px;
+    position: relative;
+    padding-top: 20px; /* เว้นระยะด้านบนให้สำหรับไอคอนสามจุด */
+}
+
+.card-logo {
+    width: 90px;
+    height: 90px;
+    margin-right: 15px;
+    margin-bottom: 50px;
+    margin-top: 5px;
+    border-radius: 50%; /* ทำให้ขอบรูปเป็นวงกลม */
+    object-fit: cover; /* ป้องกันไม่ให้ภาพยืดหรือบีบอัด */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.card-content {
+    text-align: left;
+    flex: 1;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+    .card-content p {
+        margin: 2px 0;
+        font-size: 17px;
+        color: #333;
+    }
+
+.card-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    margin-top: 120px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 60px;
+    height: 30px;
+}
+
+    .card-button:hover {
+        background-color: #555;
+    }
+
+/* Card Menu */
+.card-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px; /* ขนาดของจุดสามจุด */
+}
+
+.card-menu-options {
+    display: none; /* ซ่อนเมนูก่อน */
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    list-style: none;
+    padding: 10px;
+    width: 100px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* เพื่อให้เมนูอยู่ด้านบน */
+}
+
+    .card-menu-options li {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+        .card-menu-options li:hover {
+            background-color: #f0f0f0;
+        }
+
+/* Edit Popup */
+.edit-popup {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* เพิ่มความโปร่งใสให้ background */
+}
+
+.edit-popup-content {
+    position: relative;
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 12px; /* ปรับให้ขอบโค้งมน */
+    width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* เพิ่มเงาเพื่อให้เด่น */
+    animation: fadeIn 0.3s ease-in-out; /* เพิ่มเอฟเฟกต์ตอนแสดงผล */
+}
+
+/* Close Button */
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+    .close:hover {
+        color: #ff5e5e; /* เปลี่ยนสีเมื่อ hover */
+    }
+
+/* Headings */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        font-weight: bold;
+        color: #555;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+/* Edit Popup Specific Styles */
+#editPopup .form-group input,
+#editPopup .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none; /* เอาขอบออก */
+    border-bottom: 2px solid #FF3399; /* เพิ่มขอบด้านล่าง */
+    box-sizing: border-box;
+    background-color: transparent; /* ลบพื้นหลัง */
+    transition: border-color 0.3s ease;
+}
+
+    /* Focus States */
+    #editPopup .form-group input:focus,
+    #editPopup .form-group textarea:focus {
+        border-bottom: 2px solid #FF3399;
+        outline: none;
+    }
+
+/* Popup Actions */
+.popup-actions {
+    text-align: center;
+}
+
+.btn-save, .btn-cancel {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-save {
+    background-color: #FF3399;
+    color: white;
+    margin-right: 10px;
+}
+
+    .btn-save:hover {
+        background-color: #FF99CC;
+    }
+
+.btn-cancel {
+    background-color: #FF3399;
+    color: white;
+}
+
+    .btn-cancel:hover {
+        background-color: #FF99CC;
+    }
+
+/* Fade In Animation (Reused) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

@@ -8,22 +8,39 @@ body {
     margin-bottom: 200px;
     background-color: #f9f9f9;
     color: #333;
+
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb; /* à§ÒàÁ×èÍÁÕ¡ÒÃâ¿¡ÑÊ */
+}
+
+
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    margin: 0; /* Åº margin */
+    padding: 0; /* Åº padding */
+    box-sizing: border-box; /* µÑé§¤èÒ¡ÒÃ¤Ó¹Ç³¢¹Ò´¡ÅèÍ§ */
+    font-family: 'Arial', sans-serif; /* ¿Í¹µì·Õèãªé */
 }
 
 header {
-    background-color: #FF66FF;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
+    background-color: #FF66FF; /* ÊÕ¾×é¹ËÅÑ§¢Í§ header */
+    padding: 15px 30px; /* ÃÐÂÐËèÒ§ÀÒÂã¹ header */
+    display: flex; /* ãªé flexbox */
+    justify-content: space-between; /* ¨Ñ´àÃÕÂ§ãËéÁÕÃÐÂÐËèÒ§ÃÐËÇèÒ§Í§¤ì»ÃÐ¡Íº */
+    align-items: center; /* ¨Ñ´ãËéÍÂÙè¡ÅÒ§á¹ÇµÑé§ */
+    color: #fff; /* ÊÕµÑÇÍÑ¡ÉÃ */
+    position: relative;
+    z-index: 1; /* ãËéá¹èã¨ÇèÒ header ÍÂÙèã¹ÅÓ´Ñº·ÕèÊÙ§ */
 }
 
     header .nav-left {
@@ -57,12 +74,43 @@ footer {
         text-decoration: none;
     }
 
+footer a:hover {
+        text-decoration: underline;
+        font-size: 24px; /* ¢¹Ò´µÑÇÍÑ¡ÉÃ */
+        font-weight: bold; /* ¹éÓË¹Ñ¡µÑÇÍÑ¡ÉÃ */
+    }
+
+    header .nav-right button, header .nav-right a {
+        background-color: #fff; /* ÊÕ¾×é¹ËÅÑ§¢Í§»ØèÁáÅÐÅÔ§¡ì */
+        color: #000099; /* ÊÕµÑÇÍÑ¡ÉÃ */
+        border: none; /* äÁèÁÕ¢Íº */
+        padding: 8px 16px; /* ÃÐÂÐËèÒ§ÀÒÂã¹ */
+        cursor: pointer; /* à»ÅÕèÂ¹à»ç¹Á×ÍàÁ×èÍ hover */
+        font-weight: bold; /* ¹éÓË¹Ñ¡µÑÇÍÑ¡ÉÃ */
+        border-radius: 20px; /* ÁØÁÁ¹ */
+        text-decoration: none; /* äÁèÁÕ¡ÒÃ¢Õ´àÊé¹ãµé */
+    }
+
+footer {
+    text-align: center; /* ¨Ñ´¢éÍ¤ÇÒÁ¡ÅÒ§ */
+    padding: 10px; /* ÃÐÂÐËèÒ§ÀÒÂã¹ */
+    margin-top: 40px; /* ÃÐÂÐËèÒ§´éÒ¹º¹ */
+    background-color: #333; /* ÊÕ¾×é¹ËÅÑ§ */
+    color: #fff; /* ÊÕµÑÇÍÑ¡ÉÃ */
+    margin-top: 10px; /* ÃÐÂÐËèÒ§´éÒ¹º¹ */
+}
+
+    footer a {
+        color: #FF66FF; /* ÊÕµÑÇÍÑ¡ÉÃ¢Í§ÅÔ§¡ìã¹ footer */
+        text-decoration: none; /* äÁèÁÕ¡ÒÃ¢Õ´àÊé¹ãµé */
+    }
+
         footer a:hover {
-            text-decoration: underline;
+            text-decoration: underline; /* ¢Õ´àÊé¹ãµéàÁ×èÍ hover */
         }
 
 .nav-left {
-    cursor: pointer;
+    cursor: pointer; /* à»ÅÕèÂ¹à»ç¹Á×ÍàÁ×èÍ hover */
 }
 
 #users::first-letter {
@@ -76,4 +124,66 @@ footer {
     -webkit-background-clip: text; 
     color: transparent; 
     margin-bottom: 5px;
+}
+
+.dropdown {
+    position: relative; /* µÓáË¹è§ÊÑÁ¾Ñ¹¸ì */
+    display: inline-block; /* áÊ´§à»ç¹ inline-block */
+    overflow: visible; /* ãËé dropdown áÊ´§¼ÅÍÂèÒ§¶Ù¡µéÍ§ */
+}
+
+.dropdown-content {
+    display: none; /* «èÍ¹àÁ¹Ù´ÃÍ»´ÒÇ¹ìàÃÔèÁµé¹ */
+    position: absolute; /* µÓáË¹è§ÊÑÁºÙÃ³ì */
+    background-color: #f9f9f9; /* ÊÕ¾×é¹ËÅÑ§¢Í§àÁ¹Ù */
+    min-width: 50px; /* ¤ÇÒÁ¡ÇéÒ§¢Ñé¹µèÓ */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* à§Ò */
+    z-index: 10; /* ãËé dropdown ÍÂÙèº¹ header */
+    
+}
+
+
+.dropdown-content a {
+        color: #FF66FF !important; /* à»ÅÕèÂ¹à»ç¹ÊÕ·ÕèµéÍ§¡ÒÃ */
+        padding: 12px 16px; /* ÃÐÂÐËèÒ§ÀÒÂã¹¢Í§ÅÔ§¡ì */
+        text-decoration: none; /* äÁèÁÕ¡ÒÃ¢Õ´àÊé¹ãµé */
+        display: block; /* áÊ´§à»ç¹ block */
+        border-radius: 0 !important; /* äÁèãËéÁØÁâ¤é§ */
+}
+
+.dropdown-content a:hover {
+            background-color: #f1f1f1; /* ÊÕ¾×é¹ËÅÑ§àÁ×èÍ hover */
+            color: #FF66FF !important; /* à»ÅÕèÂ¹ÊÕµÑÇË¹Ñ§Ê×ÍàÁ×èÍ hover */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block; /* áÊ´§àÁ¹Ù´ÃÍ»´ÒÇ¹ìàÁ×èÍ hover */
+}
+
+.dropdown:hover .dropbtn {
+    background: linear-gradient(to right, #FF6699, #f89b28); /* äÅèÊÕàÁ×èÍ hover */
+}
+
+.dropbtn {
+    font-size: 20px; /* ¢¹Ò´µÑÇÍÑ¡ÉÃ */
+    background-color: #fff; /* ÊÕ¾×é¹ËÅÑ§¢Í§»ØèÁ */
+    border: none; /* äÁèÁÕ¢Íº */
+    padding: 8px 16px; /* ÃÐÂÐËèÒ§ÀÒÂã¹ */
+    cursor: pointer; /* à»ÅÕèÂ¹à»ç¹Á×ÍàÁ×èÍ hover */
+    font-weight: bold; /* ¹éÓË¹Ñ¡µÑÇÍÑ¡ÉÃ */
+    border-radius: 20px; /* ÁØÁÁ¹ */
+    margin-bottom: 5px; /* ÃÐÂÐËèÒ§´éÒ¹ÅèÒ§ */
+    text-decoration: none; /* äÁèÁÕ¡ÒÃ¢Õ´àÊé¹ãµé */
+    position: relative; /* ÊÓËÃÑº¡ÒÃ¨Ñ´µÓáË¹è§¢éÍ¤ÇÒÁ */
+}
+
+.dropbtn span {
+        background: linear-gradient(to right, #FF6699, #FFFF33); /* äÅèÊÕ */
+        -webkit-background-clip: text; /* µÑ´¾×é¹ËÅÑ§ãËéä»·ÕèµÑÇÍÑ¡ÉÃ */
+        color: transparent; /* ·ÓãËéÊÕµÑÇÍÑ¡ÉÃâ»Ãè§ãÊ */
+        display: inline-block; /* áÊ´§à»ç¹ inline-block */
+}
+
+.dropdown:hover .dropbtn span {
+    color: white; /* à»ÅÕèÂ¹ÊÕàÁ×èÍ hover */
 }

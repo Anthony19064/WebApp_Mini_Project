@@ -88,45 +88,56 @@
                 {
 
                     <div class="card">
-                        @{
-                            if (post.User_Picture != null)
-                            {
-                                var base64String = Convert.ToBase64String(post.User_Picture);
-                                var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                                <img src="@imgSrc" alt="logo" class="card-logo" />
-                            }
-                            else
-                            {
-                                <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
-                            }
-                        }
-                        <div class="card-content">
-                            <p id="user"> @post.User_Post</p>
-                            <p><b>ชื่อห้อง</b> : @post.Name_room</p>
-                            <p><b>เกม</b> : @post.Game</p>
-                            <p><b>รายละเอียด</b> : @post.Details</p>
-                        </div>
-                        @if (post.User_list.Contains(ViewBag.Usersession))
+                    @{
+                        int ID = 0;
+                        if (ViewBag.UserID != null)
                         {
-                            <button class="card-button join-room-button" data-id="@post.ID" disabled style="opacity: 0.6; cursor: default;">
-                                <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                            </button>
+                             ID = ViewBag.UserID;
                         }
-                        else if (post.User_Post != ViewBag.Usersession)
+                        
+
+                        if (post.User_Picture != null)
                         {
-                            <button class="card-button join-room-button" data-id="@post.ID">
-                                <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                            </button>
+                            var base64String = Convert.ToBase64String(post.User_Picture);
+                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                            <img src="@imgSrc" alt="logo" class="card-logo" />
                         }
                         else
                         {
-                            <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
-                                <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                            </button>
+                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                         }
-
-
+                    }
+                    <div class="card-content">
+                        @foreach (var account in Model.Account)
+                        {
+                            if (account.ID == post.User_id)
+                            {
+                                <p id="user"> @account.Username</p>
+                            }
+                        }
+                        <p><b>ชื่อห้อง</b> : @post.Name_room</p>
+                        <p><b>เกม</b> : @post.Game</p>
+                        <p><b>รายละเอียด</b> : @post.Details</p>
                     </div>
+                    @if (post.User_list.Contains(ID))
+                    {
+                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="opacity: 0.6; cursor: default;">
+                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                        </button>
+                    }
+                    else if (post.User_id != ViewBag.UserID)
+                    {
+                        <button class="card-button join-room-button" data-id="@post.ID">
+                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
+                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                        </button>
+                    }
+              </div>
 
 
                 }
