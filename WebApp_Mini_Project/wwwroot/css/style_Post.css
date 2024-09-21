@@ -1,5 +1,16 @@
+@font-face {
+    font-family: 'testfont'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
+    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    font-weight: normal; /* น้ำหนักของฟอนต์ */
+    font-style: normal; /* สไตล์ของฟอนต์ */
+}
+
+
+
+
 * {
     box-sizing: border-box;
+
 }
 
 .main-container {
@@ -39,55 +50,69 @@
 .card {
     background-color: white;
     border-radius: 10px;
-    box-shadow: 4px 7px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: -4px -4px 10px rgba(0, 0, 0, 0.1), /* เงาที่มุมซ้ายบน */
+    4px 4px 10px rgba(0, 0, 0, 0.1); /* เงาที่มุมขวาล่าง */
     padding: 10px;
     display: flex;
-    /*    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;*/
+    flex-direction: column; /* แก้ไขให้เรียงในแนวตั้ง */
+    align-items: center; /* จัดกลางในแนวนอน */
     width: 400px;
-    height: 180px;
+    height: 400px; /* ปรับให้ความสูงตามเนื้อหา */
     margin: 20px;
+    margin-top: 50px;
 }
 
 .card-logo {
-    width: 90px;
-    height: 90px;
-    margin-right: 15px;
-    margin-bottom: 50px;
-    margin-top: 5px;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     border-radius: 50%; /* ทำให้ขอบรูปเป็นวงกลม */
     object-fit: cover; /* ป้องกันไม่ให้ภาพยืดหรือบีบอัด */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
-
+.image-container {
+    display: flex;
+    flex-direction: column; /* เรียงแนวตั้ง */
+    align-items: center; /* จัดกลางในแนวนอน */
+}
 
 .card-content {
     text-align: left;
     flex: 1;
-    margin-bottom: 30px;
-    margin-left: 20px;
-    margin-top: 5px;
+    margin-bottom: 0px;
+
 }
 
-    .card-content p {
+.card-content p {
         margin: 2px 0;
         font-size: 17px;
         color: #333;
-    }
+        margin-top: 3px;
+}
+
+#time {
+    font-size: 15px;
+    color: gray;
+    margin-bottom: 20px;
+    margin-top: 0;
+    text-align: center;
+}
 
 #user::first-letter {
     text-transform: uppercase; /* ทำให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่ */
 }
 
 #user {
-    font-size: 20px; /* ขนาดตัวอักษรที่ต้องการ */
-    background: linear-gradient(to right, #FF6699, #FFFF33); /* ไล่สี */
-    font-family: 'Impact', sans-serif;
+    font-size: 30px; /* ขนาดตัวอักษรที่ต้องการ */
+    background: linear-gradient(to right, #FF6699, #FF6699, #f89b28); /* ไล่สี */
+    font-family: 'testfont', sans-serif;
     text-decoration: underline;
     -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
     color: transparent; /* ทำให้สีพื้นหลังโปร่งใส */
     margin-bottom: 5px;
+    margin-top: 0;
+    text-align: center;
 }
 
 
@@ -96,12 +121,12 @@
     background-color: #333;
     color: white;
     border: none;
-    margin-top: 130px;
+    margin-bottom: 10px;
     padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
-    width: 60px;
-    height: 30px;
+    width: 70px;
+    height: 35px;
 }
 
     .card-button:hover {
@@ -176,7 +201,7 @@
 
 .refresh-btn {
     position: absolute;
-    top: 248px;
+    top: 260px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #fff; /* สีพื้นหลังปุ่ม */
@@ -192,27 +217,28 @@
     align-items: center;
     justify-content: center;
     transition: background-color 1s; /* เพิ่มการเปลี่ยนแปลงสีพื้นหลัง */
+
 }
 
-    .refresh-btn span {
-        font-size: 25px; /* ขนาดตัวอักษรที่ต้องการ */
-        background: linear-gradient(to right, #FF6699, #f89b28); /* ไล่สี */
-        font-family: 'Impact', sans-serif;
-        text-decoration: underline;
-        -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
-        color: transparent; /* ทำให้สีพื้นหลังโปร่งใส */
-        margin-bottom: 5px;
-        transition: color 1s; /* เพิ่มการเปลี่ยนแปลงสี */
-    }
+.refresh-btn span {
+    font-size: 25px; /* ขนาดตัวอักษรที่ต้องการ */
+    background: linear-gradient(to right, #FF6699, #f89b28); /* ไล่สี */
+    font-family: 'testfont', sans-serif;
+    text-decoration: underline;
+    -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
+    color: transparent; /* ทำให้สีพื้นหลังโปร่งใส */
+    margin-bottom: 5px;
+    transition: color 1s; /* เพิ่มการเปลี่ยนแปลงสี */
+}
 
-    .refresh-btn:hover {
-        background: linear-gradient(to right, #FF6699, #f89b28); /* ไล่สีเมื่อ hover */
-        transform: translateX(-50%) scale(1.05);
-    }
+.refresh-btn:hover {
+    background: linear-gradient(to right, #FF6699, #f89b28); /* ไล่สีเมื่อ hover */
+    transform: translateX(-50%) scale(1.05);
+}
 
-        .refresh-btn:hover span {
-            color: white; /* เปลี่ยนสีข้อความเป็นขาวเมื่อ hover */
-        }
+.refresh-btn:hover span {
+    color: white; /* เปลี่ยนสีข้อความเป็นขาวเมื่อ hover */
+}
 
 .popup-background {
     display: none;
@@ -244,10 +270,10 @@
 }
 
 
-    .floating-button img {
-        width: 50px;
-        height: 50px;
-    }
+.floating-button img {
+    width: 50px;
+    height: 50px;
+}
 
 .chat-popup {
     display: none;
@@ -282,16 +308,15 @@
     border-top: 1px solid #ddd;
 }
 
-    .chat-popup-footer input {
-        width: 80%;
-        padding: 5px;
-    }
+.chat-popup-footer input {
+    width: 80%;
+    padding: 5px;}
 
-    .chat-popup-footer button {
-        width: 15%;
-        padding: 5px;
-        background-color: #ffffff;
-        border: 1px;
-        color: white;
-        cursor: pointer;
-    }
+.chat-popup-footer button {
+    width: 15%;
+    padding: 5px;
+    background-color: #ffffff;
+    border: 1px;
+    color: white;
+    cursor: pointer;
+}

@@ -52,6 +52,44 @@
 
     @foreach (var post in Model.Posts)
     {
+        if (Model.account.ID == 1)
+        {
+           <div class="card-container">
+                <div class="card">
+                    <!-- จุดสามจุด -->
+                    <div class="card-menu" onclick="toggleCardMenu(this)">
+                        <span>⋮</span>
+                        <ul class="card-menu-options">
+                            <li onclick="openEditPopup()">Edit</li>
+                            <li>delete</li>
+                            <li>kuy</li>
+                        </ul>
+                    </div>
+
+                    @{
+                        if (post.User_Picture != null)
+                        {
+                            var base64String = Convert.ToBase64String(post.User_Picture);
+                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                            <img src="@imgSrc" alt="logo" class="card-logo" />
+                        }
+                        else
+                        {
+                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                        }
+                    }
+                    <div class="card-content">
+                        <p id="user">@Model.account.Username</p>
+                        <p><b>ชื่อห้อง</b> : @post.Name_room</p>
+                        <p><b>เกม</b> : @post.Game</p>
+                        <p><b>รายละเอียด</b> : @post.Details</p>
+                    </div>
+                    <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
+                        <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                    </button>
+                </div>
+            </div> 
+        }
         if (Model.account.ID == post.User_id)
         {
             <div class="card-container">
