@@ -1,5 +1,4 @@
-﻿
-
+﻿﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +8,11 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp_Mini_Project.styles.css" asp-append-version="true" />
-    
+
 </head>
 <body>
     <header>
         <div class="nav-left" onclick="window.location.href='/Post/Index'">เพื่อไทย</div>
-        
         <div class="nav-right">
             @if (ViewBag.Usersession != null)
             {
@@ -48,5 +46,4 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-
 </html>
