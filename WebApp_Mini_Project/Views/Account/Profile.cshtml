@@ -1,5 +1,5 @@
 ﻿@using WebApp_Mini_Project.ViewModels
-@model Account
+@model AccountViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,9 +19,9 @@
         <div class="content-section">
             <!-- Avatar Section (Left) -->
             <div class="avatar-section">
-                @if (Model.ProfilePicture != null)
+                @if (Model.account.ProfilePicture != null)
                 {
-                    var imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
+                    var imageBase64 = Convert.ToBase64String(Model.account.ProfilePicture);
                     <img src="data:image/png;base64,@imageBase64" alt="Avatar">
                 }
                 else
@@ -35,7 +35,7 @@
                 <form id="profileForm" class="profile-form">
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="@Model.Username" disabled>
+                        <input type="text" id="username" name="username" value="@Model.account.Username" disabled>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -43,36 +43,57 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="@Model.Email" disabled>
+                        <input type="email" id="email" name="email" value="@Model.account.Email" disabled>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="card-container">
-        <div class="card">
-            <!-- จุดสามจุด -->
-            <div class="card-menu" onclick="toggleCardMenu(this)">
-                <span>⋮</span>
-                <ul class="card-menu-options">
-                    <li onclick="openEditPopup()">Edit</li>
-                    <li>delete</li>
-                    <li>kuy</li>
-                </ul>
-            </div>
 
-            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
-            <div class="card-content">
-                <p id="user">test</p>
-                <p><b>ชื่อห้อง</b> : test</p>
-                <p><b>เกม</b> : test</p>
-                <p><b>รายละเอียด</b> : test</p>
+    @foreach (var post in Model.Posts)
+    {
+        if (Model.account.ID == post.User_id)
+        {
+            <div class="card-container">
+                <div class="card">
+                    <!-- จุดสามจุด -->
+                    <div class="card-menu" onclick="toggleCardMenu(this)">
+                        <span>⋮</span>
+                        <ul class="card-menu-options">
+                            <li onclick="openEditPopup()">Edit</li>
+                            <li>delete</li>
+                            <li>kuy</li>
+                        </ul>
+                    </div>
+
+                    @{
+                        if (post.User_Picture != null)
+                        {
+                            var base64String = Convert.ToBase64String(post.User_Picture);
+                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                            <img src="@imgSrc" alt="logo" class="card-logo" />
+                        }
+                        else
+                        {
+                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                        }
+                    }
+                    <div class="card-content">
+                        <p id="user">@Model.account.Username</p>
+                        <p><b>ชื่อห้อง</b> : @post.Name_room</p>
+                        <p><b>เกม</b> : @post.Game</p>
+                        <p><b>รายละเอียด</b> : @post.Details</p>
+                    </div>
+                    <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
+                        <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                    </button>
+                </div>
             </div>
-            <button class="card-button join-room-button" data-id="test" disabled style="opacity: 0.6; cursor: default;">
-                <span id="test">0/test</span>
-            </button>
-        </div>
-    </div>
+        }
+        
+    }
+
+    
 
     <!-- Popup ฟอร์มกรอกข้อมูล -->
     <div id="editPopup" class="edit-popup">
@@ -109,38 +130,38 @@
     <div class="popup-overlay" id="popupOverlay"></div>
     <div class="popup" id="popup">
 
-        <form id="popupForm" class="popup-form">
+        <form method="POST" asp-controller="Account" asp-action="Edit" asp-route-id="@Model.account.ID" id="popupForm" class="popup-form" enctype="multipart/form-data">
             <div class="popup-header">
-                @if (Model.ProfilePicture != null)
+                @if (Model.account.ProfilePicture != null)
                 {
-                    var imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
+                    var imageBase64 = Convert.ToBase64String(Model.account.ProfilePicture);
                     <img id="popupProfileImage" src="data:image/png;base64,@imageBase64" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
                 }
                 else
                 {
-                    <img id="popupProfileImage" src="https://cdn-icons-png.flaticon.com/512/10141/10141012.png" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
+                    <img id="popupProfileImage" src="~/Image/User_icon.png" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
                 }
                 <h3>Settings</h3>
             </div>
             <div class="form-group">
                 <label for="popupUsername">Username</label>
-                <input type="text" id="popupUsername" name="popupUsername" placeholder="@Model.Username" value="" required>
+                <input type="text" id="popupUsername" name="username" value="@Model.account.Username" required>
             </div>
             <div class="form-group">
                 <label for="popupPassword">Password</label>
-                <input type="password" id="popupPassword" name="popupPassword" placeholder="********" value="" required>
+                <input type="password" id="popupPassword" name="password" placeholder="Leave blank to keep current password">
             </div>
             <div class="form-group">
                 <label for="popupEmail">Email</label>
-                <input type="email" id="popupEmail" name="popupEmail" placeholder="@Model.Email" value="" required>
+                <input type="email" id="popupEmail" name="email" value="@Model.account.Email" required>
             </div>
             <div class="popup-buttons">
                 <button type="submit">Save</button>
                 <button type="button" onclick="togglePopup()">Close</button>
             </div>
-            <!-- Input สำหรับเลือกไฟล์ -->
-            <input type="file" id="fileInput" style="display: none;" onchange="previewImage(event)">
+            <input type="file" id="fileInput" name="profilePicture" accept="image/*" style="display: none;" onchange="previewImage(event)">
         </form>
+
     </div>
 
     <script>

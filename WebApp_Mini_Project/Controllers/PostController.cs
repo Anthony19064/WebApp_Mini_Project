@@ -32,6 +32,14 @@ public class PostController : HomeController
      
         
         string usersession = HttpContext.Session.GetString("Usersession");
+        if (usersession != null) {
+            var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
+            int userid = account.ID;
+
+            ViewBag.UserID = userid;
+        }
+
+        var accounts = _db.Accounts.ToList();
         var posts = _db.Posts.ToList(); // ข้อมูลใน DB เก็บลง ตัวแปร posts
         posts.Reverse();
         var newPost = new Post(); // ข้อมูลที่รับมาจากฟอรม์ เก็บลง ตัวแปร newPost
@@ -40,9 +48,11 @@ public class PostController : HomeController
         var viewModel = new PostViewModel // เอาสองตัวบนมาเก็บลง object ViewModel
         {
             Posts = posts,
-            NewPost = newPost
+            NewPost = newPost,
+            Account = accounts
         };
         ViewBag.Usersession = usersession; // ViewBag ส่งค่า session ที่เก็บไว้ออกไป
+        
 
         return View(viewModel); // ส่ง ViewModel ไปยัง View index
     }
@@ -55,7 +65,7 @@ public class PostController : HomeController
     {
         string usersession = HttpContext.Session.GetString("Usersession");
         var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
-        model.NewPost.User_Post = account.Username;
+        model.NewPost.User_id = account.ID;
         model.NewPost.User_Picture = account.ProfilePicture;
 
         _db.Posts.Add(model.NewPost); // เอาเฉพาะ Newpost มาเก็บลง DB
@@ -67,6 +77,9 @@ public class PostController : HomeController
     [HttpPost]
     public IActionResult Joinroom(int? id, string user)
     {
+        var account = _db.Accounts.SingleOrDefault(account => account.Username == user);
+
+
         if (id == null || id == 0)
         {
             return NotFound();
@@ -78,14 +91,14 @@ public class PostController : HomeController
             return NotFound(); // ถ้าไม่พบโพสต์
         }
 
-        if (obj.User_list.Contains(user))
+        if (obj.User_list.Contains(account.ID))
         {
             return Json(new { success = false});
         }
         else
         {
             obj.Count_person++;
-            obj.User_list.Add(user);
+            obj.User_list.Add(account.ID);
         }
 
         _db.SaveChanges();

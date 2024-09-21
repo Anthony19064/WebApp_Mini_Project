@@ -6,5 +6,7 @@ namespace WebApp_Mini_Project.ViewModels
     {
         public IEnumerable<Post> Posts { get; set; }
         public Post NewPost { get; set; }
+
+        public IEnumerable<Account> Account { get; set; }
     }
 }

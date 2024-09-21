@@ -20,10 +20,10 @@ namespace WebApp_Mini_Project.Models
         [Required]
         public string Game { get; set; }
         [Required]
-        public string? User_Post { get; set; }
+        public int User_id { get; set; }
         public byte[]? User_Picture { get; set; }
         [Required]
-        public List<string>? User_list { get; set; } = new List<string>();
+        public List<int>? User_list { get; set; } = new List<int>();
 
 
 
