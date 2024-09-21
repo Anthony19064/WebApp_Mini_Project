@@ -67,6 +67,7 @@ public class PostController : HomeController
         var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
         model.NewPost.User_id = account.ID;
         model.NewPost.User_Picture = account.ProfilePicture;
+        model.NewPost.time = DateTime.Now;
 
         _db.Posts.Add(model.NewPost); // เอาเฉพาะ Newpost มาเก็บลง DB
         _db.SaveChanges(); // บันทึกข้อมูล

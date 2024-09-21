@@ -24,6 +24,8 @@ namespace WebApp_Mini_Project.Models
         public byte[]? User_Picture { get; set; }
         [Required]
         public List<int>? User_list { get; set; } = new List<int>();
+        [Required]
+        public DateTime time { get; set; }
 
 
 

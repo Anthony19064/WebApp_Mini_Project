@@ -1,4 +1,9 @@
-
+@font-face {
+    font-family: 'testfont'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
+    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    font-weight: normal; /* น้ำหนักของฟอนต์ */
+    font-style: normal; /* สไตล์ของฟอนต์ */
+}
 
 html, body {
     height: 100%;
@@ -124,6 +129,7 @@ footer {
         text-decoration: none;
         display: block;
         border-radius: 0 !important;
+        font-family: 'testfont', sans-serif;
     }
 
         .dropdown-content a:hover {
@@ -136,11 +142,10 @@ footer {
 }
 
 .dropdown:hover .dropbtn {
-    background: linear-gradient(to right, #FF6699, #f89b28);
+    background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
 }
 
 .dropbtn {
-    font-size: 20px;
     background-color: #fff;
     border: none;
     padding: 8px 16px;
@@ -150,20 +155,21 @@ footer {
     margin-bottom: 5px;
     text-decoration: none;
     position: relative;
+    font-family: 'testfont', sans-serif;
 }
 
     .dropbtn span {
-        background: linear-gradient(to right, #FF6699, #FFFF33);
+        background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
         -webkit-background-clip: text;
         color: transparent;
         display: inline-block;
+        font-size: 20px;
+        transition: color 1s;
     }
+
+
 
 .dropdown:hover .dropbtn span {
     color: white;
 }
 
-.pb-3{
-    padding: 0px;
-    margin: 0px;
-}
