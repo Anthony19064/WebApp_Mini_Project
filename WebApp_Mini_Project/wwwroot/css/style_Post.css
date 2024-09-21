@@ -4,8 +4,13 @@
 
 .main-container {
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
-
+.navbar, .search-section {
+    margin: 0;
+    padding: 0;
+}
 .search-section {
     background: linear-gradient(to bottom, #FF66FF, #FF66CC, #FF6699);
     padding: 30px;
@@ -31,8 +36,8 @@
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
-    gap: 5px;
-    padding: 0 20px;
+    gap: 20px;
+    padding: 0 30px;
     width: 1400px;
     margin-left: 20px;
     overflow-y: auto;
@@ -63,11 +68,10 @@
     margin-bottom: 50px;
     margin-top: 20px;
     margin-left: 40px;
-    border-radius: 50%; /* ทำให้ขอบรูปเป็นวงกลม */
-    object-fit: cover; /* ป้องกันไม่ให้ภาพยืดหรือบีบอัด */
+    border-radius: 50%; 
+    object-fit: cover; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
-
 
 .card-content {
     text-align: left;
@@ -323,7 +327,7 @@
 }
 .content-container {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     justify-content: flex-start;
     align-items: flex-start;
     padding: 10px;
