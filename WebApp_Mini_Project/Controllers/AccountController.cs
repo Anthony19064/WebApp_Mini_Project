@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using WebApp_Mini_Project.Data;
 using WebApp_Mini_Project.Models;
+using WebApp_Mini_Project.ViewModels;
 
 namespace WebApp_Mini_Project.Controllers
 {
@@ -103,13 +105,53 @@ namespace WebApp_Mini_Project.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
+            var posts = _db.Posts.ToList();
             string usersession = HttpContext.Session.GetString("Usersession");
-            var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
-            if (account == null)
+            var accounts = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
+            if (accounts == null)
             {
-                return NotFound();
+                return NotFound(); 
             }
-            return View(account);
+                
+            var viewModel = new AccountViewModel
+            {
+                Posts = posts,
+                account = accounts
+            };
+            return View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string username, string password, string email, IFormFile profilePicture)
+        {
+            var account = _db.Accounts.SingleOrDefault(a => a.ID == id);
+            if (account != null)
+            {
+                account.Username = username;
+
+                if (!string.IsNullOrEmpty(password))
+                {
+                    account.Password = password; // ควรเข้ารหัสด้วย
+                }
+
+                account.Email = email;
+
+                // การจัดการการอัปโหลดรูปภาพ
+                if (profilePicture != null && profilePicture.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        profilePicture.CopyTo(memoryStream);
+                        account.ProfilePicture = memoryStream.ToArray();
+                    }
+                }
+                HttpContext.Session.SetString("Usersession", username);
+                _db.SaveChanges();
+
+            }
+
+            return RedirectToAction("Profile", "Account");
+        }
+
     }
 }

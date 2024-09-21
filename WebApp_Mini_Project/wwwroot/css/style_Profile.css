@@ -131,7 +131,8 @@
     margin: 0 auto; /* จัดกึ่งกลางแนวนอน */
     display: block; /* ทำให้ margin auto ทำงาน */
     border: 5px solid white;
-    margin-left:70px;
+    margin-left: 70px;
+    object-fit: cover;
 }
 
 /* Form Section */
