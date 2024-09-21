@@ -1,7 +1,5 @@
-﻿﻿
-@using WebApp_Mini_Project.ViewModels
+﻿﻿@using WebApp_Mini_Project.ViewModels
 @model PostViewModel
-
 
 <head>
     <link rel="stylesheet" href="~/css/style_Post.css">
@@ -62,6 +60,8 @@
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
 
+
+
         {
             <div class="card-container" id="card-container">
                 <div class="card">
@@ -69,16 +69,11 @@
                         int ID = 0;
                         if (ViewBag.UserID != null)
                         {
-
                             ID = ViewBag.UserID;
                         }
-
-
                         if (post.User_Picture != null)
                         {
-
                             var base64String = Convert.ToBase64String(post.User_Picture);
-
                             var imgSrc = $"data:image/jpeg;base64,{base64String}";
                             <img src="@imgSrc" alt="logo" class="card-logo" />
                         }
@@ -89,13 +84,11 @@
                     }
                     <div class="card-content">
                         @foreach (var account in Model.Account)
-
                         {
                             if (account.ID == post.User_id)
                             {
                                 <p id="user"> @account.Username</p>
                             }
-
                         }
                         <p><b>ชื่อห้อง</b> : @post.Name_room</p>
                         <p><b>เกม</b> : @post.Game</p>

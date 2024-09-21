@@ -1,3 +1,5 @@
+
+
 html, body {
     height: 100%;
     margin: 0;
@@ -6,10 +8,14 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 .container {
     flex: 1;
+    padding: 0px;
+    margin: 0px;
 }
 
 footer {
@@ -22,6 +28,7 @@ footer {
 
 html {
     font-size: 14px;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -34,23 +41,6 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 200px;
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
 
 header {
     background-color: #FF66FF;
@@ -171,4 +161,9 @@ footer {
 
 .dropdown:hover .dropbtn span {
     color: white;
+}
+
+.pb-3{
+    padding: 0px;
+    margin: 0px;
 }
