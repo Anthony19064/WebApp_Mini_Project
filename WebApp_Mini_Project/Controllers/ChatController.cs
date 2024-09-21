@@ -29,15 +29,15 @@ namespace WebApp_Mini_Project.Controllers
         {
             // ตรวจสอบว่าเข้าสู่ระบบหรือยัง
             var userSeccion = HttpContext.Session.GetString("Usersession");
-            if (string.IsNullOrEmpty(userSeccion))
+            if (userSeccion == null)
             {
-                return Unauthorized(); // Return หน้า 401 Unauthorized
+                return Unauthorized(); // Return หน้า 401 Unauthorized // Return หน้า 401 Unauthorized
             }
 
             message.CreatedAt = DateTime.Now;
 
             _db.Chats.Add(message);
-            await _db.SaveChangesAsync();
+            _db.SaveChanges();
             return Ok();
         }
 

@@ -39,15 +39,33 @@
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 20px;
     padding: 0 20px;
     width: 1400px;
     margin-left: 20px;
     overflow-y: auto;
     height: 600px;
-    border: 3px solid #333;
+    border: 1px solid #333;
+    border-radius: 10px;
     box-sizing: border-box;
+    overflow-y: auto;
+
 }
+
+    /* กำหนด scrollbar แบบกำหนดเอง */
+    .card-container::-webkit-scrollbar {
+        width: 8px; /* ความกว้างของ scrollbar */
+    }
+
+    .card-container::-webkit-scrollbar-thumb {
+        background: #888; /* สีของ scrollbar */
+        border-radius: 4px; /* มุมของ scrollbar */
+    }
+
+        .card-container::-webkit-scrollbar-thumb:hover {
+            background: #555; /* สีเมื่อ hover */
+        }
+
 
 
 .card {
@@ -61,8 +79,8 @@
     align-items: center; /* จัดกลางในแนวนอน */
     width: 400px;
     height: 400px; /* ปรับให้ความสูงตามเนื้อหา */
-    margin: 20px;
-    margin-top: 50px;
+    margin: 15px;
+    margin-top: 30px;
 }
 
 .card-logo {
@@ -352,13 +370,12 @@
 .chat-board-container {
     width: 400px;
     height: 600px;
-    background-color: #444343;
+    background-color: #eac2cf;
     color: #000000;
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(255, 253, 253, 0.1);
-    margin-left: 60px;
-    position: absolute;
+    margin-right: 30px;
     right: 50px;
 }
 
@@ -466,3 +483,10 @@
         margin-right: 8px; /* Space between icon and text */
     }
 
+.test {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    margin-left: 15px
+
+}

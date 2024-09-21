@@ -14,6 +14,7 @@
 
     <button class="refresh-btn" id="openPopupBtn"><span>Posts</span></button>
     <!-- Popup Form -->
+   
     <div class="popup-background" id="popup">
         <div class="popup-form">
             <h3>กรอกข้อมูลห้อง</h3>
@@ -57,7 +58,7 @@
     </div>
 
 
-
+    <div class="test">
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
         {
@@ -134,22 +135,22 @@
             </div>
 
         }
-        <div class="chat-board-container">
-            <div class="chat-board-header">
-                <h3>Chat Board</h3>
-            </div>
-            <div class="chat-board-messages" id="chatMessages">
-                <!-- Messages will be dynamically loaded here -->
-            </div>
-            <div class="chat-board-input">
-                <input type="text" id="chatInput" placeholder="Type your message here...">
-                <button id="sendMessageBtn">Send</button>
-            </div>
-        </div>
+
     </div>
 
-
-    
+    <div class="chat-board-container">
+        <div class="chat-board-header">
+            <h3>Chat Board</h3>
+        </div>
+        <div class="chat-board-messages" id="chatMessages">
+            <!-- Messages will be dynamically loaded here -->
+        </div>
+        <div class="chat-board-input">
+            <input type="text" id="chatInput" placeholder="Type your message here...">
+            <button id="sendMessageBtn">Send</button>
+        </div>
+    </div>
+    </div>
 
     <div class="chat-popup" id="chatPopup">
         <div class="chat-popup-header">
@@ -162,108 +163,6 @@
 
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    const popupBtn = document.getElementById('openPopupBtn'); // ปุ่มเปิด form
-    const closePopup = document.getElementById('closePopup'); // ปุ่มปิด form
-    const userSession = '@ViewBag.Usersession'; // session
-    const popup = document.getElementById('popup'); // form
-
-    // ฟังก์ชั่นเปิด Form Post
-    popupBtn.addEventListener('click', function () {
-        if (!userSession) { // เช็คว่ามี session ในระบบไหม
-            window.location.href = '/Account/Login'; //ถ้าไม่มีจะให้ไป login
-        } else {
-            popup.style.display = 'flex'; // ถ้ามีจะให้เปิด form
-        }
-    });
-    // ฟังก์ชั่นปิด Form Post
-    closePopup.addEventListener('click', function () {
-        popup.style.display = 'none';
-    });
-
-    //---------------------------------------------------------------------------------------------------
-
-
-    // ตรวจสอบข้อมูล Count_person ว่ามากกว่าหรือเท่ากับ Max_person ไหมเมื่อเปิดหน้าเว็บ
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".card-container").forEach(function (container) {
-            var countSpan = container.querySelector(".card-button");
-            var button = container.querySelector(".card-button");
-
-            var countMax = countSpan.textContent.split('/').map(Number);
-            var countPerson = countMax[0];
-            var maxPerson = countMax[1];
-            if (countPerson >= maxPerson) {
-                button.style.backgroundColor = "red";
-                button.style.color = 'white';
-                button.style.pointerEvents = "none";
-                button.style.cursor = "not-allowed";
-                button.style.opacity = "0.6";
-            }
-        });
-    });
-
-    // --------------------------------------------------------------------------------------------------------
-
-    // เช็คจำนวนคนใน Post
-    $(document).ready(function () {
-        $('.join-room-button').click(function (e) {
-            e.preventDefault(); // หยุดการทำงานของลิงก์ปกติ
-
-            var button = $(this); // เก็บการอ้างอิงถึงปุ่มที่คลิก
-            var postId = button.data('id');
-            var personCountSpan = $('#person-count-' + postId);
-            var personCountText = personCountSpan.text();
-            var currentCount = parseInt(personCountText.split('/')[0]);
-            var maxPerson = parseInt(personCountText.split('/')[1]);
-
-            if (!userSession) {
-                window.location.href = '/Account/Login';
-                return;
-            }
-
-
-            $.ajax({
-                url: '@Url.Action("Joinroom", "Post")',
-                type: 'POST',
-                data: { id: postId, user: '@ViewBag.Usersession' },
-                success: function (response) {
-                    if (response.success) {
-                        var newCount = response.newCount;
-                        personCountSpan.text(newCount + '/' + maxPerson);
-                        //ตรวจสอบอีกครั้งเพื่ออัปเดตสถานะปุ่ม
-                        if (newCount >= maxPerson) {
-                            button.css({
-                                'background-color': 'red',
-                                'color': 'white',// เปลี่ยนสีพื้นหลังเป็นสีแดง
-                                'pointer-events': 'none',      // ป้องกันการคลิก
-                                'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
-                                'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
-                            });
-                        } else {
-                            button.css({
-                                'pointer-events': 'none',
-                                'color': 'white',// ป้องกันการคลิก
-                                'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
-                                'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
-                            });
-                        }
-                    } else {
-                        button.css({
-                            'pointer-events': 'none',      // ป้องกันการคลิก
-                            'color': 'white',
-                            'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
-                            'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
-                        });
-                        return;
-                    }
-                },
-            });
-        });
-    });
-
-
-</script>
 <script src="~/js/script_Post.js"></script>
 <script>
     const popupBtn = document.getElementById('openPopupBtn'); // ปุ่มเปิด form
@@ -365,10 +264,8 @@
         });
     });
 
+    // ---------------------------------------------------------------------------------------------------
 
-</script>
-<script src="~/js/script_Post.js"></script>
-<script>
     // ฟังก์ชันเพื่อจัดรูปแบบเวลา
     function formatTime(dateString) {
         const options = { hour: '2-digit', minute: '2-digit', hour12: false }; // 24 ชั่วโมง
@@ -409,10 +306,10 @@
 
                 $('#chatMessages').append(
                     `<div class="${messageClass}">
-                            <img src="${userIconUrl}" alt="User Icon" class="user-icon">
-                            <strong>${msg.user}:</strong> ${msg.message}
-                            <span class="message-time">(${formattedTime})</span>
-                        </div>`
+                                <img src="${userIconUrl}" alt="User Icon" class="user-icon">
+                                <strong>${msg.user}:</strong> ${msg.message}
+                                <span class="message-time">(${formattedTime})</span>
+                            </div>`
                 );
             });
             // Ensure the view scrolls to the bottom after new messages are added
@@ -424,7 +321,6 @@
 
     function sendMessage() {
         var message = $('#chatInput').val();
-
         if (message.trim() !== "") {
             $.ajax({
                 url: '/Chat/SendMessage',
@@ -445,6 +341,5 @@
             });
         }
     }
-
-
 </script>
+
