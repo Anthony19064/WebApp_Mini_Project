@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'testfont'; /* µÑé§ª×èÍ¿Í¹µì·Õè¤Ø³µéÍ§¡ÒÃãªé */
+    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* àÊé¹·Ò§ä»ÂÑ§ä¿Åì¿Í¹µì */
+    font-weight: normal; /* ¹éÓË¹Ñ¡¢Í§¿Í¹µì */
+    font-style: normal; /* ÊäµÅì¢Í§¿Í¹µì */
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -6,14 +13,19 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 .container {
     flex: 1;
+    padding: 0px;
+    margin: 0px;
 }
 
 html {
     font-size: 14px;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -26,23 +38,6 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 200px;
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
 
 header {
     background-color: #FF66FF;
@@ -128,6 +123,7 @@ footer {
         text-decoration: none;
         display: block;
         border-radius: 0 !important;
+        font-family: 'testfont', sans-serif;
     }
 
         .dropdown-content a:hover {
@@ -140,12 +136,10 @@ footer {
 }
 
 .dropdown:hover .dropbtn {
-    background: linear-gradient(to right, #FF6699, #f89b28);
-
+    background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
 }
 
 .dropbtn {
-    font-size: 20px;
     background-color: #fff;
     border: none;
     padding: 8px 16px;
@@ -155,15 +149,21 @@ footer {
     margin-bottom: 5px;
     text-decoration: none;
     position: relative;
+    font-family: 'testfont', sans-serif;
 }
 
     .dropbtn span {
-        background: linear-gradient(to right, #FF6699, #FFFF33);
+        background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
         -webkit-background-clip: text;
         color: transparent;
         display: inline-block;
+        font-size: 20px;
+        transition: color 1s;
     }
+
+
 
 .dropdown:hover .dropbtn span {
     color: white;
 }
+

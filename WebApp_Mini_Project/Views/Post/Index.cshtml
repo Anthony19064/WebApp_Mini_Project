@@ -1,4 +1,4 @@
-﻿﻿﻿@using WebApp_Mini_Project.ViewModels
+@using WebApp_Mini_Project.ViewModels
 @model PostViewModel
 
 <head>
@@ -60,9 +60,6 @@
 
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
-
-
-
         {
             <div class="card-container2" id="card-container">
                 <div class="card">
@@ -82,15 +79,33 @@
                         {
                             <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                         }
-                    }
-                    <div class="card-content">
-                        @foreach (var account in Model.Account)
+
+                        var timeAgo = DateTime.Now - post.time;
+                        string timeAgoString;
+
+                        if (timeAgo.TotalHours >= 1)
                         {
-                            if (account.ID == post.User_id)
-                            {
-                                <p id="user"> @account.Username</p>
-                            }
+                            var hoursAgo = (int)timeAgo.TotalHours;
+                            timeAgoString = $"{hoursAgo} ชั่วโมงที่แล้ว";
                         }
+                        else
+                        {
+                            var minutesAgo = (int)timeAgo.TotalMinutes;
+                            timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
+                        }
+                    }
+                    @foreach (var account in Model.Account)
+                    {
+
+                        if (account.ID == post.User_id)
+
+                        {
+                            <p id="user"> @account.Username</p>
+                        }
+                    }
+                    <p id="time">@timeAgoString</p>
+                    <div class="card-content">
+
                         <p><b>ชื่อห้อง</b> : @post.Name_room</p>
                         <p><b>เกม</b> : @post.Game</p>
                         <p><b>รายละเอียด</b> : @post.Details</p>
@@ -101,7 +116,7 @@
                             <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                         </button>
                     }
-                    else if (post.User_id != ViewBag.UserID)
+                    else if (post.User_id != ID)
                     {
                         <button class="card-button join-room-button" data-id="@post.ID">
                             <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
