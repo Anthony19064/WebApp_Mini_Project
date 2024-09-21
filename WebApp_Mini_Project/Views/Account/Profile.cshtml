@@ -114,17 +114,17 @@
                 @if (Model.ProfilePicture != null)
                 {
                     var imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
-                    <img src="data:image/png;base64,@imageBase64" alt="Avatar">
+                    <img id="popupProfileImage" src="data:image/png;base64,@imageBase64" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
                 }
                 else
                 {
-                    <img src="https://cdn-icons-png.flaticon.com/512/10141/10141012.png" alt="Avatar">
+                    <img id="popupProfileImage" src="https://cdn-icons-png.flaticon.com/512/10141/10141012.png" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
                 }
                 <h3>Settings</h3>
             </div>
             <div class="form-group">
                 <label for="popupUsername">Username</label>
-                <input type="text" id="popupUsername" name="popupUsername"placeholder="@Model.Username" value="" required>
+                <input type="text" id="popupUsername" name="popupUsername" placeholder="@Model.Username" value="" required>
             </div>
             <div class="form-group">
                 <label for="popupPassword">Password</label>
@@ -132,7 +132,7 @@
             </div>
             <div class="form-group">
                 <label for="popupEmail">Email</label>
-                <input type="email" id="popupEmail" name="popupEmail" placeholder="@Model.Email" value=""required>
+                <input type="email" id="popupEmail" name="popupEmail" placeholder="@Model.Email" value="" required>
             </div>
             <div class="popup-buttons">
                 <button type="submit">Save</button>
@@ -141,11 +141,7 @@
             <!-- Input สำหรับเลือกไฟล์ -->
             <input type="file" id="fileInput" style="display: none;" onchange="previewImage(event)">
         </form>
-        
-        
     </div>
-
-
 
     <script>
         function togglePopup() {
@@ -161,14 +157,23 @@
             }
         }
 
+        function triggerFileInput() {
+            document.getElementById('fileInput').click();
+        }
+
         function previewImage(event) {
             var reader = new FileReader();
             reader.onload = function () {
                 var output = document.getElementById('popupProfileImage');
-                output.src = reader.result;
+                if (output) {
+                    output.src = reader.result;
+                }
             }
-            reader.readAsDataURL(event.target.files[0]);
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
         }
+
         function toggleCardMenu(element) {
             var menu = element.querySelector('.card-menu-options');
             // เช็คว่าเมนูถูกแสดงอยู่หรือไม่
@@ -181,6 +186,16 @@
 
         // คลิกข้างนอกเพื่อปิดเมนู
         window.onclick = function (event) {
+            var editPopup = document.getElementById("editPopup");
+            var popup = document.getElementById("popup");
+            if (event.target == editPopup) {
+                editPopup.style.display = "none";
+            }
+            if (event.target == popup) {
+                popup.style.display = "none";
+            }
+
+            // ปิดเมนูการ์ดถ้าคลิกนอกเมนู
             if (!event.target.closest('.card-menu')) {
                 var dropdowns = document.getElementsByClassName("card-menu-options");
                 for (var i = 0; i < dropdowns.length; i++) {
@@ -197,16 +212,6 @@
         function closeEditPopup() {
             document.getElementById("editPopup").style.display = "none";
         }
-
-        // คลิกข้างนอก popup เพื่อปิด
-        window.onclick = function (event) {
-            var popup = document.getElementById("editPopup");
-            if (event.target == popup) {
-                popup.style.display = "none";
-            }
-        }
-
-
     </script>
 
 </body>
