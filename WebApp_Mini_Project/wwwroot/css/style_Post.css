@@ -5,9 +5,6 @@
     font-style: normal; /* สไตล์ของฟอนต์ */
 }
 
-
-
-
 * {
     box-sizing: border-box;
 
@@ -40,10 +37,16 @@
 
 .card-container {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 30px;
     padding: 0 20px;
+    width: 1400px;
+    margin-left: 20px;
+    overflow-y: auto;
+    height: 600px;
+    border: 3px solid #333;
+    box-sizing: border-box;
 }
 
 
@@ -255,44 +258,69 @@
 
 
 .floating-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 70px;
-    height: 70px;
-    background-color: #fafafa; /* ÊÕÊéÁ */
+    position: absolute; /* Fixed position so it stays in the same place */
+    top: 10px; /* Position near the top */
+    right: 160px; /* Adjust the right value to place it left of the login button */
+    width: 50px;
+    height: 50px;
+    background-color: aliceblue;
     border-radius: 50%;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    color: black;
+    z-index: 1000; /* Ensure it stays above other elements */
 }
 
+    .floating-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+.card-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
 
+.chat-popup {
+    display: none; /* Keep it hidden until triggered */
+    position: fixed; /* Fixed position for it to stay at the same spot when scrolling */
+    bottom: 500px; /* Adjust to move the chat popup upwards */
+    right: 170px; /* Position it closer to the edge of the screen */
+    border: 2px solid #000000; /* Same border */
+    border-radius: 10px; /* Keep the rounded corners */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* Same shadow */
+    width: 300px; /* Same width */
+    height: 400px; /* Same height */
+    background-color: #fff; /* Same white background */
+    z-index: 1000; /* Ensures the chat box stays above other content */
+    animation: slideUp 0.3s ease-out;
+}
+
+/* Add a sliding effect when the chat pops up */
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 .floating-button img {
     width: 50px;
     height: 50px;
 }
 
-.chat-popup {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    border: 2px solid #f3a74a;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    height: 400px;
-    background-color: #fff;
-    z-index: 1000;
-}
+
 
 .chat-popup-header {
     background-color: #fffdfb;
     padding: 20px;
-    border-radius: 10px 10px 0 0;
+    border-radius: 9px 9px 0 0;
     color: white;
     text-align: center;
 }
@@ -312,11 +340,129 @@
     width: 80%;
     padding: 5px;}
 
-.chat-popup-footer button {
-    width: 15%;
+    .chat-popup-footer button {
+        width: 15%;
+        padding: 5px;
+        background-color: #ffffff;
+        border: 1px;
+        color: white;
+        cursor: pointer;
+    }
+    /*เพิ่มแชทกับจัดหน้าการ์ดกับแชท*/
+.chat-board-container {
+    width: 400px;
+    height: 600px;
+    background-color: #444343;
+    color: #000000;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(255, 253, 253, 0.1);
+    margin-left: 60px;
+    position: absolute;
+    right: 50px;
+}
+
+.chat-board-header {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.chat-board-messages {
+    height: 80%;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.chat-message {
+    margin-bottom: 10px;
     padding: 5px;
-    background-color: #ffffff;
-    border: 1px;
-    color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-board-input {
+    display: flex;
+    margin-top: 10px;
+}
+
+#chatInput {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+}
+
+#sendMessageBtn {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
+
+    #sendMessageBtn:hover {
+        background-color: #0056b3;
+    }
+
+.content-container {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+
+/* Common styling for user icons */
+.user-icon {
+    width: 24px; /* Adjust size as needed */
+    height: 24px; /* Adjust size as needed */
+    border-radius: 50%; /* Makes the icon round */
+    vertical-align: middle; /* Aligns icon with text */
+    position: relative; /* Relative positioning for layering */
+}
+
+/* Styling for messages from the current user */
+.own-message {
+    background-color: #e1ffc7;
+    align-self: flex-end; /* Aligns message to the right */
+    margin-left: auto; /* Pushes message to the right */
+    text-align: right; /* Aligns text to the right */
+    max-width: fit-content; /* Fit width to content */
+    border-radius: 15px; /* Adjust the value for more or less rounded corners */
+    padding: 10px; /* Optional: Add padding for better spacing */
+    position: relative; /* Needed for positioning the icon */
+    padding-right: 40px; /* Add padding on the right side to make space for the icon */
+}
+
+    /* Positioning user icon for own messages */
+    .own-message .user-icon {
+        position: absolute;
+        right: 10px; /* Adjust space between icon and message */
+        top: 50%;
+        transform: translateY(-50%); /* Vertically center the icon */
+        z-index: 1; /* Ensures the icon is on top of the text */
+    }
+
+/* Styling for other users' messages */
+.other-message {
+    background-color: #f1f1f1;
+    align-self: flex-start; /* Aligns message to the left */
+    margin-right: auto; /* Pushes message to the left */
+    text-align: left; /* Aligns text to the left */
+    max-width: fit-content; /* Fit width to content */
+    border-radius: 15px; /* Adjust the value for more or less rounded corners */
+    padding: 10px; /* Optional: Add padding for better spacing */
+}
+
+    /* Positioning user icon for other messages */
+    .other-message .user-icon {
+        margin-right: 8px; /* Space between icon and text */
+    }
+

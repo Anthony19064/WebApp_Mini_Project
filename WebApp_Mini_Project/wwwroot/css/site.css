@@ -1,8 +1,8 @@
 @font-face {
-    font-family: 'testfont'; /* ��駪��Ϳ͹����س��ͧ����� */
-    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* ��鹷ҧ��ѧ���͹�� */
-    font-weight: normal; /* ���˹ѡ�ͧ�͹�� */
-    font-style: normal; /* ����ͧ�͹�� */
+    font-family: 'testfont'; /* µÑé§ª×èÍ¿Í¹µì·Õè¤Ø³µéÍ§¡ÒÃãªé */
+    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* àÊé¹·Ò§ä»ÂÑ§ä¿Åì¿Í¹µì */
+    font-weight: normal; /* ¹éÓË¹Ñ¡¢Í§¿Í¹µì */
+    font-style: normal; /* ÊäµÅì¢Í§¿Í¹µì */
 }
 
 html, body {
@@ -21,14 +21,6 @@ body {
     flex: 1;
     padding: 0px;
     margin: 0px;
-}
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
-    margin-top: auto;
 }
 
 html {
@@ -76,7 +68,8 @@ header {
 
 footer {
     text-align: center;
-    padding: 10px;
+    padding: 30px;
+    margin-top: 70px;
     background-color: #333;
     color: #fff;
     margin-top: 10px;
@@ -112,6 +105,7 @@ footer {
     position: relative;
     display: inline-block;
     overflow: visible;
+   
 }
 
 .dropdown-content {

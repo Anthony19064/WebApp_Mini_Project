@@ -1,4 +1,4 @@
-﻿﻿@using WebApp_Mini_Project.ViewModels
+@using WebApp_Mini_Project.ViewModels
 @model PostViewModel
 
 <head>
@@ -57,10 +57,11 @@
     </div>
 
 
+
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
         {
-            <div class="card-container" id="card-container">
+            <div class="card-container2" id="card-container">
                 <div class="card">
                     @{
                         int ID = 0;
@@ -133,12 +134,22 @@
             </div>
 
         }
+        <div class="chat-board-container">
+            <div class="chat-board-header">
+                <h3>Chat Board</h3>
+            </div>
+            <div class="chat-board-messages" id="chatMessages">
+                <!-- Messages will be dynamically loaded here -->
+            </div>
+            <div class="chat-board-input">
+                <input type="text" id="chatInput" placeholder="Type your message here...">
+                <button id="sendMessageBtn">Send</button>
+            </div>
+        </div>
     </div>
 
 
-    <div class="floating-button" onclick="toggleChatPopup()">
-        <img src="https://png.pngtree.com/png-clipart/20190617/original/pngtree-chat-vector-icon-png-image_3876224.jpg" alt="icon">
-    </div>
+    
 
     <div class="chat-popup" id="chatPopup">
         <div class="chat-popup-header">
@@ -254,4 +265,186 @@
 
 </script>
 <script src="~/js/script_Post.js"></script>
+<script>
+    const popupBtn = document.getElementById('openPopupBtn'); // ปุ่มเปิด form
+    const closePopup = document.getElementById('closePopup'); // ปุ่มปิด form
+    const userSession = '@ViewBag.Usersession'; // session
+    const popup = document.getElementById('popup'); // form
 
+    // ฟังก์ชั่นเปิด Form Post
+    popupBtn.addEventListener('click', function () {
+        if (!userSession) { // เช็คว่ามี session ในระบบไหม
+            window.location.href = '/Account/Login'; //ถ้าไม่มีจะให้ไป login
+        } else {
+            popup.style.display = 'flex'; // ถ้ามีจะให้เปิด form
+        }
+    });
+    // ฟังก์ชั่นปิด Form Post
+    closePopup.addEventListener('click', function () {
+        popup.style.display = 'none';
+    });
+
+    //---------------------------------------------------------------------------------------------------
+
+
+    // ตรวจสอบข้อมูล Count_person ว่ามากกว่าหรือเท่ากับ Max_person ไหมเมื่อเปิดหน้าเว็บ
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".card-container").forEach(function (container) {
+            var countSpan = container.querySelector(".card-button");
+            var button = container.querySelector(".card-button");
+
+            var countMax = countSpan.textContent.split('/').map(Number);
+            var countPerson = countMax[0];
+            var maxPerson = countMax[1];
+            if (countPerson >= maxPerson) {
+                button.style.backgroundColor = "red";
+                button.style.color = 'white';
+                button.style.pointerEvents = "none";
+                button.style.cursor = "not-allowed";
+                button.style.opacity = "0.6";
+            }
+        });
+    });
+
+    // --------------------------------------------------------------------------------------------------------
+
+    // เช็คจำนวนคนใน Post
+    $(document).ready(function () {
+        $('.join-room-button').click(function (e) {
+            e.preventDefault(); // หยุดการทำงานของลิงก์ปกติ
+
+            var button = $(this); // เก็บการอ้างอิงถึงปุ่มที่คลิก
+            var postId = button.data('id');
+            var personCountSpan = $('#person-count-' + postId);
+            var personCountText = personCountSpan.text();
+            var currentCount = parseInt(personCountText.split('/')[0]);
+            var maxPerson = parseInt(personCountText.split('/')[1]);
+
+            if (!userSession) {
+                window.location.href = '/Account/Login';
+                return;
+            }
+
+
+            $.ajax({
+                url: '@Url.Action("Joinroom", "Post")',
+                type: 'POST',
+                data: { id: postId, user: '@ViewBag.Usersession' },
+                success: function (response) {
+                    if (response.success) {
+                        var newCount = response.newCount;
+                        personCountSpan.text(newCount + '/' + maxPerson);
+                        //ตรวจสอบอีกครั้งเพื่ออัปเดตสถานะปุ่ม
+                        if (newCount >= maxPerson) {
+                            button.css({
+                                'background-color': 'red',
+                                'color': 'white',// เปลี่ยนสีพื้นหลังเป็นสีแดง
+                                'pointer-events': 'none',      // ป้องกันการคลิก
+                                'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
+                                'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
+                            });
+                        } else {
+                            button.css({
+                                'pointer-events': 'none',
+                                'color': 'white',// ป้องกันการคลิก
+                                'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
+                                'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
+                            });
+                        }
+                    } else {
+                        button.css({
+                            'pointer-events': 'none',      // ป้องกันการคลิก
+                            'color': 'white',
+                            'cursor': 'not-allowed',       // เปลี่ยนเคอร์เซอร์เป็นไม่อนุญาต
+                            'opacity': '0.6'               // ทำให้ปุ่มโปร่งแสง
+                        });
+                        return;
+                    }
+                },
+            });
+        });
+    });
+
+
+</script>
+<script src="~/js/script_Post.js"></script>
+<script>
+    // ฟังก์ชันเพื่อจัดรูปแบบเวลา
+    function formatTime(dateString) {
+        const options = { hour: '2-digit', minute: '2-digit', hour12: false }; // 24 ชั่วโมง
+        const timeString = new Date(dateString).toLocaleString('en-US', options);
+        return timeString + ' นาที'; // เพิ่มคำว่า "นาที" หลังจากเวลา
+    }
+
+    // โหลดข้อความทั้งหมดเมื่อเปิดหน้าเว็บ
+    $(document).ready(function () {
+        loadMessages();
+
+        // Event listener for send button
+        $('#sendMessageBtn').click(function () {
+            sendMessage();
+        });
+
+        // Pressing 'Enter' triggers send message
+        $('#chatInput').keypress(function (e) {
+            if (e.which === 13) { // 13 is the Enter key
+                sendMessage();
+            }
+        });
+    });
+
+    function loadMessages() {
+        $.get("/Chat/GetMessages", function (data) {
+            $('#chatMessages').html(''); // Clear previous messages
+            data.forEach(function (msg) {
+                const formattedTime = formatTime(msg.createdAt);
+                // Check if the message is from the current user
+                const isOwnMessage = msg.user === '@ViewBag.Usersession';
+                // Assign appropriate CSS class
+                const messageClass = isOwnMessage ? 'chat-message own-message' : 'chat-message other-message';
+                // Define the URL for the user icon
+                const userIconUrl = 'https://img.icons8.com/ios/50/000000/user-male.png';
+
+
+
+                $('#chatMessages').append(
+                    `<div class="${messageClass}">
+                            <img src="${userIconUrl}" alt="User Icon" class="user-icon">
+                            <strong>${msg.user}:</strong> ${msg.message}
+                            <span class="message-time">(${formattedTime})</span>
+                        </div>`
+                );
+            });
+            // Ensure the view scrolls to the bottom after new messages are added
+            $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
+        });
+    }
+
+
+
+    function sendMessage() {
+        var message = $('#chatInput').val();
+
+        if (message.trim() !== "") {
+            $.ajax({
+                url: '/Chat/SendMessage',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ message: message, user: '@ViewBag.Usersession' }),
+                success: function () {
+                    $('#chatInput').val(''); // Clear input field after sending
+                    loadMessages(); // Reload messages to reflect the new message
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status === 401) { // If 401 Unauthorized is returned
+                        window.location.href = '/Account/Login'; // Redirect to login page
+                    } else {
+                        console.error("Error sending message: " + error);
+                    }
+                }
+            });
+        }
+    }
+
+
+</script>
