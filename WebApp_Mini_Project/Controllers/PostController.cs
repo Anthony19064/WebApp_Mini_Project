@@ -38,7 +38,7 @@ public class PostController : HomeController
 
             ViewBag.UserID = userid;
         }
-
+        var chat = _db.Chats.OrderByDescending(m => m.CreatedAt).ToList();
         var accounts = _db.Accounts.ToList();
         var posts = _db.Posts.ToList(); // ข้อมูลใน DB เก็บลง ตัวแปร posts
         posts.Reverse();
@@ -49,7 +49,8 @@ public class PostController : HomeController
         {
             Posts = posts,
             NewPost = newPost,
-            Account = accounts
+            Account = accounts,
+            Chats = chat,
         };
         ViewBag.Usersession = usersession; // ViewBag ส่งค่า session ที่เก็บไว้ออกไป
         

@@ -41,7 +41,7 @@ html {
 
 header {
     background-color: #FF66FF;
-    padding: 15px 30px;
+    padding: 15px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -55,7 +55,7 @@ header {
         font-weight: bold;
     }
 
-    header .nav-right button, header .nav-right a {
+header .nav-right button, header .nav-right a {
         background-color: #fff;
         color: #000099;
         border: none;
@@ -65,14 +65,24 @@ header {
         border-radius: 20px;
         text-decoration: none;
     }
+.nav-right {
+    display: flex; /* ใช้ flexbox เพื่อจัดเรียงในแนวนอน */
+    align-items: center; /* จัดกลางแนวตั้ง */
+    justify-content: center;
+}
+
+.dropdown {
+    margin-right: 20px; /* ระยะห่างระหว่าง dropdown และ floating-button */
+    min-width: 100px; /* กำหนดความกว้างขั้นต่ำ */
+}
+
 
 footer {
     text-align: center;
-    padding: 30px;
-    margin-top: 70px;
+    padding: 15px;
     background-color: #333;
     color: #fff;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
     footer a {
@@ -137,33 +147,57 @@ footer {
 
 .dropdown:hover .dropbtn {
     background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
+
 }
 
 .dropbtn {
+    left: 10px;
     background-color: #fff;
     border: none;
     padding: 8px 16px;
     cursor: pointer;
     font-weight: bold;
     border-radius: 20px;
-    margin-bottom: 5px;
     text-decoration: none;
     position: relative;
     font-family: 'testfont', sans-serif;
+    margin-right: 0px;
 }
 
-    .dropbtn span {
+.dropbtn span {
         background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
         -webkit-background-clip: text;
         color: transparent;
         display: inline-block;
         font-size: 20px;
         transition: color 1s;
-    }
+}
 
 
 
 .dropdown:hover .dropbtn span {
     color: white;
 }
+
+.floating-button {
+    width: 50px; /* เปลี่ยนขนาดปุ่ม */
+    height: 50px; /* เปลี่ยนขนาดปุ่ม */
+    background-color: white; /* เปลี่ยนสีพื้นหลัง */
+    border-radius: 50%; /* ให้ปุ่มเป็นวงกลม */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* ปรับเงา */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000; /* ให้ปุ่มอยู่ข้างบน */
+    margin-right: 15px; /* ระยะห่างจากปุ่มอื่น */
+    transition: background-color 0.3s, transform 0.3s; /* เพิ่มการเปลี่ยนแปลง */
+}
+
+    .floating-button:hover {
+        transform: scale(1.1); /* ขยายขนาดเมื่อชี้ */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* ปรับเงาเมื่อชี้ */
+        background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
+        background-color: transparent; /* สีพื้นหลังเมื่อชี้ */
+    }
 

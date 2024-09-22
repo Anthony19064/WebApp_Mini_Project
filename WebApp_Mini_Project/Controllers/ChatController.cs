@@ -15,52 +15,52 @@ namespace WebApp_Mini_Project.Controllers
             _db = db;
         }
 
-        // แสดงหน้าแชท
-        [HttpGet]
-        public IActionResult Index()
-        {
-            ViewBag.Usersession = HttpContext.Session.GetString("Usersession");
-            return View();
-        }
-
-        // ส่งข้อความ
         [HttpPost]
-        public async Task<IActionResult> SendMessage([FromBody] Chat message)
+        public ActionResult AddChat(Chat obj) // ใช้ ActionResult แทน void
         {
-            // ตรวจสอบว่าเข้าสู่ระบบหรือยัง
-            var userSession = HttpContext.Session.GetString("Usersession");
-            if (userSession == null)
+            string usersession = HttpContext.Session.GetString("Usersession");
+            if (usersession == null)
             {
-                // ส่งกลับ 401 Unauthorized เมื่อไม่ล็อกอิน
-                return Unauthorized();
+                // แทนที่จะใช้ return ที่ไม่มีค่า ให้ส่งกลับ NotFound
+                return RedirectToAction("Index", "Post");
             }
 
-            // ตรวจสอบว่าข้อความว่างไหม
-            if (string.IsNullOrWhiteSpace(message.Message))
+            var account = _db.Accounts.SingleOrDefault(a => a.Username == usersession);
+            if (account == null)
             {
-                // ส่งกลับ 400 BadRequest ถ้าข้อความว่าง
-                return BadRequest();
+                return NotFound(); // ไม่ต้องทำอะไรต่อ ถ้าไม่พบบัญชีผู้ใช้
             }
 
-            message.CreatedAt = DateTime.Now;
+            if (string.IsNullOrWhiteSpace(obj.Message))
+            {
+                return BadRequest("Message cannot be empty."); // ส่งกลับข้อผิดพลาดถ้าข้อความว่างเปล่า
+            }
 
-            _db.Chats.Add(message);
-            await _db.SaveChangesAsync(); // ใช้ await เพื่อให้การบันทึกข้อมูลเป็น asynchronous
+            obj.ProfilePicture = account.ProfilePicture;
+            obj.CreatedAt = DateTime.UtcNow;
 
-            return Ok(); // ส่งผลลัพธ์ OK ถ้าสำเร็จ
+            _db.Chats.Add(obj);
+            _db.SaveChanges();
+
+            // ส่งกลับเป็น NoContent ถ้าทำงานสำเร็จและไม่ต้องการคืนค่าใด ๆ
+            return NoContent(); // หรือสามารถใช้ Ok() ถ้าต้องการส่งข้อมูลเพิ่มเติม
+        }
+
+        public ActionResult GetChats()
+        {
+            var chats = _db.Chats.OrderByDescending(m => m.CreatedAt)
+                .Take(7)
+                .Select(chat => new {
+                    chat.User,
+                    chat.Message,
+                    CreatedAt = chat.CreatedAt.ToString("o"), // ส่งในรูปแบบ ISO 8601
+                    ProfilePicture = chat.ProfilePicture
+                })
+                .ToList();
+
+            return Json(chats);
         }
 
 
-
-
-        // รับข้อความทั้งหมด
-        [HttpGet]
-        public async Task<IActionResult> GetMessages()
-        {
-            var messages = await _db.Chats
-                .OrderByDescending(m => m.CreatedAt)
-                .ToListAsync();
-            return Json(messages);
-        }
     }
 }
