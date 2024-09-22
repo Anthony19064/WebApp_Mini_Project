@@ -143,24 +143,7 @@
                 <p>Chat Board</p>
             </div>
             <div class="chat-board-messages" id="chatMessages">
-                @foreach (var chat in Model.Chats)
-                {
-                    <div class="chat-message @(chat.User == ViewBag.Usersession ? "own-message" : "other-message")">
-                        @{
-                            if (chat.ProfilePicture != null)
-                            {
-                                var imageBase64 = Convert.ToBase64String(chat.ProfilePicture);
-                                <img src="data:image/png;base64,@imageBase64" alt="Avatar" class="user-icon">
-                            }
-                            else
-                            {
-                                <img src="~/Image/User_icon.png" alt="Avatar" class="user-icon">
-                            }
-                        }
-                        <strong>@chat.User:</strong> @chat.Message
-                        <span class="message-time">@chat.CreatedAt.ToString("HH:mm")</span>
-                    </div>
-                }
+                <!-- Show message form ajax -->
             </div>
             <div class="chat-board-input">
                 <input type="text" id="chatInput" name="Message" placeholder="Type your message here..." required>
