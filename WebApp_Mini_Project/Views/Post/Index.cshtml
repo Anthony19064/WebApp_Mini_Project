@@ -321,25 +321,51 @@
 
     function sendMessage() {
         var message = $('#chatInput').val();
-        if (message.trim() !== "") {
+
+        if (message.trim() === "") {
+            // ถ้าข้อความว่าง, ตรวจสอบสถานะการล็อกอิน
             $.ajax({
                 url: '/Chat/SendMessage',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ message: message, user: '@ViewBag.Usersession' }),
                 success: function () {
-                    $('#chatInput').val(''); // Clear input field after sending
-                    loadMessages(); // Reload messages to reflect the new message
+                    // ไม่มีการทำงานในกรณีนี้
                 },
                 error: function (xhr, status, error) {
-                    if (xhr.status === 401) { // If 401 Unauthorized is returned
-                        window.location.href = '/Account/Login'; // Redirect to login page
+                    if (xhr.status === 401) {
+                        // เปลี่ยนเส้นทางไปที่หน้า Login เมื่อไม่ได้ล็อกอิน
+                        window.location.href = '/Account/Login';
+                    } else if (xhr.status === 400) {
+                        // ถ้าข้อความว่างและผู้ใช้ล็อกอินแล้ว, ไม่ต้องทำอะไร
+                        console.error("Error: Message is empty.");
                     } else {
                         console.error("Error sending message: " + error);
                     }
                 }
             });
+            return; // หยุดการทำงานของฟังก์ชัน
         }
+
+        // ถ้าข้อความไม่ว่างและล็อกอินแล้ว
+        $.ajax({
+            url: '/Chat/SendMessage',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ message: message, user: '@ViewBag.Usersession' }),
+            success: function () {
+                $('#chatInput').val(''); // Clear input field after sending
+                loadMessages(); // Reload messages to reflect the new message
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 401) {
+                    window.location.href = '/Account/Login'; // Redirect to login page
+                } else {
+                    console.error("Error sending message: " + error);
+                }
+            }
+        });
     }
+
 </script>
 
