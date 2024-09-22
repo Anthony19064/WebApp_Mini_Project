@@ -35,38 +35,36 @@
     border-radius: 20px;
 }
 
-.scrollable {
+.card-container {
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
-    gap: 50px;
+    gap: 20px;
     padding: 0 20px;
     width: 1400px;
     margin-left: 20px;
+    overflow-y: auto;
     height: 600px;
+    border: 1px solid #333;
     border-radius: 10px;
     box-sizing: border-box;
-    overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 
-}
-.hidden-scrollbar::-webkit-scrollbar {
-    display: none;
 }
 
     /* กำหนด scrollbar แบบกำหนดเอง */
-    /*.card-container::-webkit-scrollbar {
-        width: 8px;*/ /* ความกว้างของ scrollbar */
-    /*}
+    .card-container::-webkit-scrollbar {
+        width: 8px; /* ความกว้างของ scrollbar */
+    }
 
     .card-container::-webkit-scrollbar-thumb {
-        background: #888;*/ /* สีของ scrollbar */
-        /*border-radius: 4px;*/ /* มุมของ scrollbar */
-    /*}
+        background: #888; /* สีของ scrollbar */
+        border-radius: 4px; /* มุมของ scrollbar */
+    }
 
         .card-container::-webkit-scrollbar-thumb:hover {
-            background: #555;*/ /* สีเมื่อ hover */
-        /*}*/
+            background: #555; /* สีเมื่อ hover */
+        }
 
 
 
@@ -81,7 +79,8 @@
     align-items: center; /* จัดกลางในแนวนอน */
     width: 400px;
     height: 400px; /* ปรับให้ความสูงตามเนื้อหา */
-    margin-top: 10px;
+    margin: 15px;
+    margin-top: 30px;
 }
 
 .card-logo {
@@ -129,6 +128,7 @@
     font-size: 30px; /* ขนาดตัวอักษรที่ต้องการ */
     background: linear-gradient(to right, #FF6699, #FF6699, #f89b28); /* ไล่สี */
     font-family: 'testfont', sans-serif;
+    text-decoration: underline;
     -webkit-background-clip: text; /* ตัดพื้นหลังให้ไปที่ตัวอักษร */
     color: transparent; /* ทำให้สีพื้นหลังโปร่งใส */
     margin-bottom: 5px;
@@ -139,8 +139,7 @@
 
 
 .card-button {
-    background-color: transparent;
-    background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
+    background-color: #333;
     color: white;
     border: none;
     margin-bottom: 10px;
@@ -371,24 +370,20 @@
 .chat-board-container {
     width: 400px;
     height: 600px;
-    background-color:transparent;
-    background: linear-gradient(to bottom, #FF6699, #f89b28);
+    background-color: #eac2cf;
     color: #000000;
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(255, 253, 253, 0.1);
     margin-right: 30px;
     right: 50px;
-    margin-top: 10px;
 }
 
-.chat-board-header p {
-    color: white;
+.chat-board-header {
     text-align: center;
-    font-family: 'testfont', sans-serif;
-    font-size: 30px;
-    margin: 10px;
-    letter-spacing: 5px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .chat-board-messages {
@@ -452,7 +447,7 @@
 
 /* Styling for messages from the current user */
 .own-message {
-    background-color: pink;
+    background-color: #e1ffc7;
     align-self: flex-end; /* Aligns message to the right */
     margin-left: auto; /* Pushes message to the right */
     text-align: right; /* Aligns text to the right */

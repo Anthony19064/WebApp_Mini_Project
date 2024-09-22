@@ -70,18 +70,20 @@ footer {
     text-align: center;
     padding: 30px;
     margin-top: 70px;
-    background-color: gray;
+    background-color: #333;
+    color: #fff;
     margin-top: 10px;
 }
 
     footer a {
-        color: white;
+        color: #FF66FF;
         text-decoration: none;
     }
 
         footer a:hover {
             text-decoration: underline;
         }
+
 .nav-left {
     cursor: pointer;
 }

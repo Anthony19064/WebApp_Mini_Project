@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Diagnostics;
 using WebApp_Mini_Project.Data;
 using WebApp_Mini_Project.Models;
 
@@ -28,24 +27,19 @@ namespace WebApp_Mini_Project.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMessage([FromBody] Chat message)
         {
-            var usersession = HttpContext.Session.GetString("Usersession");
-            if (usersession == null)
+            // ตรวจสอบว่าเข้าสู่ระบบหรือยัง
+            var userSeccion = HttpContext.Session.GetString("Usersession");
+            if (userSeccion == null)
             {
-                return Unauthorized();
-            }
-
-            var account = await _db.Accounts.SingleOrDefaultAsync(account => account.Username == usersession);
-            if (account != null)
-            {
-                message.ProfilePicture = account.ProfilePicture;
+                return Unauthorized(); // Return หน้า 401 Unauthorized // Return หน้า 401 Unauthorized
             }
 
             message.CreatedAt = DateTime.Now;
+
             _db.Chats.Add(message);
-            await _db.SaveChangesAsync(); // ควรใช้ await
+            _db.SaveChanges();
             return Ok();
         }
-
 
         // รับข้อความทั้งหมด
         [HttpGet]
@@ -53,30 +47,8 @@ namespace WebApp_Mini_Project.Controllers
         {
             var messages = await _db.Chats
                 .OrderByDescending(m => m.CreatedAt)
-                .Select(m => new {
-                    m.ID,
-                    m.Message,
-                    m.CreatedAt,
-                    m.User,
-                    m.ProfilePicture // ตรวจสอบว่าถูกดึงมา
-                })
                 .ToListAsync();
-
-            foreach (var message in messages)
-            {
-                if (message.ProfilePicture == null)
-                {
-                    Debug.WriteLine($"Message ID {message.ID} has a null ProfilePicture.");
-                }
-                else
-                {
-                    Debug.WriteLine($"Message ID {message.ID} has a ProfilePicture of size: {message.ProfilePicture.Length} bytes.");
-                }
-            }
-
             return Json(messages);
         }
-
-
     }
 }

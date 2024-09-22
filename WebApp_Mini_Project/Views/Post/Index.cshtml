@@ -59,7 +59,7 @@
 
 
     <div class="test">
-    <div class="scrollable hidden-scrollbar" id="card-container">
+    <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
         {
             <div class="card-container2" id="card-container">
@@ -125,7 +125,7 @@
                     }
                     else
                     {
-                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:white; cursor: default; ">
+                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
                             <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                         </button>
                     }
@@ -140,7 +140,7 @@
 
     <div class="chat-board-container">
         <div class="chat-board-header">
-            <p>Chat Board</p>
+            <h3>Chat Board</h3>
         </div>
         <div class="chat-board-messages" id="chatMessages">
             <!-- Messages will be dynamically loaded here -->
@@ -291,39 +291,31 @@
     });
 
     function loadMessages() {
-    $.get("/Chat/GetMessages", function (data) {
-        $('#chatMessages').html(''); // Clear previous messages
-        data.forEach(function (msg) {
-            const formattedTime = formatTime(msg.createdAt);
-            const isOwnMessage = msg.user === '@ViewBag.Usersession';
-            const messageClass = isOwnMessage ? 'chat-message own-message' : 'chat-message other-message';
+        $.get("/Chat/GetMessages", function (data) {
+            $('#chatMessages').html(''); // Clear previous messages
+            data.forEach(function (msg) {
+                const formattedTime = formatTime(msg.createdAt);
+                // Check if the message is from the current user
+                const isOwnMessage = msg.user === '@ViewBag.Usersession';
+                // Assign appropriate CSS class
+                const messageClass = isOwnMessage ? 'chat-message own-message' : 'chat-message other-message';
+                // Define the URL for the user icon
+                const userIconUrl = 'https://img.icons8.com/ios/50/000000/user-male.png';
 
 
-            // URL สำหรับการดึงภาพ
-            const imgSrc = '/Image/User_icon.png'; // ไอคอนเริ่มต้น
 
-            // ตรวจสอบว่ามีค่าภาพ
-            if (msg.ProfilePicture && msg.ProfilePicture.length > 0) {
-                const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(msg.ProfilePicture)));
-                imgSrc = `data:image/jpeg;base64,${base64String}`;
-                console.log('success');
-            }else{
-            console.log('fail');
-            }
-
-            $('#chatMessages').append(
-                `<div class="${messageClass}">
-                    <img src="${imgSrc}" alt="User Icon" class="user-icon">
-                    <strong>${msg.user}:</strong> ${msg.message}
-                    <span class="message-time">(${formattedTime})</span>
-                </div>`
-            );
+                $('#chatMessages').append(
+                    `<div class="${messageClass}">
+                                <img src="${userIconUrl}" alt="User Icon" class="user-icon">
+                                <strong>${msg.user}:</strong> ${msg.message}
+                                <span class="message-time">(${formattedTime})</span>
+                            </div>`
+                );
+            });
+            // Ensure the view scrolls to the bottom after new messages are added
+            $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
         });
-        // Scroll to the bottom
-        $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
-    });
-}
-
+    }
 
 
 
