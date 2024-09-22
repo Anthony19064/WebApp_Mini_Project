@@ -125,7 +125,7 @@
                     }
                     else
                     {
-                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
+                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; cursor: default; ">
                             <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                         </button>
                     }
@@ -138,31 +138,45 @@
 
     </div>
 
-    <div class="chat-board-container">
-        <div class="chat-board-header">
-            <h3>Chat Board</h3>
+        <div class="chat-board-container">
+            <div class="chat-board-header">
+                <p>Chat Board</p>
+            </div>
+            <div class="chat-board-messages" id="chatMessages">
+                @foreach (var chat in Model.Chats)
+                {
+                    <div class="chat-message @(chat.User == ViewBag.Usersession ? "own-message" : "other-message")">
+                        @{
+                            if (chat.ProfilePicture != null)
+                            {
+                                var imageBase64 = Convert.ToBase64String(chat.ProfilePicture);
+                                <img src="data:image/png;base64,@imageBase64" alt="Avatar" class="user-icon">
+                            }
+                            else
+                            {
+                                <img src="~/Image/User_icon.png" alt="Avatar" class="user-icon">
+                            }
+                        }
+                        <strong>@chat.User:</strong> @chat.Message
+                        <span class="message-time">@chat.CreatedAt.ToString("HH:mm")</span>
+                    </div>
+                }
+            </div>
+            <div class="chat-board-input">
+                <input type="text" id="chatInput" name="Message" placeholder="Type your message here..." required>
+                <input type="hidden" id="user" name="User" value="@ViewBag.Usersession">
+                <button type="button" id="sendMessageBtn" class="btn-chat">Send</button>
+            </div>
         </div>
-        <div class="chat-board-messages" id="chatMessages">
-            <!-- Messages will be dynamically loaded here -->
-        </div>
-        <div class="chat-board-input">
-            <input type="text" id="chatInput" placeholder="Type your message here...">
-            <button id="sendMessageBtn">Send</button>
-        </div>
-    </div>
+
+
     </div>
 
-    <div class="chat-popup" id="chatPopup">
-        <div class="chat-popup-header">
-            แชทแจ้งเตือน
-        </div>
-        <div class="chat-popup-body" id="chatBody">
-            @* ข้อความแชท  *@
-        </div>
-    </div>
+
 
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="~/js/script_Post.js"></script>
 <script>
     const popupBtn = document.getElementById('openPopupBtn'); // ปุ่มเปิด form
@@ -266,80 +280,69 @@
 
     // ---------------------------------------------------------------------------------------------------
 
-    // ฟังก์ชันเพื่อจัดรูปแบบเวลา
-    function formatTime(dateString) {
-        const options = { hour: '2-digit', minute: '2-digit', hour12: false }; // 24 ชั่วโมง
-        const timeString = new Date(dateString).toLocaleString('en-US', options);
-        return timeString + ' นาที'; // เพิ่มคำว่า "นาที" หลังจากเวลา
-    }
 
-    // โหลดข้อความทั้งหมดเมื่อเปิดหน้าเว็บ
     $(document).ready(function () {
-        loadMessages();
-
-        // Event listener for send button
-        $('#sendMessageBtn').click(function () {
-            sendMessage();
-        });
-
-        // Pressing 'Enter' triggers send message
-        $('#chatInput').keypress(function (e) {
-            if (e.which === 13) { // 13 is the Enter key
-                sendMessage();
+        $('#sendMessageBtn').click(function (event) {
+            event.preventDefault(); // ป้องกันการส่งฟอร์ม
+            console.log('btn yess');
+            var message = $('#chatInput').val();
+            if (message.trim() === '') { 
+                return;
             }
-        });
-    });
-
-    function loadMessages() {
-        $.get("/Chat/GetMessages", function (data) {
-            $('#chatMessages').html(''); // Clear previous messages
-            data.forEach(function (msg) {
-                const formattedTime = formatTime(msg.createdAt);
-                // Check if the message is from the current user
-                const isOwnMessage = msg.user === '@ViewBag.Usersession';
-                // Assign appropriate CSS class
-                const messageClass = isOwnMessage ? 'chat-message own-message' : 'chat-message other-message';
-                // Define the URL for the user icon
-                const userIconUrl = 'https://img.icons8.com/ios/50/000000/user-male.png';
-
-
-
-                $('#chatMessages').append(
-                    `<div class="${messageClass}">
-                                <img src="${userIconUrl}" alt="User Icon" class="user-icon">
-                                <strong>${msg.user}:</strong> ${msg.message}
-                                <span class="message-time">(${formattedTime})</span>
-                            </div>`
-                );
-            });
-            // Ensure the view scrolls to the bottom after new messages are added
-            $('#chatMessages').scrollTop($('#chatMessages')[0].scrollHeight);
-        });
-    }
-
-
-
-    function sendMessage() {
-        var message = $('#chatInput').val();
-        if (message.trim() !== "") {
+            if (userSession != null){
+                console.log(userSession);
+            }
             $.ajax({
-                url: '/Chat/SendMessage',
                 type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ message: message, user: '@ViewBag.Usersession' }),
+                url: '@Url.Action("AddChat", "Chat")', // URL ของ Action ที่จะเรียก
+                data: { Message: message, User: '@ViewBag.Usersession' },
                 success: function () {
-                    $('#chatInput').val(''); // Clear input field after sending
-                    loadMessages(); // Reload messages to reflect the new message
+                    $('#chatInput').val(''); // เคลียร์ฟิลด์ข้อความหลังจากส่ง
+                    console.log('suscess');
+                    loadChats(); // เรียกใช้งานฟังก์ชันโหลดข้อความ
                 },
                 error: function (xhr, status, error) {
-                    if (xhr.status === 401) { // If 401 Unauthorized is returned
-                        window.location.href = '/Account/Login'; // Redirect to login page
-                    } else {
-                        console.error("Error sending message: " + error);
-                    }
+                    console.error("Error sending message: " + error);
+                }
+            });
+        });
+
+        // ฟังก์ชันสำหรับโหลด chat
+        function loadChats() {
+            $.ajax({
+                url: '/Chat/GetChats',
+                type: 'GET',
+                success: function (data) {
+                    $('#chatMessages').empty(); // ลบข้อความเก่าออก
+                    
+                    $.each(data, function (index, chat) {
+                        var user = chat.user || "Unknown User";
+                        var message = chat.message || "No message";
+                        var createdAt = new Date(chat.createdAt);
+                        var timeString = createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // แสดงเวลาในรูปแบบ HH:mm
+
+                        var imageBase64 = chat.profilePicture ? 'data:image/png;base64,' + chat.profilePicture : '/Image/User_icon.png';
+                        var ownMessageClass = (chat.user === '@ViewBag.Usersession') ? 'own-message' : 'other-message';
+                        $('#chatMessages').prepend(
+
+                            `<div class="chat-message ${ownMessageClass}">
+                                    <img src="${imageBase64}" alt="Avatar" class="user-icon">
+                                    <strong>${user}:</strong> ${message}
+                                    <span class="message-time">(${timeString})</span>
+                                </div>`
+                        );
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching chats:", error);
                 }
             });
         }
-    }
+
+        // โหลด chats เมื่อเริ่มต้น
+        loadChats();
+    });
+
+
 </script>
 

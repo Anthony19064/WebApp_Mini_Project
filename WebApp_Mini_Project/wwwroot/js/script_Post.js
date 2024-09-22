@@ -19,15 +19,7 @@ function joinRoom(id_room, countPersons, maxPersons) {
 };
 
 
-// ¿Ñ§¡ìªÑ¹à»Ô´/»Ô´ popupchat
-function toggleChatPopup() {
-   var chatPopup = document.getElementById("chatPopup");
-   if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
-      chatPopup.style.display = "block";
- } else {
-      chatPopup.style.display = "none";
-       }
-};
+
 
 function sendMessage() {
    var chatBody = document.getElementById("chatBody");

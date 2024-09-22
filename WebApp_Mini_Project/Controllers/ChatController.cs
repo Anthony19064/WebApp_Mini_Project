@@ -15,40 +15,52 @@ namespace WebApp_Mini_Project.Controllers
             _db = db;
         }
 
-        // แสดงหน้าแชท
-        [HttpGet]
-        public IActionResult Index()
-        {
-            ViewBag.Usersession = HttpContext.Session.GetString("Usersession");
-            return View();
-        }
-
-        // ส่งข้อความ
         [HttpPost]
-        public async Task<IActionResult> SendMessage([FromBody] Chat message)
+        public ActionResult AddChat(Chat obj) // ใช้ ActionResult แทน void
         {
-            // ตรวจสอบว่าเข้าสู่ระบบหรือยัง
-            var userSeccion = HttpContext.Session.GetString("Usersession");
-            if (userSeccion == null)
+            string usersession = HttpContext.Session.GetString("Usersession");
+            if (usersession == null)
             {
-                return Unauthorized(); // Return หน้า 401 Unauthorized // Return หน้า 401 Unauthorized
+                // แทนที่จะใช้ return ที่ไม่มีค่า ให้ส่งกลับ NotFound
+                return RedirectToAction("Index", "Post");
             }
 
-            message.CreatedAt = DateTime.Now;
+            var account = _db.Accounts.SingleOrDefault(a => a.Username == usersession);
+            if (account == null)
+            {
+                return NotFound(); // ไม่ต้องทำอะไรต่อ ถ้าไม่พบบัญชีผู้ใช้
+            }
 
-            _db.Chats.Add(message);
+            if (string.IsNullOrWhiteSpace(obj.Message))
+            {
+                return BadRequest("Message cannot be empty."); // ส่งกลับข้อผิดพลาดถ้าข้อความว่างเปล่า
+            }
+
+            obj.ProfilePicture = account.ProfilePicture;
+            obj.CreatedAt = DateTime.UtcNow;
+
+            _db.Chats.Add(obj);
             _db.SaveChanges();
-            return Ok();
+
+            // ส่งกลับเป็น NoContent ถ้าทำงานสำเร็จและไม่ต้องการคืนค่าใด ๆ
+            return NoContent(); // หรือสามารถใช้ Ok() ถ้าต้องการส่งข้อมูลเพิ่มเติม
         }
 
-        // รับข้อความทั้งหมด
-        [HttpGet]
-        public async Task<IActionResult> GetMessages()
+        public ActionResult GetChats()
         {
-            var messages = await _db.Chats
-                .OrderByDescending(m => m.CreatedAt)
-                .ToListAsync();
-            return Json(messages);
+            var chats = _db.Chats.OrderByDescending(m => m.CreatedAt)
+                .Take(7)
+                .Select(chat => new {
+                    chat.User,
+                    chat.Message,
+                    CreatedAt = chat.CreatedAt.ToString("o"), // ส่งในรูปแบบ ISO 8601
+                    ProfilePicture = chat.ProfilePicture
+                })
+                .ToList();
+
+            return Json(chats);
         }
+
+
     }
 }

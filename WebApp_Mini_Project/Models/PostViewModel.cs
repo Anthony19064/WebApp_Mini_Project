@@ -8,5 +8,9 @@ namespace WebApp_Mini_Project.ViewModels
         public Post NewPost { get; set; }
 
         public IEnumerable<Account> Account { get; set; }
+
+        public IEnumerable<Chat> Chats { get; set; }
+
+        public Chat ChatMessage { get; set; }
     }
 }
