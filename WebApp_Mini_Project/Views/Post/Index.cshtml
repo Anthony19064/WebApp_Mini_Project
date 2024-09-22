@@ -147,13 +147,14 @@
             </div>
             <div class="chat-board-input">
                 <input type="text" id="chatInput" name="Message" placeholder="Type your message here..." required>
+                
                 <input type="hidden" id="user" name="User" value="@ViewBag.Usersession">
                 <button type="button" id="sendMessageBtn" class="btn-chat">Send</button>
             </div>
         </div>
 
 
-    </div>
+      </div>
 
 
 
@@ -269,11 +270,12 @@
             event.preventDefault(); // ป้องกันการส่งฟอร์ม
             console.log('btn yess');
             var message = $('#chatInput').val();
-            if (message.trim() === '') { 
+            if (!userSession){
+                window.location.href = '/Account/Login';
                 return;
             }
-            if (userSession != null){
-                console.log(userSession);
+            if (message.trim() === '') { 
+                return;
             }
             $.ajax({
                 type: 'POST',
