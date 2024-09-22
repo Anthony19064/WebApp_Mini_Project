@@ -28,18 +28,30 @@ namespace WebApp_Mini_Project.Controllers
         public async Task<IActionResult> SendMessage([FromBody] Chat message)
         {
             // ตรวจสอบว่าเข้าสู่ระบบหรือยัง
-            var userSeccion = HttpContext.Session.GetString("Usersession");
-            if (userSeccion == null)
+            var userSession = HttpContext.Session.GetString("Usersession");
+            if (userSession == null)
             {
-                return Unauthorized(); // Return หน้า 401 Unauthorized // Return หน้า 401 Unauthorized
+                // ส่งกลับ 401 Unauthorized เมื่อไม่ล็อกอิน
+                return Unauthorized();
+            }
+
+            // ตรวจสอบว่าข้อความว่างไหม
+            if (string.IsNullOrWhiteSpace(message.Message))
+            {
+                // ส่งกลับ 400 BadRequest ถ้าข้อความว่าง
+                return BadRequest();
             }
 
             message.CreatedAt = DateTime.Now;
 
             _db.Chats.Add(message);
-            _db.SaveChanges();
-            return Ok();
+            await _db.SaveChangesAsync(); // ใช้ await เพื่อให้การบันทึกข้อมูลเป็น asynchronous
+
+            return Ok(); // ส่งผลลัพธ์ OK ถ้าสำเร็จ
         }
+
+
+
 
         // รับข้อความทั้งหมด
         [HttpGet]
