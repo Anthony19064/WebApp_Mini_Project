@@ -78,13 +78,19 @@
                         }
                         else
                         {
-                                        <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                                <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                         }
 
                         var timeAgo = DateTime.Now - post.time;
                         string timeAgoString;
 
-                        if (timeAgo.TotalHours >= 1)
+                        if (timeAgo.TotalDays >= 1)
+                        {
+                            var daysAgo = (int)timeAgo.TotalDays;
+                            timeAgoString = $"{daysAgo} วันที่แล้ว";
+                        }
+
+                        else if (timeAgo.TotalHours >= 1)
                         {
                             var hoursAgo = (int)timeAgo.TotalHours;
                             timeAgoString = $"{hoursAgo} ชั่วโมงที่แล้ว";
@@ -94,6 +100,7 @@
                             var minutesAgo = (int)timeAgo.TotalMinutes;
                             timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
                         }
+
                     }
                     @foreach (var account in Model.Account)
                     {
@@ -316,9 +323,9 @@
 
                             `<div class="chat-message ${ownMessageClass}">
                                     <img src="${imageBase64}" alt="Avatar" class="user-icon">
-                                    <strong>${user_name}:</strong> ${message}
-                                    <span class="message-time">(${timeString})</span>
-                                </div>`
+                                    <p>${user_name} <span> ${timeString} </span></p>
+                                    ${message}
+                            </div>`
                         );
                     });
                 },

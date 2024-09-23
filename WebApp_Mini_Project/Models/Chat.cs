@@ -9,7 +9,7 @@ namespace WebApp_Mini_Project.Models
         [Required]
         public string Message { get; set; }
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } 
         [Required]
         public int User_id { get; set; } // ผู้ส่งข้อความ
         public byte[]? ProfilePicture { get; set; }

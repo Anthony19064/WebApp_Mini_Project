@@ -37,7 +37,7 @@ namespace WebApp_Mini_Project.Controllers
             }
             obj.User_id = account.ID;
             obj.ProfilePicture = account.ProfilePicture;
-            obj.CreatedAt = DateTime.UtcNow;
+            obj.CreatedAt = DateTime.Now;
 
             _db.Chats.Add(obj);
             _db.SaveChanges();
@@ -49,7 +49,7 @@ namespace WebApp_Mini_Project.Controllers
         public ActionResult GetChats()
         {
             var chats = _db.Chats.OrderByDescending(m => m.CreatedAt)
-                .Take(7)
+                .Take(10)
                 .Select(chat => new {
                     chat.User_id,
                     chat.Message,

@@ -55,7 +55,13 @@ header {
         font-weight: bold;
     }
 
-header .nav-right button, header .nav-right a {
+.nav-left img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    filter: drop-shadow(0 4px 10px rgba(255, 102, 153, 1));
+}
+    header .nav-right button, header .nav-right a {
         background-color: #fff;
         color: #000099;
         border: none;
@@ -200,4 +206,5 @@ footer {
         background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
         background-color: transparent; /* สีพื้นหลังเมื่อชี้ */
     }
+
 

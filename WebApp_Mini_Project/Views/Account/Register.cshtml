@@ -21,6 +21,7 @@
         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
         @Html.ValidationMessageFor(model => model.ReplyPassword, "", new { @class = "text-danger" })
         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        <h1>Register</h1>
         <form method="POST" action="/Account/Register" enctype="multipart/form-data">
         <!-- Profile image with onClick to trigger file input -->
         <img src="https://cdn-icons-png.flaticon.com/512/10141/10141012.png" alt="Profile Picture" class="profile-pic" id="profileImage" onclick="document.getElementById('file-input').click();">
