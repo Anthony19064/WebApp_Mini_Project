@@ -35,7 +35,7 @@ namespace WebApp_Mini_Project.Controllers
             {
                 return BadRequest("Message cannot be empty."); // ส่งกลับข้อผิดพลาดถ้าข้อความว่างเปล่า
             }
-
+            obj.User_id = account.ID;
             obj.ProfilePicture = account.ProfilePicture;
             obj.CreatedAt = DateTime.UtcNow;
 
@@ -51,14 +51,23 @@ namespace WebApp_Mini_Project.Controllers
             var chats = _db.Chats.OrderByDescending(m => m.CreatedAt)
                 .Take(7)
                 .Select(chat => new {
-                    chat.User,
+                    chat.User_id,
                     chat.Message,
                     CreatedAt = chat.CreatedAt.ToString("o"), // ส่งในรูปแบบ ISO 8601
                     ProfilePicture = chat.ProfilePicture
                 })
                 .ToList();
 
-            return Json(chats);
+            string usersession = HttpContext.Session.GetString("Usersession");
+            var account = _db.Accounts.ToList();
+
+            var result = new
+            {
+                Chats = chats,
+                Account = account
+            };
+
+            return Json(result);
         }
 
 

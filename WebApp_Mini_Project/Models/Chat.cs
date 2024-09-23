@@ -11,7 +11,7 @@ namespace WebApp_Mini_Project.Models
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         [Required]
-        public string User { get; set; } // ผู้ส่งข้อความ
+        public int User_id { get; set; } // ผู้ส่งข้อความ
         public byte[]? ProfilePicture { get; set; }
 
 
