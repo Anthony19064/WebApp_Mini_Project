@@ -15,6 +15,7 @@ body {
     flex-direction: column;
     background-color: #f9f9f9;
     color: #333;
+
 }
 
 .container {
@@ -50,10 +51,16 @@ header {
     z-index: 1;
 }
 
-    header .nav-left {
-        font-size: 24px;
-        font-weight: bold;
-    }
+
+
+header .nav-left {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'testfont', sans-serif;
+    background-size: 300%;
+    
+}
+
 
     header .nav-right button, header .nav-right a {
         background-color: #fff;
@@ -82,19 +89,24 @@ header {
 
 footer {
     text-align: center;
-    padding: 15px;
-    background-color: #333;
+    padding: 20px;
+    background: linear-gradient(to right, #FF6699, #f89b28); /* A vibrant pink that matches your site */
     color: #fff;
     margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for a raised look */
 }
 
     footer a {
-        color: #FF66FF;
+        color: #FFA500; /* Bright orange color to complement the pink */
         text-decoration: none;
+        transition: color 0.3s ease;
     }
 
         footer a:hover {
             text-decoration: underline;
+            color: #fff; /* White color on hover to stand out */
         }
 
 .nav-left {
@@ -141,6 +153,8 @@ footer {
         display: block;
         border-radius: 0 !important;
         font-family: 'testfont', sans-serif;
+        animation: slideDown 1.0s ease forwards;
+        opacity: 0; /* เริ่มต้นด้วยความโปร่งใส */
     }
 
         .dropdown-content a:hover {
@@ -148,13 +162,37 @@ footer {
             color: white !important;
         }
 
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .dropdown:hover .dropdown-content {
     display: block;
+    animation: slideDown 1.0s ease forwards; /* เพิ่ม animation */
 }
 
 .dropdown:hover .dropbtn {
     background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
 
+}
+.dropdown-content a:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.dropdown-content a:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.dropdown-content a:nth-child(3) {
+    animation-delay: 0.3s;
 }
 
 .dropbtn {
