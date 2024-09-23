@@ -74,11 +74,11 @@
                         {
                             var base64String = Convert.ToBase64String(post.User_Picture);
                             var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                            <img src="@imgSrc" alt="logo" class="card-logo" />
+                                        <img src="@imgSrc" alt="logo" class="card-logo" />
                         }
                         else
                         {
-                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                                        <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                         }
 
                         var timeAgo = DateTime.Now - post.time;
@@ -147,8 +147,6 @@
             </div>
             <div class="chat-board-input">
                 <input type="text" id="chatInput" name="Message" placeholder="Type your message here..." required>
-                
-                <input type="hidden" id="user" name="User" value="@ViewBag.Usersession">
                 <button type="button" id="sendMessageBtn" class="btn-chat">Send</button>
             </div>
         </div>
@@ -268,7 +266,6 @@
     $(document).ready(function () {
         $('#sendMessageBtn').click(function (event) {
             event.preventDefault(); // ป้องกันการส่งฟอร์ม
-            console.log('btn yess');
             var message = $('#chatInput').val();
             if (!userSession){
                 window.location.href = '/Account/Login';
@@ -280,7 +277,7 @@
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("AddChat", "Chat")', // URL ของ Action ที่จะเรียก
-                data: { Message: message, User: '@ViewBag.Usersession' },
+                data: { Message: message, User: userSession },
                 success: function () {
                     $('#chatInput').val(''); // เคลียร์ฟิลด์ข้อความหลังจากส่ง
                     console.log('suscess');
@@ -298,21 +295,28 @@
                 url: '/Chat/GetChats',
                 type: 'GET',
                 success: function (data) {
+                    console.log(data.chats);
                     $('#chatMessages').empty(); // ลบข้อความเก่าออก
-                    
-                    $.each(data, function (index, chat) {
-                        var user = chat.user || "Unknown User";
+                    $.each(data.chats, function (index, chat) {
+                        var user = chat.user_id || "Unknown User";
+                        var user_name = ''
+                        $.each(data.account, function (index, account) {
+
+                            if (user == account.id) {
+                                user_name = account.username;
+                            }
+                        });
                         var message = chat.message || "No message";
                         var createdAt = new Date(chat.createdAt);
                         var timeString = createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // แสดงเวลาในรูปแบบ HH:mm
 
                         var imageBase64 = chat.profilePicture ? 'data:image/png;base64,' + chat.profilePicture : '/Image/User_icon.png';
-                        var ownMessageClass = (chat.user === '@ViewBag.Usersession') ? 'own-message' : 'other-message';
+                        var ownMessageClass = (String(chat.user_id) === String('@ViewBag.UserID')) ? 'own-message' : 'other-message';
                         $('#chatMessages').prepend(
 
                             `<div class="chat-message ${ownMessageClass}">
                                     <img src="${imageBase64}" alt="Avatar" class="user-icon">
-                                    <strong>${user}:</strong> ${message}
+                                    <strong>${user_name}:</strong> ${message}
                                     <span class="message-time">(${timeString})</span>
                                 </div>`
                         );
