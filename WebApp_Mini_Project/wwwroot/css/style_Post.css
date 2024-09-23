@@ -156,33 +156,51 @@
 
 .popup-background {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 200%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
+    backdrop-filter: blur(6px);
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .popup-form {
-    background-color: rgb(252, 247, 247);
-    padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 400px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     text-align: left;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 1em;
+    margin-bottom: 2em;
+    border: none;
+    box-shadow: 10px 10px 1000px rgba(0, 0, 0, 0.2);
+    color: #333;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    
 }
 
     .popup-form h3 {
         margin-bottom: 10px;
         text-align: center;
+        font-size:24px;
+        color:white;
+        border:
     }
 
     .popup-form label {
         margin: 10px 0 5px;
         display: block;
+        color: white !important;
+        font-size:17px;
+    }
+    .popup-form input {
+        display: block;
+        box-shadow: 10px 10px 1000px rgba(0, 0, 0, 0.2);
     }
 
     .popup-form input,
@@ -191,22 +209,27 @@
         padding: 8px;
         margin-bottom: 10px;
         border: none;
-        border-bottom: 1px solid #b51313;
+        border-bottom: 2px solid #FF6699;
         border-radius: 0;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(6px);
+        border-radius: 20px;
     }
 
     .popup-form button {
         width: 100%;
         padding: 10px;
-        background-color: #a00a0a;
-        color: white;
+        color: #FF66FF !important;
         border: none;
-        border-radius: 5px;
+        border-radius: 15px;
         cursor: pointer;
+        border-bottom: 2px solid #FF6699;
+        font-family: 'testfont', sans-serif;
     }
 
         .popup-form button:hover {
-            background-color: #555;
+            background: linear-gradient(to right, #FF6699, #f89b28);
+            color: white !important;
         }
 
 .close-popup {
@@ -219,6 +242,87 @@
     .close-popup:hover {
         text-decoration: underline;
     }
+
+
+.drops {
+    position: relative;
+    
+}
+
+.drop {
+    color: aliceblue;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, rgba(255, 100, 255, 0.3), rgba(255, 102, 204, 0.3), rgba(255, 102, 153, 0.3));
+    border-left: 1px solid white; /* แก้ไข $white เป็น white */
+    border-top: 1px solid white;
+    box-shadow: 10px 10px 60px -8px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    transition: all 0.2s ease;
+}
+
+.drop-1 {
+    height: 90px;
+    width: 90px;
+    top: -20px;
+    left: 320px;
+    z-index: -1;
+    
+}
+
+.drop-2 {
+    height: 80px;
+    width: 80px;
+    bottom: 300px;
+    right: -90px;
+    
+}
+
+.drop-3 {
+    height: 100px;
+    width: 100px;
+    bottom: 530px;
+    right: 320px;
+    z-index: -1;
+   
+}
+
+.drop-4 {
+    height: 120px;
+    width: 120px;
+    top: -650px;
+    right: -60px;
+    
+}
+
+.drop-5 {
+    height: 60px;
+    width: 60px;
+    bottom: 170px;
+    left: 90px;
+    z-index: -1;
+    
+}
+
+/* การขยับ drops เมื่อ hover บน popup-form */
+.popup-form:hover .drop-1 {
+    transform: translate(-10px, -10px);
+}
+
+.popup-form:hover .drop-2 {
+    transform: translate(10px, 10px);
+}
+
+.popup-form:hover .drop-3 {
+    transform: translate(-15px, 15px);
+}
+
+.popup-form:hover .drop-4 {
+    transform: translate(15px, -15px);
+}
+
+.popup-form:hover .drop-5 {
+    transform: translate(-5px, 5px);
+}
 
 .refresh-btn {
     position: absolute;
@@ -484,3 +588,5 @@
 
 }
 
+
+ 
