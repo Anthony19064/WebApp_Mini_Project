@@ -106,8 +106,9 @@ namespace WebApp_Mini_Project.Controllers
         public IActionResult Profile()
         {
             var posts = _db.Posts.ToList();
+            var accounts = _db.Accounts.ToList();
             string usersession = HttpContext.Session.GetString("Usersession");
-            var accounts = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
+            var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
             if (accounts == null)
             {
                 return NotFound(); 
@@ -116,7 +117,8 @@ namespace WebApp_Mini_Project.Controllers
             var viewModel = new AccountViewModel
             {
                 Posts = posts,
-                account = accounts
+                Account = account,
+                Account_list = accounts
             };
             return View(viewModel);
         }

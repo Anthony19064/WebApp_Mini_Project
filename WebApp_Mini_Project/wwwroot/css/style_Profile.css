@@ -107,16 +107,22 @@
 .content-section {
     display: flex;
     width: 100%;
-    flex-wrap: wrap; /* อนุญาตให้ห่อในหน้าจอขนาดเล็ก */
-    justify-content: center; /* จัดกึ่งกลางแนวนอน */
-    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+    flex-direction: column; /* เปลี่ยนเป็นแนวตั้ง */
+    align-items: center; /* จัดกึ่งกลางแนวนอน */
+}
+
+.avatar-section, .form-section {
+    width: 100%; /* ปรับให้แต่ละส่วนมีความกว้าง 100% */
+    display: flex;
+    justify-content: center; /* จัดกึ่งกลางแนวนอนในแต่ละส่วน */
+    margin-bottom: 20px; /* เว้นระยะระหว่างแต่ละส่วน */
 }
 
 .avatar-section {
     width: 30%; /* กำหนดความกว้างเป็นเปอร์เซ็นต์เพื่อปรับตาม container */
-    text-align: center;
-    margin-right: 20px;
+    margin: 0px;
 }
+
 
 @media (max-width: 768px) {
     .avatar-section, .form-section {
@@ -132,7 +138,6 @@
     margin: 0 auto; /* จัดกึ่งกลางแนวนอน */
     display: block; /* ทำให้ margin auto ทำงาน */
     border: 5px solid white;
-    margin-left: 70px;
     object-fit: cover;
 }
 
@@ -147,6 +152,7 @@
 .profile-form {
     width: 100%; /* ทำให้ฟอร์มใช้พื้นที่ทั้งหมดของ form-section */
     max-width: 500px; /* กำหนดความกว้างสูงสุด */
+
 }
 
     .profile-form .form-group {
@@ -266,6 +272,7 @@
         margin-left: 180px;
         cursor: pointer; /* เพิ่ม cursor pointer เมื่อคลิกที่ภาพ */
         align-items: center;
+        object-fit: cover;
         border: 5px solid #FF3399;
     }
 
