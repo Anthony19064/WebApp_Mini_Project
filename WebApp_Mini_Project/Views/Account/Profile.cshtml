@@ -84,8 +84,28 @@
                         {
                             <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                         }
+
+                        <!-- Time ago logic -->
+                        @{
+                            var timeAgo = DateTime.Now - post.time;
+                            string timeAgoString;
+
+                            if (timeAgo.TotalHours >= 1)
+                            {
+                                var hoursAgo = (int)timeAgo.TotalHours;
+                                timeAgoString = $"{hoursAgo} ชั่วโมงที่แล้ว";
+                            }
+                            else
+                            {
+                                var minutesAgo = (int)timeAgo.TotalMinutes;
+                                timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
+                            }
+                        }
+                        
+
                         <div class="card-content">
-                            <p id="user">@Model.Account.Username</p>
+                            <p id="user">@Model.account.Username</p>
+                            <p id="time">@timeAgoString</p>
                             <p><b>ชื่อห้อง</b> : @post.Name_room</p>
                             <p><b>เกม</b> : @post.Game</p>
                             <p><b>รายละเอียด</b> : @post.Details</p>
@@ -114,29 +134,38 @@
                 {
                     <div class="card-join">
 
+                        @if (post.User_Picture != null)
+                        {
+                            var base64String = Convert.ToBase64String(post.User_Picture);
+                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                            <img src="@imgSrc" alt="logo" class="card-logo-join" />
+                        }
+                        else
+                        {
+                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo-join" />
+                        }
 
+                        <!-- Time ago logic -->
                         @{
-                            if (post.User_Picture != null)
+                            var timeAgo = DateTime.Now - post.time;
+                            string timeAgoString;
+
+                            if (timeAgo.TotalHours >= 1)
                             {
-                                var base64String = Convert.ToBase64String(post.User_Picture);
-                                var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                                <img src="@imgSrc" alt="logo" class="card-logo-join" />
+                                var hoursAgo = (int)timeAgo.TotalHours;
+                                timeAgoString = $"{hoursAgo} ชั่วโมงที่แล้ว";
                             }
                             else
                             {
-                                <img src="~/Image/User_icon.png" alt="logo" class="card-logo-join" />
+                                var minutesAgo = (int)timeAgo.TotalMinutes;
+                                timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
                             }
                         }
+                        
+
                         <div class="card-content-join">
-                            @foreach (var account in Model.Account_list)
-                            {
-                                if (post.User_id == account.ID)
-                                {
-                                    <p id="user">@account.Username</p>
-                                }
-                                
-                            }
-                            
+                            <p id="user">@Model.account.Username</p>
+                            <p id="time">@timeAgoString</p>
                             <p><b>ชื่อห้อง</b> : @post.Name_room</p>
                             <p><b>เกม</b> : @post.Game</p>
                             <p><b>รายละเอียด</b> : @post.Details</p>
@@ -150,6 +179,7 @@
         </div>
         <button class="scroll-button-join right" onclick="scrollRight('.card-container-join')">></button>
     </div>
+
 
     <!-- Edit Popup -->
     <div id="editPopup" class="edit-popup">

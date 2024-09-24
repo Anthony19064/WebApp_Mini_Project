@@ -417,11 +417,12 @@ h2 {
 .card-container-wrapper-join {
     position: relative;
     width: 80vw;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 40px auto;
     display: flex;
     align-items: center;
     margin-top: 40px; /* เพิ่มระยะห่างด้านบนเพื่อไม่ให้ทับกับ label */
+    word-wrap: break-word; /* ทำให้คำยาว ๆ ถูกตัดบรรทัด */
 }
 
 /* Scroll Buttons */
@@ -463,16 +464,19 @@ h2 {
 .card-container-join {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start; /* จัดการ์ดไปทางซ้าย */
+    justify-content: left; /* จัดการ์ดไปทางซ้าย */
     align-items: stretch;
     white-space: nowrap; /* ทำให้การ์ดอยู่ในบรรทัดเดียว */
     padding: 20px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     overflow-x: auto; /* เปิดการเลื่อนในแนวนอน */
     overflow-y: hidden; /* ปิดการเลื่อนในแนวตั้ง */
     position: relative;
+    margin-left: 20px;
+    gap: 20px;
+    ma
 }
 
 
@@ -508,6 +512,9 @@ h2 {
     margin: 10px; /* Adjust margin as needed */
     box-sizing: border-box;
     position: relative;
+    width: 400px;
+    height: 400px;
+    margin-top: 30px;
 }
 
 .card-label,
@@ -541,10 +548,16 @@ h2 {
 .card-logo-join {
     width: 120px;
     height: 120px;
-    margin: 10px 0;
+    margin: 0 0;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column; /* เรียงแนวตั้ง */
+    align-items: center; /* จัดกลางในแนวนอน */
 }
 
 .card-content,
@@ -552,29 +565,39 @@ h2 {
     text-align: left;
     flex: 1;
     margin-bottom: 0;
+    white-space: initial; /* อนุญาตให้ข้อความห่อบรรทัด */
+    text-overflow: ellipsis; /* แสดง ... เมื่อข้อความยาวเกินไป */
 }
 
     .card-content p,
     .card-content-join p {
-        margin: 2px 0;
+        margin: 4px 0;
         font-size: 17px;
         color: #333;
         margin-top: 3px;
     }
 
+#time {
+    font-size: 15px;
+    color: gray;
+    margin-bottom: 20px;
+    margin-top: 0;
+    text-align: center;
+}
+
 /* Card Buttons */
 .card-button,
 .card-button-join {
+    background-color: transparent;
     background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
     color: white;
     border: none;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
     width: 70px;
     height: 35px;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
     .card-button:hover,
