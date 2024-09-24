@@ -41,7 +41,7 @@ html {
 
 header {
     background-color: #FF66FF;
-    padding: 15px 15px;
+    padding: 2px;
     display: flex;
     justify-content: space-between;
     align-items: center;
