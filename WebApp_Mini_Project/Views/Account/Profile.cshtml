@@ -87,7 +87,7 @@
 
                         <!-- Time ago logic -->
                         @{
-                            var timeAgo = DateTime.Now - post.time;
+                            var timeAgo = DateTime.Now - post.timeCreate;
                             string timeAgoString;
 
                             if (timeAgo.TotalHours >= 1)
@@ -104,7 +104,7 @@
                         
 
                         <div class="card-content">
-                            <p id="user">@Model.account.Username</p>
+                            <p id="user">@Model.Account.Username</p>
                             <p id="time">@timeAgoString</p>
                             <p><b>ชื่อห้อง</b> : @post.Name_room</p>
                             <p><b>เกม</b> : @post.Game</p>
@@ -147,7 +147,7 @@
 
                         <!-- Time ago logic -->
                         @{
-                            var timeAgo = DateTime.Now - post.time;
+                            var timeAgo = DateTime.Now - post.timeCreate;
                             string timeAgoString;
 
                             if (timeAgo.TotalHours >= 1)
@@ -164,7 +164,7 @@
                         
 
                         <div class="card-content-join">
-                            <p id="user">@Model.account.Username</p>
+                            <p id="user">@Model.Account.Username</p>
                             <p id="time">@timeAgoString</p>
                             <p><b>ชื่อห้อง</b> : @post.Name_room</p>
                             <p><b>เกม</b> : @post.Game</p>
@@ -310,7 +310,7 @@
             const container = document.querySelector(containerSelector);
             if (container) {
                 container.scrollBy({
-                    left: -300,
+                    left: -226,
                     behavior: 'smooth'
                 });
             }
@@ -322,7 +322,7 @@
             const container = document.querySelector(containerSelector);
             if (container) {
                 container.scrollBy({
-                    left: 300,
+                    left: 226,
                     behavior: 'smooth'
                 });
             }
