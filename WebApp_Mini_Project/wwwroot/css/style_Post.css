@@ -480,7 +480,7 @@
     background: linear-gradient(to bottom, #FF6699, #f89b28);
     color: #000000;
     border-radius: 10px;
-    padding: 15px 15px 20px 15px;
+    padding: 15px 15px 30px 15px;
     box-shadow: 0 4px 8px rgba(255, 253, 253, 0.1);
     margin-right: 30px;
     right: 50px;
@@ -559,7 +559,7 @@
 
 .chat-board-input {
     display: flex;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 

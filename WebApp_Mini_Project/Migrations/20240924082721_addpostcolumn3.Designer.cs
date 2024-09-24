@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp_Mini_Project.Data;
 
@@ -11,9 +12,11 @@ using WebApp_Mini_Project.Data;
 namespace WebApp_Mini_Project.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240924082721_addpostcolumn3")]
+    partial class addpostcolumn3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,8 +119,14 @@ namespace WebApp_Mini_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("dayend")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("timeCreate")
                         .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("timeend")
+                        .HasColumnType("time");
 
                     b.Property<DateTime>("timeout")
                         .HasColumnType("datetime2");
