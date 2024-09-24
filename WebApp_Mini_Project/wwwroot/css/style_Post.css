@@ -169,23 +169,28 @@
 
 .popup-background {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 200%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
+    backdrop-filter: blur(6px);
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .popup-form {
-    background-color: rgb(252, 247, 247);
-    padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 400px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     text-align: left;
+    background-color: rgb(255, 255, 255,0.8);
+    padding: 1em;
+    margin-bottom: 2em;
+    border: none;
+    box-shadow: 10px 10px 1000px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease-in-out;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     font-family: 'thaifont', sans-serif;
 }
 
@@ -199,8 +204,17 @@
     .popup-form label {
         margin: 10px 0 5px;
         display: block;
+        padding-bottom: 8px;
         font-size: 23px;
     }
+
+
+
+    .popup-form input {
+       display: block;
+       box-shadow: 10px 10px 1000px rgba(0, 0, 0, 0.2);
+       padding-bottom: 8px;
+     }
 
     .popup-form input,
     .popup-form select {
@@ -208,6 +222,8 @@
         padding: 8px;
         margin-bottom: 10px;
         border: none;
+        background: white;
+        backdrop-filter: blur(6px);
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
@@ -222,26 +238,114 @@
         background: linear-gradient(to right, #FF6699, #f89b28);
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 15px;
+        width:90px;
+        margin-left:130px;
+        margin-top:20px;
         cursor: pointer;
         margin: 15px auto 0; /* ตรงกลางแนวนอน */
         display: block; /* ทำให้ปุ่มเป็น block-level element */
     }
 
         .popup-form button:hover {
-            background-color: #555;
+            background: linear-gradient(to right, #FF6699, #f89b28);
+            color: white !important;
         }
 
 .close-popup {
     text-align: center;
-    margin-top: 10px;
     cursor: pointer;
     color: #333;
+    width: 30px;
+    margin-left: 340px;
 }
 
     .close-popup:hover {
         text-decoration: underline;
     }
+
+
+.drops {
+    position: relative;
+    
+}
+
+.drop {
+    color: aliceblue;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, rgba(255, 100, 255, 0.3), rgba(255, 102, 204, 0.3), rgba(255, 102, 153, 0.3));
+    border-left: 1px solid white; /* แก้ไข $white เป็น white */
+    border-top: 1px solid white;
+    box-shadow: 10px 10px 60px -8px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    transition: all 0.2s ease;
+}
+
+.drop-1 {
+    height: 90px;
+    width: 90px;
+    top: -20px;
+    left: 320px;
+    z-index: -1;
+    
+}
+
+.drop-2 {
+    height: 80px;
+    width: 80px;
+    bottom: 300px;
+    right: -90px;
+    z-index:-1;
+    
+}
+
+.drop-3 {
+    height: 100px;
+    width: 100px;
+    bottom: 530px;
+    right: 320px;
+    z-index: -1;
+   
+}
+
+.drop-4 {
+    height: 120px;
+    width: 120px;
+    top: -650px;
+    right: -60px;
+    z-index:-50;
+    
+}
+
+.drop-5 {
+    height: 60px;
+    width: 60px;
+    bottom: 170px;
+    left: 90px;
+    z-index: -1;
+    
+}
+
+/* การขยับ drops เมื่อ hover บน popup-form */
+.popup-form:hover .drop-1 {
+    transform: translate(-10px, -10px);
+}
+
+.popup-form:hover .drop-2 {
+    transform: translate(10px, 10px);
+}
+
+.popup-form:hover .drop-3 {
+    transform: translate(-15px, 15px);
+}
+
+.popup-form:hover .drop-4 {
+    transform: translate(15px, -15px);
+}
+
+.popup-form:hover .drop-5 {
+    transform: translate(-5px, 5px);
+}
 
 .refresh-btn {
     position: absolute;
@@ -562,4 +666,3 @@
     margin-left: 15px
 
 }
-
