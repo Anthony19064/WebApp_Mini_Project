@@ -120,6 +120,7 @@ namespace WebApp_Mini_Project.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("timeout")
+
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");

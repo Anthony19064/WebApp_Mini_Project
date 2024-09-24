@@ -333,6 +333,7 @@
                 url: '/Chat/GetChats',
                 type: 'GET',
                 success: function (data) {
+                    console.log(data.chats);
                     $('#chatMessages').empty(); // ลบข้อความเก่าออก
                     $.each(data.chats, function (index, chat) {
                         var user = chat.user_id || "Unknown User";
@@ -355,6 +356,7 @@
                                     <img src="${imageBase64}" alt="Avatar" class="user-icon">
                                     <p>${user_name} <span> ${timeString} </span></p>
                                         <div class="message"> ${message} </div>
+
                             </div>`
                         );
                     });
