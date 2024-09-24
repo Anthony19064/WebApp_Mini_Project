@@ -42,7 +42,7 @@ html {
 
 header {
     background-color: #FF66FF;
-    padding: 15px 15px;
+    padding: 2px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,16 +52,12 @@ header {
 }
 
 
-
-header .nav-left {
-    font-size: 24px;
-    font-weight: bold;
-    font-family: 'testfont', sans-serif;
-    background-size: 300%;
-    
+.nav-left img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    filter: drop-shadow(0 4px 10px rgba(255, 102, 153, 1));
 }
-
-
     header .nav-right button, header .nav-right a {
         background-color: #fff;
         color: #000099;
@@ -245,4 +241,5 @@ footer {
         background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
         background-color: transparent; /* สีพื้นหลังเมื่อชี้ */
     }
+
 

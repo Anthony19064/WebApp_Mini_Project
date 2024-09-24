@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="profile-container">
-        <!-- Icon ฟันเฟือง -->
+        <!-- Settings Icon -->
         <div class="settings-icon" onclick="togglePopup()">
             <img src="https://img5.pic.in.th/file/secure-sv1/Pngtreewhite-edit-icon_4559214.png" alt="Settings Icon">
         </div>
@@ -19,9 +19,9 @@
         <div class="content-section">
             <!-- Avatar Section (Left) -->
             <div class="avatar-section">
-                @if (Model.account.ProfilePicture != null)
+                @if (Model.Account.ProfilePicture != null)
                 {
-                    var imageBase64 = Convert.ToBase64String(Model.account.ProfilePicture);
+                    var imageBase64 = Convert.ToBase64String(Model.Account.ProfilePicture);
                     <img src="data:image/png;base64,@imageBase64" alt="Avatar">
                 }
                 else
@@ -35,7 +35,7 @@
                 <form id="profileForm" class="profile-form">
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="@Model.account.Username" disabled>
+                        <input type="text" id="username" name="username" value="@Model.Account.Username" disabled>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -43,31 +43,38 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="@Model.account.Email" disabled>
+                        <input type="email" id="email" name="email" value="@Model.Account.Email" disabled>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    @foreach (var post in Model.Posts)
-    {
-        if (Model.account.ID == 1)
-        {
-           <div class="card-container">
-                <div class="card">
-                    <!-- จุดสามจุด -->
-                    <div class="card-menu" onclick="toggleCardMenu(this)">
-                        <span>⋮</span>
-                        <ul class="card-menu-options">
-                            <li onclick="openEditPopup()">Edit</li>
-                            <li>delete</li>
-                            <li>kuy</li>
-                        </ul>
-                    </div>
+    <!-- Card Container for User's Own Posts -->
 
-                    @{
-                        if (post.User_Picture != null)
+    <div class="card-container-wrapper">
+        <button class="scroll-button left" onclick="scrollLeft('.card-container')"><</button>
+        <div class="card-label">
+            <h2>โพสของคุณ</h2>
+        </div>
+        <div class="card-container">
+
+            @foreach (var post in Model.Posts)
+            {
+                if (Model.Account.ID == post.User_id) // Adjusted condition for joined posts
+                {
+                    <div class="card">
+                        <!-- Card Menu in the top right corner -->
+                        <div class="card-menu" onclick="toggleCardMenu(event)">
+                            <span>⋮</span>
+                            <ul class="card-menu-options">
+                                <li onclick="openEditPopup()">Edit</li>
+                                <li>Delete</li>
+                                <li>Kuy</li>
+                            </ul>
+                        </div>
+
+                        @if (post.User_Picture != null)
                         {
                             var base64String = Convert.ToBase64String(post.User_Picture);
                             var imgSrc = $"data:image/jpeg;base64,{base64String}";
@@ -77,72 +84,110 @@
                         {
                             <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                         }
-                    }
-                    <div class="card-content">
-                        <p id="user">@Model.account.Username</p>
-                        <p><b>ชื่อห้อง</b> : @post.Name_room</p>
-                        <p><b>เกม</b> : @post.Game</p>
-                        <p><b>รายละเอียด</b> : @post.Details</p>
-                    </div>
-                    <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
-                        <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                    </button>
-                </div>
-            </div> 
-        }
-        if (Model.account.ID == post.User_id)
-        {
-            <div class="card-container">
-                <div class="card">
-                    <!-- จุดสามจุด -->
-                    <div class="card-menu" onclick="toggleCardMenu(this)">
-                        <span>⋮</span>
-                        <ul class="card-menu-options">
-                            <li onclick="openEditPopup()">Edit</li>
-                            <li>delete</li>
-                            <li>kuy</li>
-                        </ul>
-                    </div>
 
-                    @{
-                        if (post.User_Picture != null)
+                        <!-- Time ago logic -->
+                        @{
+                            var timeAgo = DateTime.Now - post.timeCreate;
+                            string timeAgoString;
+
+                            if (timeAgo.TotalHours >= 1)
+                            {
+                                var hoursAgo = (int)timeAgo.TotalHours;
+                                timeAgoString = $"{hoursAgo} ชั่วโมงที่แล้ว";
+                            }
+                            else
+                            {
+                                var minutesAgo = (int)timeAgo.TotalMinutes;
+                                timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
+                            }
+                        }
+                        
+
+                        <div class="card-content">
+                            <p id="user">@Model.Account.Username</p>
+                            <p id="time">@timeAgoString</p>
+                            <p><b>ชื่อห้อง</b> : @post.Name_room</p>
+                            <p><b>เกม</b> : @post.Game</p>
+                            <p><b>รายละเอียด</b> : @post.Details</p>
+                        </div>
+                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default;">
+                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                        </button>
+                    </div>
+                }
+            }
+        </div>
+        <button class="scroll-button right" onclick="scrollRight('.card-container')">></button>
+    </div>
+
+    <!-- Card Container for Joined Posts -->
+    <div class="card-container-wrapper-join">
+        <button class="scroll-button-join left" onclick="scrollLeft('.card-container-join')"><</button>
+        <div class="card-label-join">
+            <h2>โพสที่เข้าร่วม</h2>
+        </div>
+        <div class="card-container-join">
+            
+            @foreach (var post in Model.Posts)
+            {
+                if (post.User_list.Contains(Model.Account.ID))
+                {
+                    <div class="card-join">
+
+                        @if (post.User_Picture != null)
                         {
                             var base64String = Convert.ToBase64String(post.User_Picture);
                             var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                            <img src="@imgSrc" alt="logo" class="card-logo" />
+                            <img src="@imgSrc" alt="logo" class="card-logo-join" />
                         }
                         else
                         {
-                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo-join" />
                         }
-                    }
-                    <div class="card-content">
-                        <p id="user">@Model.account.Username</p>
-                        <p><b>ชื่อห้อง</b> : @post.Name_room</p>
-                        <p><b>เกม</b> : @post.Game</p>
-                        <p><b>รายละเอียด</b> : @post.Details</p>
+
+                        <!-- Time ago logic -->
+                        @{
+                            var timeAgo = DateTime.Now - post.timeCreate;
+                            string timeAgoString;
+
+                            if (timeAgo.TotalHours >= 1)
+                            {
+                                var hoursAgo = (int)timeAgo.TotalHours;
+                                timeAgoString = $"{hoursAgo} ชั่วโมงที่แล้ว";
+                            }
+                            else
+                            {
+                                var minutesAgo = (int)timeAgo.TotalMinutes;
+                                timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
+                            }
+                        }
+                        
+
+                        <div class="card-content-join">
+                            <p id="user">@Model.Account.Username</p>
+                            <p id="time">@timeAgoString</p>
+                            <p><b>ชื่อห้อง</b> : @post.Name_room</p>
+                            <p><b>เกม</b> : @post.Game</p>
+                            <p><b>รายละเอียด</b> : @post.Details</p>
+                        </div>
+                        <button class="card-button-join join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default;">
+                            <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
+                        </button>
                     </div>
-                    <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default; ">
-                        <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                    </button>
-                </div>
-            </div>
-        }
-        
-    }
+                }
+            }
+        </div>
+        <button class="scroll-button-join right" onclick="scrollRight('.card-container-join')">></button>
+    </div>
 
-    
 
-    <!-- Popup ฟอร์มกรอกข้อมูล -->
+    <!-- Edit Popup -->
     <div id="editPopup" class="edit-popup">
         <div class="edit-popup-content">
             <span class="close" onclick="closeEditPopup()">&times;</span>
             <h2>Edit Information</h2>
             <form>
-                <div class="form-group">
-                    <label for="editUsername">Username</label>
-                    <input type="text" id="editUsername" name="editUsername" placeholder="Enter username">
-                </div>
+
                 <div class="form-group">
                     <label for="editRoomName">ชื่อห้อง</label>
                     <input type="text" id="editRoomName" name="editRoomName" placeholder="Enter room name">
@@ -163,27 +208,25 @@
         </div>
     </div>
 
-
-    <!-- Pop-up และ overlay -->
+    <!-- Settings Popup and Overlay -->
     <div class="popup-overlay" id="popupOverlay"></div>
     <div class="popup" id="popup">
-
-        <form method="POST" asp-controller="Account" asp-action="Edit" asp-route-id="@Model.account.ID" id="popupForm" class="popup-form" enctype="multipart/form-data">
+        <form method="POST" asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Account.ID" id="popupForm" class="popup-form" enctype="multipart/form-data">
             <div class="popup-header">
-                @if (Model.account.ProfilePicture != null)
+                @if (Model.Account.ProfilePicture != null)
                 {
-                    var imageBase64 = Convert.ToBase64String(Model.account.ProfilePicture);
+                    var imageBase64 = Convert.ToBase64String(Model.Account.ProfilePicture);
                     <img id="popupProfileImage" src="data:image/png;base64,@imageBase64" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
                 }
                 else
                 {
                     <img id="popupProfileImage" src="~/Image/User_icon.png" alt="Avatar" onclick="triggerFileInput()" style="cursor: pointer;">
                 }
-                <h3>Settings</h3>
+
             </div>
             <div class="form-group">
                 <label for="popupUsername">Username</label>
-                <input type="text" id="popupUsername" name="username" value="@Model.account.Username" required>
+                <input type="text" id="popupUsername" name="username" value="@Model.Account.Username" required>
             </div>
             <div class="form-group">
                 <label for="popupPassword">Password</label>
@@ -191,7 +234,7 @@
             </div>
             <div class="form-group">
                 <label for="popupEmail">Email</label>
-                <input type="email" id="popupEmail" name="email" value="@Model.account.Email" required>
+                <input type="email" id="popupEmail" name="email" value="@Model.Account.Email" required>
             </div>
             <div class="popup-buttons">
                 <button type="submit">Save</button>
@@ -199,27 +242,29 @@
             </div>
             <input type="file" id="fileInput" name="profilePicture" accept="image/*" style="display: none;" onchange="previewImage(event)">
         </form>
-
     </div>
 
     <script>
+        // Function to toggle the settings popup
         function togglePopup() {
             var popup = document.getElementById("popup");
             var overlay = document.getElementById("popupOverlay");
 
             if (popup.style.display === "none" || popup.style.display === "") {
                 popup.style.display = "block";
-                overlay.classList.add("show"); // เพิ่มคลาส show เพื่อแสดง
+                overlay.classList.add("show"); // Add 'show' class to display overlay
             } else {
                 popup.style.display = "none";
-                overlay.classList.remove("show"); // ลบคลาส show เมื่อลบ popup
+                overlay.classList.remove("show"); // Remove 'show' class to hide overlay
             }
         }
 
+        // Function to trigger the hidden file input
         function triggerFileInput() {
             document.getElementById('fileInput').click();
         }
 
+        // Function to preview the selected image
         function previewImage(event) {
             var reader = new FileReader();
             reader.onload = function () {
@@ -233,45 +278,104 @@
             }
         }
 
-        function toggleCardMenu(element) {
-            var menu = element.querySelector('.card-menu-options');
-            // เช็คว่าเมนูถูกแสดงอยู่หรือไม่
-            if (menu.style.display === "none" || menu.style.display === "") {
-                menu.style.display = "block";  // แสดงเมนู
-            } else {
-                menu.style.display = "none";   // ซ่อนเมนู
+        // Function to toggle card menu for user’s own posts
+        function toggleCardMenu(event) {
+            event.stopPropagation(); // Prevent click from propagating to parent elements
+            const menu = event.currentTarget.querySelector('.card-menu-options');
+            const isVisible = menu.style.display === 'block';
+            menu.style.display = isVisible ? 'none' : 'block';
+        }
+
+        // Function to toggle card menu for joined posts
+        function toggleCardMenuJoin(event) {
+            event.stopPropagation(); // Prevent click from propagating to parent elements
+            const menu = event.currentTarget.querySelector('.card-menu-options-join');
+            const isVisible = menu.style.display === 'block';
+            menu.style.display = isVisible ? 'none' : 'block';
+        }
+
+        // Function to open the edit popup
+        function openEditPopup() {
+            document.getElementById("editPopup").style.display = "block";
+        }
+
+        // Function to close the edit popup
+        function closeEditPopup() {
+            document.getElementById("editPopup").style.display = "none";
+        }
+
+        // Generic function to scroll left
+        function scrollLeft(containerSelector) {
+            console.log("Scrolling left...");
+            const container = document.querySelector(containerSelector);
+            if (container) {
+                container.scrollBy({
+                    left: -226,
+                    behavior: 'smooth'
+                });
             }
         }
 
-        // คลิกข้างนอกเพื่อปิดเมนู
+        // Generic function to scroll right
+        function scrollRight(containerSelector) {
+            console.log("Scrolling right...");
+            const container = document.querySelector(containerSelector);
+            if (container) {
+                container.scrollBy({
+                    left: 226,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Attach event listeners to scroll buttons
+        document.querySelectorAll('.scroll-button.left').forEach(button => {
+            button.addEventListener('click', () => scrollLeft('.card-container'));
+        });
+
+        document.querySelectorAll('.scroll-button.right').forEach(button => {
+            button.addEventListener('click', () => scrollRight('.card-container'));
+        });
+
+        document.querySelectorAll('.scroll-button-join.left').forEach(button => {
+            button.addEventListener('click', () => scrollLeft('.card-container-join'));
+        });
+
+        document.querySelectorAll('.scroll-button-join.right').forEach(button => {
+            button.addEventListener('click', () => scrollRight('.card-container-join'));
+        });
+
         window.onclick = function (event) {
             var editPopup = document.getElementById("editPopup");
             var popup = document.getElementById("popup");
+            var overlay = document.getElementById("popupOverlay");
+
+            // Close edit popup if clicking outside of it
             if (event.target == editPopup) {
                 editPopup.style.display = "none";
             }
-            if (event.target == popup) {
+
+            // Close settings popup if clicking outside of it
+            if (event.target == popup || event.target == overlay) {
                 popup.style.display = "none";
+                overlay.classList.remove("show"); // Hide overlay
             }
 
-            // ปิดเมนูการ์ดถ้าคลิกนอกเมนู
-            if (!event.target.closest('.card-menu')) {
+            // Close card menus if clicked outside
+            if (!event.target.closest('.card-menu') && !event.target.closest('.card-menu-join')) {
                 var dropdowns = document.getElementsByClassName("card-menu-options");
                 for (var i = 0; i < dropdowns.length; i++) {
                     var openDropdown = dropdowns[i];
                     openDropdown.style.display = "none";
                 }
+
+                var dropdownsJoin = document.getElementsByClassName("card-menu-options-join");
+                for (var i = 0; i < dropdownsJoin.length; i++) {
+                    var openDropdownJoin = dropdownsJoin[i];
+                    openDropdownJoin.style.display = "none";
+                }
             }
         }
-
-        function openEditPopup() {
-            document.getElementById("editPopup").style.display = "block";
-        }
-
-        function closeEditPopup() {
-            document.getElementById("editPopup").style.display = "none";
-        }
     </script>
-
 </body>
 </html>

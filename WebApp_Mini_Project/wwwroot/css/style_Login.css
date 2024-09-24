@@ -1,3 +1,25 @@
+@font-face {
+    font-family: 'testfont'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
+    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    font-weight: normal; /* น้ำหนักของฟอนต์ */
+    font-style: normal; /* สไตล์ของฟอนต์ */
+}
+h1 {
+    font-size: 3em;
+    color: transparent; /* Logo color */
+    background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
+    -webkit-background-clip: text;
+    font-family: 'testfont', sans-serif;
+    letter-spacing: 10px;
+    margin: 0px;
+}
+
+.logo img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    filter: drop-shadow(0 4px 10px rgba(255, 102, 153, 1));
+}
 html, body {
     height: 100%;
     margin: 0;
@@ -21,11 +43,6 @@ body {
 }
 
 
-h1 {
-    font-size: 2em;
-    margin-bottom: 1em;
-    color: white; /* Logo color */
-}
 
 .form-group {
     margin-bottom: 1.5em;

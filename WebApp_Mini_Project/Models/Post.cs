@@ -25,7 +25,13 @@ namespace WebApp_Mini_Project.Models
         [Required]
         public List<int>? User_list { get; set; } = new List<int>();
         [Required]
-        public DateTime time { get; set; }
+        public DateTime timeCreate { get; set; }
+        [Required]
+        public DateTime timeout { get; set; }
+        [NotMapped]
+        public DateTime dayend { get; set; }
+        [NotMapped]
+        public TimeSpan timeend { get; set; }
 
 
 

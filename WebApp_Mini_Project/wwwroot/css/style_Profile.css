@@ -10,7 +10,9 @@
     margin: 0 auto; /* จัดกึ่งกลางแนวนอน */
     margin-top: 40px;
     border-radius: 40px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* เพิ่มเงา */
 }
+
 
 @media (max-width: 768px) {
     .profile-container {
@@ -30,7 +32,6 @@
     animation: fadeIn 0.5s ease-in-out; /* ปรับเวลาแอนิเมชันได้ */
     opacity: 1; /* แสดงผลปกติ */
     transition: transform 0.3s ease;
-
 }
 
     .settings-icon:hover {
@@ -106,16 +107,22 @@
 .content-section {
     display: flex;
     width: 100%;
-    flex-wrap: wrap; /* อนุญาตให้ห่อในหน้าจอขนาดเล็ก */
-    justify-content: center; /* จัดกึ่งกลางแนวนอน */
-    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+    flex-direction: column; /* เปลี่ยนเป็นแนวตั้ง */
+    align-items: center; /* จัดกึ่งกลางแนวนอน */
+}
+
+.avatar-section, .form-section {
+    width: 100%; /* ปรับให้แต่ละส่วนมีความกว้าง 100% */
+    display: flex;
+    justify-content: center; /* จัดกึ่งกลางแนวนอนในแต่ละส่วน */
+    margin-bottom: 20px; /* เว้นระยะระหว่างแต่ละส่วน */
 }
 
 .avatar-section {
     width: 30%; /* กำหนดความกว้างเป็นเปอร์เซ็นต์เพื่อปรับตาม container */
-    text-align: center;
-    margin-right: 20px;
+    margin: 0px;
 }
+
 
 @media (max-width: 768px) {
     .avatar-section, .form-section {
@@ -131,7 +138,6 @@
     margin: 0 auto; /* จัดกึ่งกลางแนวนอน */
     display: block; /* ทำให้ margin auto ทำงาน */
     border: 5px solid white;
-    margin-left: 70px;
     object-fit: cover;
 }
 
@@ -146,7 +152,7 @@
 .profile-form {
     width: 100%; /* ทำให้ฟอร์มใช้พื้นที่ทั้งหมดของ form-section */
     max-width: 500px; /* กำหนดความกว้างสูงสุด */
-    
+
 }
 
     .profile-form .form-group {
@@ -155,7 +161,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start; /* จัดกึ่งกลางแนวนอน */
-        margin-left:70px;
+        margin-left: 70px;
     }
 
         .profile-form .form-group label {
@@ -163,7 +169,7 @@
             font-size: 16px;
             margin-bottom: 5px;
             text-align: left !important; /* จัดกึ่งกลางข้อความ */
-            color:white;
+            color: white;
         }
 
         .profile-form .form-group input {
@@ -260,118 +266,26 @@
 }
 
     .popup-header img {
-        width: 50px;
-        height: 50px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
-        margin-right: 15px;
+        margin-left: 180px;
         cursor: pointer; /* เพิ่ม cursor pointer เมื่อคลิกที่ภาพ */
+        align-items: center;
+        object-fit: cover;
+        border: 5px solid #FF3399;
     }
 
 /* Body Styles */
 body {
-    margin-bottom: 200px;
-    background-color: #f9f9f9;
-    color: #333;
+    /*    margin-bottom: 200px;*/
+    background-color: #FFF0F5;
+    /*background-image: url('https://wallpapers-clan.com/wp-content/uploads/2024/08/sanrio-cute-hello-kitty-pink-gif-desktop-wallpaper-preview.gif');
+    background-size: cover;*/ /* Optional: makes the image cover the entire background */
+    /*background-repeat: no-repeat;*/ /* Prevents the image from repeating */
+    /*background-position: center;*/ /* Centers the image */
+    /*color: #333;*/ /* Text color */
 }
-
-/* Card Container */
-.card-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 5px;
-    padding: 0 20px;
-    margin-top: 20px;
-}
-
-/* Card Styles */
-.card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 4px 7px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    display: flex;
-    width: 400px;
-    height: 180px;
-    margin: 20px;
-    position: relative;
-    padding-top: 20px; /* เว้นระยะด้านบนให้สำหรับไอคอนสามจุด */
-}
-
-.card-logo {
-    width: 90px;
-    height: 90px;
-    margin-right: 15px;
-    margin-bottom: 50px;
-    margin-top: 5px;
-    border-radius: 50%; /* ทำให้ขอบรูปเป็นวงกลม */
-    object-fit: cover; /* ป้องกันไม่ให้ภาพยืดหรือบีบอัด */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-.card-content {
-    text-align: left;
-    flex: 1;
-    margin-bottom: 30px;
-    margin-left: 20px;
-    margin-top: 5px;
-}
-
-    .card-content p {
-        margin: 2px 0;
-        font-size: 17px;
-        color: #333;
-    }
-
-.card-button {
-    background-color: #333;
-    color: white;
-    border: none;
-    margin-top: 120px;
-    padding: 10px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 60px;
-    height: 30px;
-}
-
-    .card-button:hover {
-        background-color: #555;
-    }
-
-/* Card Menu */
-.card-menu {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 24px; /* ขนาดของจุดสามจุด */
-}
-
-.card-menu-options {
-    display: none; /* ซ่อนเมนูก่อน */
-    position: absolute;
-    top: 30px;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    list-style: none;
-    padding: 10px;
-    width: 100px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1; /* เพื่อให้เมนูอยู่ด้านบน */
-}
-
-    .card-menu-options li {
-        padding: 8px;
-        cursor: pointer;
-    }
-
-        .card-menu-options li:hover {
-            background-color: #f0f0f0;
-        }
-
 /* Edit Popup */
 .edit-popup {
     display: none;
@@ -493,4 +407,303 @@ h2 {
         opacity: 1;
         transform: scale(1);
     }
+}
+
+/* =========================================
+   Card Container Wrapper
+========================================= */
+
+.card-container-wrapper,
+.card-container-wrapper-join {
+    position: relative;
+    width: 80vw;
+    max-width: 1400px;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+    margin-top: 40px; /* เพิ่มระยะห่างด้านบนเพื่อไม่ให้ทับกับ label */
+    word-wrap: break-word; /* ทำให้คำยาว ๆ ถูกตัดบรรทัด */
+}
+
+/* Scroll Buttons */
+.scroll-button,
+.scroll-button-join {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 50px; /* กำหนดความกว้าง */
+    height: 50px; /* กำหนดความสูง */
+    border-radius: 50%; /* ทำให้ปุ่มเป็นวงกลม */
+    font-size: 24px;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+    .scroll-button.left,
+    .scroll-button-join.left {
+        left: -40px;
+    }
+
+    .scroll-button.right,
+    .scroll-button-join.right {
+        right: -40px;
+    }
+
+    .scroll-button.left:hover,
+    .scroll-button-join.left:hover {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    .scroll-button.right:hover,
+    .scroll-button-join.right:hover {
+        transform: translate(50%, -50%) scale(1.2);
+    }
+
+
+
+/* =========================================
+   Card Container
+========================================= */
+
+.card-container,
+.card-container-join {
+    display: flex; /* ใช้ flexbox */
+    flex-direction: row; /* เรียงในแนวนอน */
+    justify-content: flex-start; /* จัดการ์ดไปทางซ้าย */
+    align-items: stretch; /* ขยายความสูงให้เต็ม */
+    white-space: nowrap; /* ทำให้การ์ดอยู่ในบรรทัดเดียว */
+    width: 100%; /* ให้ความกว้างเต็มที่ */
+    max-width: 1600px; /* ความกว้างสูงสุด */
+    margin: 0 auto; /* จัดให้อยู่กลาง */
+    overflow-x: auto; /* เปิดการเลื่อนในแนวนอน */
+    overflow-y: hidden; /* ปิดการเลื่อนในแนวตั้ง */
+    position: relative; /* ทำให้สามารถวางตำแหน่งภายในได้ */
+    padding: 0 20px; /* เพิ่ม padding แทน margin ซ้ายขวา */
+}
+
+
+    .card-container::-webkit-scrollbar,
+    .card-container-join::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+    }
+
+    .card-container-join::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+
+        .card-container-join::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+
+/* =========================================
+   Card Styles
+========================================= */
+
+.card,
+.card-join {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: -4px -4px 10px rgba(0, 0, 0, 0.1), 4px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 calc(33.33% - 20px); /* 3 cards per row with spacing */
+    height: auto;
+    margin: 10px; /* Adjust margin as needed */
+    position: relative;
+    width: 300px;
+    height: 400px;
+    margin-top: 30px;
+}
+
+.card-label,
+.card-label-join {
+    position: absolute; /* ใช้ตำแหน่งแบบสัมบูรณ์ */
+    top: -30px; /* ปรับให้สูงขึ้นเหนือ container */
+    left: 20px; /* ระยะห่างจากด้านซ้าย */
+    z-index: 10; /* ทำให้แน่ใจว่าอยู่เหนือองค์ประกอบอื่น ๆ */
+    background-color: rgba(255, 255, 255, 0.0); /* ทำให้พื้นหลังโปร่งใสเล็กน้อย (เลือกได้) */
+    padding: 5px; /* เพิ่ม padding */
+    border-radius: 5px; /* ทำให้มุมมน */
+}
+
+@media (max-width: 1024px) {
+    .card,
+    .card-join {
+        flex: 0 0 calc((100% - 40px) / 2); /* 2 cards per row on medium screens */
+        max-width: calc((100% - 40px) / 2);
+    }
+}
+
+@media (max-width: 768px) {
+    .card,
+    .card-join {
+        flex: 0 0 100%; /* 1 card per row on small screens */
+        max-width: 100%;
+    }
+}
+
+.card-logo,
+.card-logo-join {
+    width: 120px;
+    height: 120px;
+    margin: 0 0;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column; /* เรียงแนวตั้ง */
+    align-items: center; /* จัดกลางในแนวนอน */
+}
+
+.card-content,
+.card-content-join {
+    text-align: left;
+    flex: 1;
+    margin-bottom: 0;
+    white-space: initial; /* อนุญาตให้ข้อความห่อบรรทัด */
+    text-overflow: ellipsis; /* แสดง ... เมื่อข้อความยาวเกินไป */
+}
+
+    .card-content p,
+    .card-content-join p {
+        margin: 4px 0;
+        font-size: 17px;
+        color: #333;
+        margin-top: 3px;
+    }
+
+#time {
+    font-size: 15px;
+    color: gray;
+    margin-bottom: 20px;
+    margin-top: 0;
+    text-align: center;
+}
+
+/* Card Buttons */
+.card-button,
+.card-button-join {
+    background-color: transparent;
+    background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
+    color: white;
+    border: none;
+    margin-bottom: 10px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 70px;
+    height: 35px;
+}
+
+    .card-button:hover,
+    .card-button-join:hover {
+        background-color: #555;
+        transform: scale(1.1);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+/* Card Menus */
+.card-menu {
+    position: absolute;
+    top: 10px; /* ปรับให้สูงพอสมควร */
+    right: 10px; /* ปรับให้ชิดขวา */
+    cursor: pointer;
+    z-index: 10; /* ให้แน่ใจว่าเมนูอยู่ด้านหน้าสิ่งอื่น */
+}
+
+.card-menu-options {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1;
+    display: none;
+}
+
+    .card-menu-options li {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+        .card-menu-options li:hover {
+            background-color: #f0f0f0;
+        }
+
+/* =========================================
+   Animations
+========================================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* =========================================
+   User Name Styling
+========================================= */
+
+#user {
+    font-size: 30px;
+    background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
+    font-family: 'testfont', sans-serif;
+    text-decoration: underline;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0 auto 5px auto;
+    text-align: center;
+}
+
+    #user::first-letter {
+        text-transform: uppercase;
+    }
+
+/* =========================================
+   Responsive Adjustments
+========================================= */
+
+/* Adjust Avatar and Form Sections on Small Screens */
+@media (max-width: 768px) {
+    .avatar-section img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .profile-form .form-group {
+        margin-left: 0;
+    }
+
+        .profile-form .form-group input {
+            width: 100%;
+        }
 }
