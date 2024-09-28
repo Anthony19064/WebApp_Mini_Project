@@ -538,8 +538,7 @@
         color: #333;
         display: flex;
         justify-content: space-between;
-        letter-spacing: 5px;
-        
+        letter-spacing: 5px;        
     }
 
     .chat-message span {
