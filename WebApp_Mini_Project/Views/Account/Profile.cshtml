@@ -63,34 +63,54 @@
             {
                 if (Model.Account.ID == post.User_id) // Adjusted condition for joined posts
                 {
+                    DateTime timeout = post.timeout; 
+                    string datePart = timeout.ToString("yyyy-MM-dd"); 
+                    string timePart = timeout.ToString("HH:mm"); 
+
                     <div class="card">
                         <!-- Card Menu in the top right corner -->
                         <div class="card-menu" onclick="toggleCardMenu(event)">
                             <span>⋮</span>
                             <ul class="card-menu-options">
-                                <li onclick="openEditPopup()">Edit</li>
+                                <li onclick="openEditPopup('@post.ID','@post.Name_room', '@post.Id_room', '@post.Game', '@post.Details', '@post.Max_person', '@datePart', '@timePart')">แก้ไข</li>
                                 <li>Delete</li>
                                 <li>Kuy</li>
                             </ul>
                         </div>
 
-                        @if (post.User_Picture != null)
-                        {
-                            var base64String = Convert.ToBase64String(post.User_Picture);
-                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                            <img src="@imgSrc" alt="logo" class="card-logo" />
-                        }
-                        else
-                        {
-                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
-                        }
-
-                        <!-- Time ago logic -->
                         @{
+                            int ID = 0;
+                            if (ViewBag.UserID != null)
+                            {
+                                ID = ViewBag.UserID;
+                            }
+                            @foreach (var account in Model.Account_list)
+                            {
+                                if (account.ProfilePicture != null)
+                                {
+                                    if (post.User_id == account.ID)
+                                    {
+                                        var base64String = Convert.ToBase64String(account.ProfilePicture);
+                                        var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                                        <img src="@imgSrc" alt="logo" class="card-logo" />
+                                    }
+                                }
+                                else
+                                {
+                                    <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                                }
+                            }
+
                             var timeAgo = DateTime.Now - post.timeCreate;
                             string timeAgoString;
 
-                            if (timeAgo.TotalHours >= 1)
+                            if (timeAgo.TotalDays >= 1)
+                            {
+                                var daysAgo = (int)timeAgo.TotalDays;
+                                timeAgoString = $"{daysAgo} วันที่แล้ว";
+                            }
+
+                            else if (timeAgo.TotalHours >= 1)
                             {
                                 var hoursAgo = (int)timeAgo.TotalHours;
                                 timeAgoString = $"{hoursAgo} ชั่วโมงที่แล้ว";
@@ -100,6 +120,7 @@
                                 var minutesAgo = (int)timeAgo.TotalMinutes;
                                 timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
                             }
+
                         }
                         
 
@@ -110,7 +131,7 @@
                             <p><b>เกม</b> : @post.Game</p>
                             <p><b>รายละเอียด</b> : @post.Details</p>
                         </div>
-                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default;">
+                        <button class="card-button join-room-button" data-id="@post.ID" disabled style="color: white; cursor: default;">
                             <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                         </button>
                     </div>
@@ -134,23 +155,39 @@
                 {
                     <div class="card-join">
 
-                        @if (post.User_Picture != null)
-                        {
-                            var base64String = Convert.ToBase64String(post.User_Picture);
-                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                            <img src="@imgSrc" alt="logo" class="card-logo-join" />
-                        }
-                        else
-                        {
-                            <img src="~/Image/User_icon.png" alt="logo" class="card-logo-join" />
-                        }
-
-                        <!-- Time ago logic -->
                         @{
+                            int ID = 0;
+                            if (ViewBag.UserID != null)
+                            {
+                                ID = ViewBag.UserID;
+                            }
+                            @foreach (var account in Model.Account_list)
+                            {
+                                if (account.ProfilePicture != null)
+                                {
+                                    if (post.User_id == account.ID)
+                                    {
+                                        var base64String = Convert.ToBase64String(account.ProfilePicture);
+                                        var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                                        <img src="@imgSrc" alt="logo" class="card-logo" />
+                                    }
+                                }
+                                else
+                                {
+                                    <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                                }
+                            }
+
                             var timeAgo = DateTime.Now - post.timeCreate;
                             string timeAgoString;
 
-                            if (timeAgo.TotalHours >= 1)
+                            if (timeAgo.TotalDays >= 1)
+                            {
+                                var daysAgo = (int)timeAgo.TotalDays;
+                                timeAgoString = $"{daysAgo} วันที่แล้ว";
+                            }
+
+                            else if (timeAgo.TotalHours >= 1)
                             {
                                 var hoursAgo = (int)timeAgo.TotalHours;
                                 timeAgoString = $"{hoursAgo} ชั่วโมงที่แล้ว";
@@ -160,17 +197,25 @@
                                 var minutesAgo = (int)timeAgo.TotalMinutes;
                                 timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
                             }
+
                         }
                         
 
                         <div class="card-content-join">
-                            <p id="user">@Model.Account.Username</p>
+                            @foreach (var account in Model.Account_list)
+                            {
+                                if (post.User_id == account.ID)
+                                {
+                                    <p id="user">@account.Username</p>
+                                }
+                            }
+                            
                             <p id="time">@timeAgoString</p>
                             <p><b>ชื่อห้อง</b> : @post.Name_room</p>
                             <p><b>เกม</b> : @post.Game</p>
                             <p><b>รายละเอียด</b> : @post.Details</p>
                         </div>
-                        <button class="card-button-join join-room-button" data-id="@post.ID" disabled style="background-color: white; color:black; cursor: default;">
+                        <button class="card-button-join join-room-button" data-id="@post.ID" style=" color:white; cursor: default; opacity: 0.6;" disabled>
                             <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                         </button>
                     </div>
@@ -181,37 +226,58 @@
     </div>
 
 
-    <!-- Edit Popup -->
+    <!-- Edit Post-->
     <div id="editPopup" class="edit-popup">
         <div class="edit-popup-content">
             <span class="close" onclick="closeEditPopup()">&times;</span>
             <h2>Edit Information</h2>
-            <form>
-
+            <form method="POST" asp-controller="Post" asp-action="EditPost">
+                <input type="hidden" id="editPostId" name="id">
                 <div class="form-group">
                     <label for="editRoomName">ชื่อห้อง</label>
-                    <input type="text" id="editRoomName" name="editRoomName" placeholder="Enter room name">
+                    <input type="text" id="editRoomName" name="roomname" placeholder="Enter room name">
+                </div>
+                <div class="form-group">
+                    <label for="editRoomid">เลขห้อง</label>
+                    <input type="text" id="editRoomid" name="roomid" placeholder="Enter room name">
                 </div>
                 <div class="form-group">
                     <label for="editGame">เกม</label>
-                    <input type="text" id="editGame" name="editGame" placeholder="Enter game">
+                    <input type="text" id="editGame" name="game" placeholder="Enter game">
                 </div>
                 <div class="form-group">
                     <label for="editDetails">รายละเอียด</label>
-                    <textarea id="editDetails" name="editDetails" placeholder="Enter details"></textarea>
+                    <input type="text" id="editDetails" name="detail" placeholder="Enter details">
                 </div>
+                <div class="form-group">
+                    <label for="editCount">จำนวนสมาชิก</label>
+                    <select id="editCount" name="count" placeholder="Enter details">
+                        <option value="1">1 คน</option>
+                        <option value="2">2 คน</option>
+                        <option value="3">3 คน</option>
+                        <option value="4">4 คน</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editTimend">เวลาปิดโพส</label>
+                    <input type="date" id="editDayend" name="day">
+                    <input type="time" id="editTime" name="time">
+                </div>
+
                 <div class="popup-actions">
                     <button type="submit" class="btn-save">Save</button>
                     <button type="button" class="btn-cancel" onclick="closeEditPopup()">Cancel</button>
                 </div>
+  
             </form>
         </div>
     </div>
 
-    <!-- Settings Popup and Overlay -->
+
+    <!-- Edit profile -->
     <div class="popup-overlay" id="popupOverlay"></div>
     <div class="popup" id="popup">
-        <form method="POST" asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Account.ID" id="popupForm" class="popup-form" enctype="multipart/form-data">
+        <form method="POST" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Account.ID" id="popupForm" class="popup-form" enctype="multipart/form-data">
             <div class="popup-header">
                 @if (Model.Account.ProfilePicture != null)
                 {
@@ -295,7 +361,18 @@
         }
 
         // Function to open the edit popup
-        function openEditPopup() {
+        function openEditPopup(id, roomName, roomid, game, details, count, day, time) {
+            document.getElementById('editPostId').value = id;
+            document.getElementById('editRoomName').value = roomName;
+            document.getElementById('editRoomid').value = roomid;
+            document.getElementById('editGame').value = game;
+            document.getElementById('editDetails').value = details;
+
+            document.getElementById('editCount').value = count;
+            document.getElementById('editDayend').value = day;
+            document.getElementById('editTime').value = time;
+
+
             document.getElementById("editPopup").style.display = "block";
         }
 

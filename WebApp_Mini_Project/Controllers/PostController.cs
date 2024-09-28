@@ -113,6 +113,28 @@ public class PostController : HomeController
         return Json(new { success = true, newCount = obj.Count_person });
     }
 
+    [HttpPost]
+    public IActionResult EditPost(int id, string roomname, string roomid, string game, string detail, int count, string day, string time)
+    {
+        var post = _db.Posts.SingleOrDefault(a => a.ID == id);
+        if (post != null)
+        {
+            post.Name_room = roomname;
+            post.Id_room = roomid;
+            post.Game = game;
+            post.Details = detail;
+            post.Max_person = count;
+            DateTime timeend = DateTime.TryParse($"{day} {time}", out DateTime parsedTime) ? parsedTime : DateTime.MinValue;
+            post.timeout = timeend;
+            _db.SaveChanges();
+        }
+        else
+        {
+            return NotFound();
+        }
+        return RedirectToAction("Profile", "Account");
+    }
+
 
     
 

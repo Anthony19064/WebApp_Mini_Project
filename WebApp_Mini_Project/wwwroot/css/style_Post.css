@@ -97,7 +97,6 @@
 .card-logo {
     width: 120px;
     height: 120px;
-    margin-bottom: 10px;
     margin-top: 10px;
     border-radius: 50%; /* ทำให้ขอบรูปเป็นวงกลม */
     object-fit: cover; /* ป้องกันไม่ให้ภาพยืดหรือบีบอัด */
@@ -122,6 +121,8 @@
         font-size: 17px;
         color: #333;
         margin-top: 3px;
+        font-family: 'thaifont', sans-serif;
+        font-size: 20px;
 }
 
 #time {
@@ -155,7 +156,7 @@
     background: linear-gradient(to right, #FF6699, #f89b28);
     color: white;
     border: none;
-    margin-bottom: 10px;
+    margin: 10px 0px 10px 0px;
     padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;

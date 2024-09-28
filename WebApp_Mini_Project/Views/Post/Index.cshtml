@@ -88,18 +88,28 @@
                                 {
                                     ID = ViewBag.UserID;
                                 }
-                                if (post.User_Picture != null)
+
+
+                                @foreach (var account in Model.Account)
                                 {
-                                    var base64String = Convert.ToBase64String(post.User_Picture);
-                                    var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                                        <img src="@imgSrc" alt="logo" class="card-logo" />
-                                }
-                                else
-                                {
+                                    if (account.ProfilePicture != null)
+                                    {
+                                        if (post.User_id == account.ID)
+                                        {
+                                            var base64String = Convert.ToBase64String(account.ProfilePicture);
+                                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                                            <img src="@imgSrc" alt="logo" class="card-logo" />
+                                        }
+                                    }
+                                    else
+                                    {
                                         <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                                    }
                                 }
 
-                                var timeAgo = DateTime.Now - post.timeCreate;
+
+
+                        var timeAgo = DateTime.Now - post.timeCreate;
                                 string timeAgoString;
 
                                 if (timeAgo.TotalDays >= 1)
@@ -205,6 +215,31 @@
     closePopup.addEventListener('click', function () {
         popup.style.display = 'none';
     });
+
+    //----------------------------------Search------------------------------------
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchBar = document.querySelector(".search-bar");
+        const cardContainers = document.querySelectorAll(".card-container2");
+
+        searchBar.addEventListener("input", function () {
+            const searchValue = searchBar.value.toLowerCase();
+
+            cardContainers.forEach(container => {
+                const gameText = container.querySelector(".card-content p:nth-child(2)").innerText.toLowerCase(); // เกม
+                const usernameText = container.querySelector("#user").innerText.toLowerCase(); // ชื่อผู้ใช้
+
+                // ตรวจสอบว่าเกมหรือชื่อผู้ใช้ตรงกับค่าที่ค้นหา
+                if (gameText.includes(searchValue) || usernameText.includes(searchValue)) {
+                    container.style.display = ""; // แสดงโพสต์
+                } else {
+                    container.style.display = "none"; // ซ่อนโพสต์
+                }
+            });
+        });
+    });
+
+
 
     //-----------------------------------------------Check button---------------------------------------------
 

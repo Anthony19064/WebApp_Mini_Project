@@ -476,14 +476,17 @@ h2 {
     justify-content: flex-start; /* จัดการ์ดไปทางซ้าย */
     align-items: stretch; /* ขยายความสูงให้เต็ม */
     white-space: nowrap; /* ทำให้การ์ดอยู่ในบรรทัดเดียว */
-    width: 100%; /* ให้ความกว้างเต็มที่ */
+    width: 93%; /* ให้ความกว้างเต็มที่ */
     max-width: 1600px; /* ความกว้างสูงสุด */
-    margin: 0 auto; /* จัดให้อยู่กลาง */
+    margin: 0px 10px 0px 10px; /* จัดให้อยู่กลาง */
     overflow-x: auto; /* เปิดการเลื่อนในแนวนอน */
     overflow-y: hidden; /* ปิดการเลื่อนในแนวตั้ง */
     position: relative; /* ทำให้สามารถวางตำแหน่งภายในได้ */
-    padding: 0 20px; /* เพิ่ม padding แทน margin ซ้ายขวา */
+    padding: 20px; /* เพิ่ม padding แทน margin ซ้ายขวา */
+    gap: 25px;
 }
+
+
 
 
     .card-container::-webkit-scrollbar,
@@ -510,15 +513,13 @@ h2 {
     background-color: white;
     border-radius: 10px;
     box-shadow: -4px -4px 10px rgba(0, 0, 0, 0.1), 4px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 0 0 calc(33.33% - 20px); /* 3 cards per row with spacing */
-    height: auto;
-    margin: 10px; /* Adjust margin as needed */
+    flex: 0 0 auto; /* 3 cards per row with spacing */
     position: relative;
-    width: 300px;
+    width: 400px;
     height: 400px;
     margin-top: 30px;
 }
@@ -554,7 +555,7 @@ h2 {
 .card-logo-join {
     width: 120px;
     height: 120px;
-    margin: 0 0;
+    margin: 0px 0px 15px 0px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -577,7 +578,7 @@ h2 {
 
     .card-content p,
     .card-content-join p {
-        margin: 4px 0;
+        margin: 0px 10% 0px 10%;
         font-size: 17px;
         color: #333;
         margin-top: 3px;
@@ -598,7 +599,7 @@ h2 {
     background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
     color: white;
     border: none;
-    margin-bottom: 10px;
+    margin: 10px 0px 10px 0px;
     padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;

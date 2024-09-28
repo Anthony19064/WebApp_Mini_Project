@@ -124,7 +124,7 @@ namespace WebApp_Mini_Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string username, string password, string email, IFormFile profilePicture)
+        public IActionResult EditProfile(int id, string username, string password, string email, IFormFile profilePicture)
         {
             var account = _db.Accounts.SingleOrDefault(a => a.ID == id);
             if (account != null)
