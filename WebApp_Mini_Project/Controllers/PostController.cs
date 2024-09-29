@@ -16,12 +16,13 @@ public class PostController : HomeController
     }
     public ActionResult Index()
     {
+        var defaultImagePath = "wwwroot/Image/Logo_web.png"; // ระบุ path ของรูปภาพเริ่มต้น
         var adminAccount = new Account
         {
             Username = "admin",
             Password = "admin",
             Email    = "admin@gmail.com",
-            ProfilePicture = null,
+            ProfilePicture = System.IO.File.ReadAllBytes(defaultImagePath)
         };
 
         var check_admin = _db.Accounts.SingleOrDefault(a => a.Username == adminAccount.Username && a.Password == adminAccount.Password && a.Email == adminAccount.Email);
@@ -68,7 +69,6 @@ public class PostController : HomeController
         string usersession = HttpContext.Session.GetString("Usersession");
         var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
         model.NewPost.User_id = account.ID;
-        model.NewPost.User_Picture = account.ProfilePicture;
         model.NewPost.timeCreate = DateTime.Now;
 
         DateTime timeEnd = model.NewPost.dayend + model.NewPost.timeend; // รวม DateTime
@@ -150,6 +150,7 @@ public class PostController : HomeController
         }
         else
         {
+            var own_post = _db.Accounts.Find(obj.User_id);
             // อัพเดทข้อมูล
             obj.Count_person++; // เพิ่มจำนวนผู้เข้าร่วม
             obj.User_list.Add(account.ID); // เพิ่มผู้ใช้ในรายการ
@@ -159,7 +160,7 @@ public class PostController : HomeController
             {
                 UserID = account.ID,
                 Message = $"คุณได้เข้าร่วม เลขห้อง : {obj.Id_room}",
-                Picture = obj.User_Picture // ต้องมีค่าจริงในที่นี้
+                Picture = own_post.ProfilePicture // ต้องมีค่าจริงในที่นี้
             };
 
 
@@ -206,8 +207,40 @@ public class PostController : HomeController
         return RedirectToAction("Profile", "Account");
     }
 
+    [HttpPost]
+    public IActionResult DeletePost(int id)
+    {
+        var post = _db.Posts.SingleOrDefault(a => a.ID == id);
+        if (post != null)
+        {
+            _db.Posts.Remove(post);
+            _db.SaveChanges();
+            return RedirectToAction("Profile", "Account");
+        }
+        else
+        {
+            return NotFound();
+        }
+       
+    }
 
+    public IActionResult ClosePost(int id)
+    {
+        var post = _db.Posts.SingleOrDefault(a => a.ID == id);
+        if (post != null)
+        {
+            post.status = false;
+            _db.SaveChanges();
+            return RedirectToAction("Profile", "Account");
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
     
+
+
 
 
 }

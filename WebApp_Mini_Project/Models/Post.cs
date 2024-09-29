@@ -21,7 +21,6 @@ namespace WebApp_Mini_Project.Models
         public string Game { get; set; }
         [Required]
         public int User_id { get; set; }
-        public byte[]? User_Picture { get; set; }
         [Required]
         public List<int>? User_list { get; set; } = new List<int>();
         [Required]
@@ -32,6 +31,8 @@ namespace WebApp_Mini_Project.Models
         public DateTime dayend { get; set; }
         [NotMapped]
         public TimeSpan timeend { get; set; }
+        [Required]
+        public bool status { get; set; } = true;
 
 
 

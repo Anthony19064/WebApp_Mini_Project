@@ -16,11 +16,10 @@
 
 
     <div class="register-container">
-        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-        @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
-        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        @Html.ValidationMessageFor(model => model.ReplyPassword, "", new { @class = "text-danger" })
-        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+           @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+           @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+           @Html.ValidationMessageFor(model => model.ReplyPassword, "", new { @class = "text-danger" })
+           @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         <h1>Register</h1>
         <form method="POST" action="/Account/Register" enctype="multipart/form-data">
         <!-- Profile image with onClick to trigger file input -->
