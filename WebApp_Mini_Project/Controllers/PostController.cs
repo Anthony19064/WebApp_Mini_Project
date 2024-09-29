@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using WebApp_Mini_Project.Controllers;
 using WebApp_Mini_Project.Data;
@@ -80,11 +81,56 @@ public class PostController : HomeController
 
     }
 
+    [HttpGet]
+    public IActionResult GetNotifications()
+    {
+        // ตรวจสอบการล็อกอินของผู้ใช้
+        string usersession = HttpContext.Session.GetString("Usersession");
+        if (string.IsNullOrEmpty(usersession))
+        {
+            return Json(new { success = false, message = "คุณยังไม่ได้ล็อกอิน" });
+        }
+
+        // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
+        var account = _db.Accounts.SingleOrDefault(a => a.Username == usersession);
+        if (account == null)
+        {
+            return Json(new { success = false, message = "ไม่พบข้อมูลผู้ใช้" });
+        }
+
+        // ดึงข้อมูลการแจ้งเตือนเฉพาะของผู้ใช้ที่ล็อกอินอยู่
+        var notifications = _db.Notices
+            .Where(n => n.UserID == account.ID) // ดึงการแจ้งเตือนของผู้ใช้ที่ล็อกอิน
+            .Select(n => new
+            {
+                senderUsername = _db.Accounts.FirstOrDefault(a => a.ID == n.UserID).Username, // ผู้ส่ง
+                message = n.Message, // ข้อความแจ้งเตือน
+                picture = n.Picture != null ? Convert.ToBase64String(n.Picture) : null // รูปภาพ (แปลงเป็น Base64)
+            })
+            .ToList();
+
+        // ส่งข้อมูลกลับในรูปแบบ JSON
+        return Json(new { success = true, notifications });
+    }
+
+
+
+
+
+
+
+
     [HttpPost]
     public IActionResult Joinroom(int? id, string user)
     {
-        var account = _db.Accounts.SingleOrDefault(account => account.Username == user);
+        // ตรวจสอบสถานะการล็อกอิน
+        string usersession = HttpContext.Session.GetString("Usersession");
+        if (string.IsNullOrEmpty(usersession))
+        {
+            return Json(new { success = false, message = "คุณยังไม่ได้ล็อกอิน" });
+        }
 
+        var account = _db.Accounts.SingleOrDefault(account => account.Username == usersession);
 
         if (id == null || id == 0)
         {
@@ -97,21 +143,46 @@ public class PostController : HomeController
             return NotFound(); // ถ้าไม่พบโพสต์
         }
 
+        // เช็คว่าผู้ใช้อยู่ในรายการหรือไม่
         if (obj.User_list.Contains(account.ID))
         {
-            return Json(new { success = false});
+            return Json(new { success = false, message = "คุณได้เข้าร่วมห้องนี้แล้ว." });
         }
         else
         {
-            obj.Count_person++;
-            obj.User_list.Add(account.ID);
+            // อัพเดทข้อมูล
+            obj.Count_person++; // เพิ่มจำนวนผู้เข้าร่วม
+            obj.User_list.Add(account.ID); // เพิ่มผู้ใช้ในรายการ
+
+            // สร้างการแจ้งเตือน
+            var notice = new Notice
+            {
+                UserID = account.ID,
+                Message = $"คุณได้เข้าร่วม เลขห้อง : {obj.Id_room}",
+                Picture = obj.User_Picture // ต้องมีค่าจริงในที่นี้
+            };
+
+
+
+
+            // บันทึกการแจ้งเตือนลงในฐานข้อมูล
+            _db.Notices.Add(notice);
         }
 
         _db.SaveChanges();
 
-        // คืนค่าตอบกลับ JSON ที่มีข้อมูลใหม่
-        return Json(new { success = true, newCount = obj.Count_person });
+        // คืนค่าตอบกลับ JSON ที่มีข้อมูลใหม่ รวมถึง Id_room
+        return Json(new
+        {
+            success = true,
+            message = $"คุณได้เข้าร่วม เลขห้อง : {obj.Id_room}", // ปรับข้อความที่แสดงเลขห้อง
+            newCount = obj.Count_person,
+            roomId = obj.Id_room  // ส่งค่า Id_room กลับไปด้วย
+        });
     }
+
+
+
 
     [HttpPost]
     public IActionResult EditPost(int id, string roomname, string roomid, string game, string detail, int count, string day, string time)
