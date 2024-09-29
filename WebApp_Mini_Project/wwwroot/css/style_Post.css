@@ -446,7 +446,7 @@
     background-color: #fffdfb;
     padding: 20px;
     border-radius: 9px 9px 0 0;
-    color: white;
+    color: black;
     text-align: center;
 }
 
@@ -454,6 +454,7 @@
     padding: 10px;
     height: 320px;
     overflow-y: auto;
+    color: black;
 }
 
 .chat-popup-footer {
@@ -473,6 +474,27 @@
         color: white;
         cursor: pointer;
     }
+
+
+    /* สไตล์สำหรับรูปโปรไฟล์ */
+.chat-notice img {
+    border-radius: 50%; /* ทำให้รูปโปรไฟล์เป็นวงกลม */
+    margin-right: 10px; /* เว้นระยะห่างระหว่างรูปกับข้อความ */
+    width: 40px; /* ขนาดของรูปโปรไฟล์ */
+    height: 40px; /* ขนาดของรูปโปรไฟล์ */
+}
+
+/* สไตล์สำหรับข้อความ */
+.chat-notice span {
+    background-color: #f1f1f1; /* สีพื้นหลังของข้อความ */
+    border-radius: 10px;
+    padding: 8px 12px;
+    max-width: 70%; /* กำหนดความกว้างสูงสุดของข้อความ */
+    word-wrap: break-word; /* พับคำที่ยาวเกินไป */
+}
+
+/*/-------------------------------------------CHATBOARD---------------------------------------------------/*/
+
     /*เพิ่มแชทกับจัดหน้าการ์ดกับแชท*/
 .chat-board-container {
     width: 400px;
@@ -665,3 +687,5 @@
     margin-left: 15px
 
 }
+
+
