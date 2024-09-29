@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="~/css/style_Profile.css">
 </head>
 <body>
+
+    <!-- ไอ้ภูแก้ตรงนี้ -->
+    
     <div class="profile-container">
         <!-- Settings Icon -->
         <div class="settings-icon" onclick="togglePopup()">
@@ -50,6 +53,8 @@
         </div>
     </div>
 
+    <!-- ถึงตรงนี้ -->
+
     <!-- Card Container for User's Own Posts -->
 
     <div class="card-container-wrapper">
@@ -73,8 +78,8 @@
                             <span>⋮</span>
                             <ul class="card-menu-options">
                                 <li onclick="openEditPopup('@post.ID','@post.Name_room', '@post.Id_room', '@post.Game', '@post.Details', '@post.Max_person', '@datePart', '@timePart')">แก้ไข</li>
-                                <li>Delete</li>
-                                <li>Kuy</li>
+                                <li > <a asp-controller="Post" asp-action="ClosePost" asp-route-id="@post.ID">ปิดรับคน</a> </li>
+                                <li onclick="confirmDelete('@post.ID')">ลบ</li>
                             </ul>
                         </div>
 
@@ -84,7 +89,7 @@
                             {
                                 ID = ViewBag.UserID;
                             }
-                            @foreach (var account in Model.Account_list)
+                                @foreach (var account in Model.Account_list)
                             {
                                 if (account.ProfilePicture != null)
                                 {
@@ -92,12 +97,12 @@
                                     {
                                         var base64String = Convert.ToBase64String(account.ProfilePicture);
                                         var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                                        <img src="@imgSrc" alt="logo" class="card-logo" />
+                                            <img src="@imgSrc" alt="logo" class="card-logo" />
                                     }
                                 }
                                 else
                                 {
-                                    <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                                        <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                                 }
                             }
 
@@ -161,7 +166,7 @@
                             {
                                 ID = ViewBag.UserID;
                             }
-                            @foreach (var account in Model.Account_list)
+                                @foreach (var account in Model.Account_list)
                             {
                                 if (account.ProfilePicture != null)
                                 {
@@ -169,12 +174,12 @@
                                     {
                                         var base64String = Convert.ToBase64String(account.ProfilePicture);
                                         var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                                        <img src="@imgSrc" alt="logo" class="card-logo" />
+                                            <img src="@imgSrc" alt="logo" class="card-logo" />
                                     }
                                 }
                                 else
                                 {
-                                    <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
+                                        <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
                                 }
                             }
 
@@ -272,6 +277,19 @@
             </form>
         </div>
     </div>
+
+    <!-- delete Post -->
+    <div id="delete-confirmation-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <form method="POST" asp-controller="Post" asp-action="DeletePost">
+            <input type="hidden" id="deletePostid" name="id">
+            <h3>ยืนยันการลบ</h3>
+            <p>คุณต้องการลบโพสต์นี้หรือไม่?</p>
+            <button type="submit" id="confirm-delete-button">ใช่</button>
+            <button type="button" onclick="closeModal()">ไม่</button>
+        </form>
+    </div>
+</div>
 
 
     <!-- Edit profile -->
@@ -376,6 +394,10 @@
             document.getElementById("editPopup").style.display = "block";
         }
 
+        function deletePost(id) {
+
+        }
+
         // Function to close the edit popup
         function closeEditPopup() {
             document.getElementById("editPopup").style.display = "none";
@@ -453,6 +475,21 @@
                 }
             }
         }
+
+
+        function confirmDelete(postId) {
+            document.getElementById('deletePostid').value = postId; // ตั้งค่า ID
+            document.getElementById('delete-confirmation-modal').style.display = 'flex'; // แสดง modal
+        }
+
+        function closeModal() {
+            document.getElementById('delete-confirmation-modal').style.display = 'none'; // ปิด modal
+        }
+
+
+
+
+
     </script>
 </body>
 </html>

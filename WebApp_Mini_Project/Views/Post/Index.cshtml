@@ -78,7 +78,7 @@
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
             {
-                if (post.timeout > DateTime.Now && post.Count_person < post.Max_person)
+                if (post.timeout > DateTime.Now && post.Count_person < post.Max_person && post.status == true)
                 {
                     <div class="card-container2" id="card-container">
                         <div class="card">
@@ -90,7 +90,7 @@
                                 }
 
 
-                                @foreach (var account in Model.Account)
+                                foreach (var account in Model.Account)
                                 {
                                     if (account.ProfilePicture != null)
                                     {
@@ -101,11 +101,9 @@
                                             <img src="@imgSrc" alt="logo" class="card-logo" />
                                         }
                                     }
-                                    else
-                                    {
-                                        <img src="~/Image/User_icon.png" alt="logo" class="card-logo" />
-                                    }
+
                                 }
+                            
 
 
 
@@ -146,13 +144,14 @@
                                 <p><b>เกม</b> : @post.Game</p>
                                 <p><b>รายละเอียด</b> : @post.Details</p>
                             </div>
-                            @if (post.User_list.Contains(ID))
+                            @if (post.status != true || post.User_list.Contains(ID))
                             {
                                 <button class="card-button join-room-button" data-id="@post.ID" disabled style="opacity: 0.6; cursor: default;">
                                     <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                                 </button>
+                                
                             }
-                            else if (post.User_id != ID)
+                            else if (post.User_id != ID && post.status == true)
                             {
                                 <button class="card-button join-room-button" data-id="@post.ID" data-timeout="@post.timeout">
                                     <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
@@ -160,7 +159,7 @@
                             }
                             else
                             {
-                                <button class="card-button join-room-button" data-id="@post.ID" disabled style="background-color: white; cursor: default; ">
+                                <button class="card-button join-room-button" data-id="@post.ID" disabled style=" cursor: default; ">
                                     <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                                 </button>
                             }

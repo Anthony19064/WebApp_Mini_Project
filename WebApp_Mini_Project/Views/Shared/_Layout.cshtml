@@ -56,6 +56,7 @@
                     @* ข้อความแชท *@
                 </div>
             </div>
+
         </div>
     </header>
     <div class="container">
@@ -72,5 +73,57 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+<script>
+                  function toggleChatPopup() {
+            // เปิด/ปิด popup
+            var chatPopup = document.getElementById("chatPopup");
+            if (chatPopup.style.display === "none") {
+                chatPopup.style.display = "block";
+                loadChatMessages();  // เรียก AJAX เมื่อเปิด popup
+            } else {
+                chatPopup.style.display = "none";
+            }
+        }
+
+                                function loadChatMessages() {
+            $.ajax({
+                url: '/Post/GetNotifications',
+                method: 'GET',
+                success: function (response) {
+                    $("#chatBody").empty(); // ล้างข้อความเก่าก่อนเติมข้อมูลใหม่
+
+
+                    if (response.success && response.notifications.length > 0) {
+                        response.notifications.forEach(function (notice) {
+                            var chatNotice = '<div class="chat-notice" style="display: flex; align-items: center; margin-bottom: 10px;">';
+
+                            // Check for the existence of a profile picture
+               
+                                 var base64String = "data:image/jpeg;base64," + notice.picture; // Use the converted base64
+                                chatNotice += '<img src="' + base64String + '" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">';
+                        
+                            // Show the message
+                            chatNotice += '<span style="flex: 1;">' + notice.message + '</span>';
+                            chatNotice += '</div>';
+                            $("#chatBody").append(chatNotice);
+                        });
+                    } else {
+                        $("#chatBody").append('<p>ไม่มีข้อความแชท</p>');
+                    }
+                },
+                error: function () {
+                    $("#chatBody").append('<p>เกิดข้อผิดพลาดในการโหลดข้อความ</p>');
+                }
+            });
+        }
+
+
+
+
+
+
+
+</script>
 </body>
 </html>

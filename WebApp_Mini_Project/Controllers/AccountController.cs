@@ -22,7 +22,7 @@ namespace WebApp_Mini_Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(Account obj, IFormFile profilePicture)
+        public async Task<IActionResult> Register(Account obj, IFormFile? profilePicture)
         {
             if (ModelState.IsValid)
             {
@@ -41,8 +41,13 @@ namespace WebApp_Mini_Project.Controllers
                 {
                     if (obj.Password == obj.ReplyPassword)
                     {
+                        if(profilePicture == null)
+                        {
+                            var defaultImagePath = "wwwroot/Image/User_icon.png"; // ระบุ path ของรูปภาพเริ่มต้น
+                            obj.ProfilePicture = System.IO.File.ReadAllBytes(defaultImagePath);
+                        }
                         // Handle the image file
-                        if (profilePicture != null && profilePicture.Length > 0)
+                        else if (profilePicture != null && profilePicture.Length > 0)
                         {
                             using (var memoryStream = new MemoryStream())
                             {
@@ -50,10 +55,8 @@ namespace WebApp_Mini_Project.Controllers
                                 obj.ProfilePicture = memoryStream.ToArray();
                             }
                         }
-                        else
-                        {
-                            ModelState.AddModelError("Picture", "Picture Error.");
-                        }
+                        
+
 
                         // Save the account to the database
                         _db.Accounts.Add(obj);
