@@ -158,7 +158,7 @@ public class PostController : HomeController
             var notice = new Notice
             {
                 UserID = account.ID,
-                Message = $"คุณได้เข้าร่วมเลขห้อง : {obj.Id_room}",
+                Message = $"คุณได้เข้าร่วม เลขห้อง : {obj.Id_room}",
                 Picture = obj.User_Picture // ต้องมีค่าจริงในที่นี้
             };
 
