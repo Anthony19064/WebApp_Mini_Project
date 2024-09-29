@@ -154,6 +154,10 @@ public class PostController : HomeController
             // อัพเดทข้อมูล
             obj.Count_person++; // เพิ่มจำนวนผู้เข้าร่วม
             obj.User_list.Add(account.ID); // เพิ่มผู้ใช้ในรายการ
+            if (obj.Count_person == obj.Max_person)
+            {
+                obj.status = false;
+            }
 
             // สร้างการแจ้งเตือน
             var notice = new Notice
