@@ -280,16 +280,18 @@
 
     <!-- delete Post -->
     <div id="delete-confirmation-modal" class="modal" style="display:none;">
-    <div class="modal-content">
-        <form method="POST" asp-controller="Post" asp-action="DeletePost">
-            <input type="hidden" id="deletePostid" name="id">
-            <h3>ยืนยันการลบ</h3>
-            <p>คุณต้องการลบโพสต์นี้หรือไม่?</p>
-            <button type="submit" id="confirm-delete-button">ใช่</button>
-            <button type="button" onclick="closeModal()">ไม่</button>
-        </form>
+        <div class="modal-content">
+            <form method="POST" asp-controller="Post" asp-action="DeletePost">
+                <input type="hidden" id="deletePostid" name="id">
+                <h3>ยืนยันการลบ</h3>
+                <p>คุณต้องการลบโพสต์นี้หรือไม่?</p>
+                <div class="button-group">
+                    <button type="submit" id="confirm-delete-button" class="btn-confirm">ใช่</button>
+                    <button type="button" class="btn-cancel" onclick="closeModal()">ไม่</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
 
     <!-- Edit profile -->
