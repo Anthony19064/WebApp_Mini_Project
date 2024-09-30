@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using WebApp_Mini_Project.Controllers;
@@ -108,9 +108,18 @@ public class PostController : HomeController
                 picture = n.Picture != null ? Convert.ToBase64String(n.Picture) : null // รูปภาพ (แปลงเป็น Base64)
             })
             .ToList();
-
+        var hasnewnotifications = _db.Notices
+            .Where(n => n.UserID == account.ID && !n.IsRead) // ดึงการแจ้งเตือนของผู้ใช้ที่ล็อกอิน
+            .Select(n => new
+            {
+                senderUsername = _db.Accounts.FirstOrDefault(a => a.ID == n.UserID).Username, // ผู้ส่ง
+                message = n.Message, // ข้อความแจ้งเตือน
+                picture = n.Picture != null ? Convert.ToBase64String(n.Picture) : null // รูปภาพ (แปลงเป็น Base64)
+            })
+            .ToList();
+        bool newNotification = hasnewnotifications.Any();
         // ส่งข้อมูลกลับในรูปแบบ JSON
-        return Json(new { success = true, notifications });
+        return Json(new { success = true, notifications,newNotification });
     }
 
 
@@ -242,7 +251,41 @@ public class PostController : HomeController
             return NotFound();
         }
     }
-    
+    [HttpPost]
+    public IActionResult MarkAllNotificationsAsRead()
+    {
+        // Check user login status using session data
+        string usersession = HttpContext.Session.GetString("Usersession");
+        if (string.IsNullOrEmpty(usersession))
+        {
+            return Json(new { success = false, message = "คุณยังไม่ได้ล็อกอิน" });
+        }
+
+        // Retrieve the logged-in user's account from the database
+        var account = _db.Accounts.SingleOrDefault(a => a.Username == usersession);
+        if (account == null)
+        {
+            return Json(new { success = false, message = "ไม่พบข้อมูลผู้ใช้" });
+        }
+
+        // Get all unread notifications for this user and mark them as read
+        var unreadNotifications = _db.Notices
+            .Where(n => n.UserID == account.ID && !n.IsRead)
+            .ToList();
+
+        foreach (var notification in unreadNotifications)
+        {
+            notification.IsRead = true; // Mark each notification as read
+        }
+
+        // Save changes to the database
+        _db.SaveChanges();
+
+        // Return success response
+        return Json(new { success = true, message = "การแจ้งเตือนทั้งหมดถูกอ่านแล้ว" });
+    }
+
+
 
 
 
