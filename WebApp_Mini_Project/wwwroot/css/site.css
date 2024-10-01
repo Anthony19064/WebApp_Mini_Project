@@ -15,7 +15,6 @@ body {
     flex-direction: column;
     background-color: #f9f9f9;
     color: #333;
-
 }
 
 .container {
@@ -58,18 +57,19 @@ header {
     object-fit: cover;
     filter: drop-shadow(0 4px 10px rgba(255, 102, 153, 1));
 }
-    header .nav-right button, header .nav-right a {
-        background-color: #fff;
-        color: #000099;
-        border: none;
-        padding: 8px 16px;
-        cursor: pointer;
-        font-weight: bold;
-        border-radius: 20px;
-        text-decoration: none;
-        z-index: 10;
-        transition: background 0.3s ease, color 0.3s ease;
-    }
+
+header .nav-right button, header .nav-right a {
+    background-color: #fff;
+    color: #000099;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 20px;
+    text-decoration: none;
+    z-index: 10;
+    transition: background 0.3s ease, color 0.3s ease;
+}
 
 .nav-right {
     display: flex; /* ใช้ flexbox เพื่อจัดเรียงในแนวนอน */
@@ -126,7 +126,6 @@ footer {
     position: relative;
     display: inline-block;
     overflow: visible;
-   
 }
 
 .dropdown-content {
@@ -177,8 +176,8 @@ footer {
 
 .dropdown:hover .dropbtn {
     background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
-
 }
+
 .dropdown-content a:nth-child(1) {
     animation-delay: 0.2s;
 }
@@ -205,14 +204,14 @@ footer {
     margin-right: 0px;
 }
 
-.dropbtn span {
+    .dropbtn span {
         background: linear-gradient(to right, #FF6699, #FF6699, #f89b28);
         -webkit-background-clip: text;
         color: transparent;
         display: inline-block;
         font-size: 20px;
         transition: color 1s;
-}
+    }
 
 
 
@@ -233,6 +232,7 @@ footer {
     z-index: 1000; /* ให้ปุ่มอยู่ข้างบน */
     margin-right: 15px; /* ระยะห่างจากปุ่มอื่น */
     transition: background-color 0.3s, transform 0.3s; /* เพิ่มการเปลี่ยนแปลง */
+    position: relative; /* ให้ตำแหน่งสัมพันธ์สำหรับ notification-dot */
 }
 
     .floating-button:hover {
@@ -242,4 +242,13 @@ footer {
         background-color: transparent; /* สีพื้นหลังเมื่อชี้ */
     }
 
-
+.notification-dot {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    height: 8px;
+    width: 8px;
+    background-color: red;
+    border-radius: 50%;
+    display: none; /* ซ่อนจุดแจ้งเตือนเริ่มต้น */
+}
