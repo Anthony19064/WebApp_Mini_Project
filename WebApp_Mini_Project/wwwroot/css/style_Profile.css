@@ -1,4 +1,25 @@
-﻿/* Profile Container */
+﻿@font-face {
+    font-family: 'main'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
+    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    font-weight: normal; /* น้ำหนักของฟอนต์ */
+    font-style: normal; /* สไตล์ของฟอนต์ */
+}
+
+@font-face {
+    font-family: 'story'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
+    src: url('../font/StoryElementRegular-X3RWa.ttf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    font-weight: normal; /* น้ำหนักของฟอนต์ */
+    font-style: normal; /* สไตล์ของฟอนต์ */
+}
+
+@font-face {
+    font-family: 'thaifont'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
+    src: url('../font/TCS 4KhobKhun Bold.ttf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    font-weight: normal; /* น้ำหนักของฟอนต์ */
+    font-style: normal; /* สไตล์ของฟอนต์ */
+}
+
+/* Profile Container */
 .profile-container {
     background: linear-gradient(#FF66FF, #FF66CC, #FF6699);
     color: white;
@@ -152,7 +173,6 @@
 .profile-form {
     width: 100%; /* ทำให้ฟอร์มใช้พื้นที่ทั้งหมดของ form-section */
     max-width: 500px; /* กำหนดความกว้างสูงสุด */
-
 }
 
     .profile-form .form-group {
@@ -484,8 +504,21 @@ h2 {
     position: relative; /* ทำให้สามารถวางตำแหน่งภายในได้ */
     padding: 20px; /* เพิ่ม padding แทน margin ซ้ายขวา */
     gap: 25px;
+    min-height: 475px; /* ความสูงขั้นต่ำให้ container คงที่ */
+}
+.card-container {
+    margin-bottom: 10px; /* ระยะห่างคงที่ระหว่าง card-container กับ card-container-join */
 }
 
+.card-container-join {
+    margin-top: 10px; /* ระยะห่างคงที่ด้านบน */
+}
+
+/* ซ่อนการ์ดเมื่อไม่มีโพสต์ */
+.card.hidden,
+.card-join.hidden {
+    visibility: hidden; /* ซ่อนโพสต์แต่ยังรักษาพื้นที่ไว้ */
+}
 
 
 
@@ -517,23 +550,28 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 0 0 auto; /* 3 cards per row with spacing */
+    flex: 0 0 auto;
     position: relative;
     width: 400px;
     height: 400px;
-    margin-top: 30px;
+    margin-top: 40px;
 }
-
 .card-label,
 .card-label-join {
-    position: absolute; /* ใช้ตำแหน่งแบบสัมบูรณ์ */
-    top: -30px; /* ปรับให้สูงขึ้นเหนือ container */
+    position: absolute;
+    top: -30px; /* ระยะห่างจากด้านบนของการ์ด */
     left: 20px; /* ระยะห่างจากด้านซ้าย */
-    z-index: 10; /* ทำให้แน่ใจว่าอยู่เหนือองค์ประกอบอื่น ๆ */
-    background-color: rgba(255, 255, 255, 0.0); /* ทำให้พื้นหลังโปร่งใสเล็กน้อย (เลือกได้) */
-    padding: 5px; /* เพิ่ม padding */
-    border-radius: 5px; /* ทำให้มุมมน */
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.0);
+    padding: 10px; /* เพิ่มหรือปรับระยะห่างภายในกล่องข้อความ */
+    border-radius: 5px;
+    min-height: 50px;
+    font-family: 'thaifont', sans-serif;
+    line-height: 1.5; /* ควบคุมระยะห่างระหว่างบรรทัด */
+    margin-bottom: 10px; /* ปรับระยะห่างด้านล่าง */
+
 }
+
 
 @media (max-width: 1024px) {
     .card,
@@ -578,10 +616,12 @@ h2 {
 
     .card-content p,
     .card-content-join p {
-        margin: 0px 10% 0px 10%;
+        margin: 2px 0;
         font-size: 17px;
         color: #333;
         margin-top: 3px;
+        font-family: 'thaifont', sans-serif;
+        font-size: 20px;
     }
 
 #time {
@@ -622,58 +662,74 @@ h2 {
     cursor: pointer;
     z-index: 10; /* ให้แน่ใจว่าเมนูอยู่ด้านหน้าสิ่งอื่น */
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้เมนู */
+    transition: background-color 0.3s, transform 0.3s; /* เพิ่มเอฟเฟกต์ */
 }
 
+    .card-menu:hover {
+        transform: scale(1.1); /* ขยายเมนูเล็กน้อยเมื่อ hover */
+    }
+
+    .card-menu img {
+        width: 20px;
+        height: 20px;
+        filter: invert(1); /* ทำให้ไอคอนเป็นสีขาว */
+    }
 
 
+/* Card Menu Options */
 .card-menu-options {
     list-style-type: none;
     padding: 10px; /* เพิ่ม padding เพื่อให้มีพื้นที่ภายใน */
     margin: 0;
     position: absolute;
+    top: 45px; /* ให้เมนูปรากฏด้านล่างของไอคอน */
+    right: 0; /* ให้ชิดขวาของ card */
     background-color: white;
     border: 1px solid #ccc;
     z-index: 1;
-    display: none;
-    border-radius: 10px; /* ทำให้ขอบกลม */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้ดูน่าสนใจ */
+    display: none; /* ซ่อนตอนแรก */
+    border-radius: 8px; /* ทำให้ขอบกลม */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+    animation: fadeIn 0.3s ease-in-out; /* เพิ่มแอนิเมชันตอนแสดง */
+    font-family: 'thaifont', sans-serif;
 }
 
-
-
     .card-menu-options li {
-        padding: 8px;
+        padding: 10px;
         cursor: pointer;
+        color: #333; /* สีข้อความ */
+        transition: background-color 0.2s ease; /* เพิ่มเอฟเฟกต์เมื่อ hover */
     }
 
         .card-menu-options li:hover {
-            background-color: #f0f0f0;
+            background-color: #f5f5f5; /* เปลี่ยนสีพื้นหลังเมื่อ hover */
         }
 
-/* =========================================
-   Animations
-========================================= */
+        .card-menu-options li a {
+            text-decoration: none; /* ลบเส้นใต้จากลิงก์ */
+            color: #333;
+        }
 
+/* Animation for menu appearance */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: scale(0.8);
+        transform: translateY(-10px);
     }
 
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0);
     }
 }
 
-@keyframes fadeInOverlay {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+/* Show menu when the card-menu is clicked */
+.card-menu.active + .card-menu-options {
+    display: block;
 }
 
 /* =========================================
@@ -817,9 +873,73 @@ h2 {
     justify-content: center;
 }
 
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* ความโปร่งใสของพื้นหลัง */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 400px;
+}
+
+    .modal-content h3 {
+        font-size: 22px;
+        color: #333;
+        margin-bottom: 20px;
+        font-family: 'thaifont', sans-serif;
+    }
+
+    .modal-content p {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 30px;
+        font-family: 'thaifont', sans-serif;
+    }
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'thaifont', sans-serif;
+}
+
+    .button-group .btn-confirm {
+        background-color: #FF66CC; /* สีเขียวสำหรับยืนยัน */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 45%;
+        font-family: 'thaifont', sans-serif;
+    }
+
+    .button-group .btn-cancel {
+        background-color: white; /* สีแดงสำหรับยกเลิก */
+        color: #FF66CC;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 45%;
+        font-family: 'thaifont', sans-serif;
+        border: 1px solid #FF66CC;
+    }
+
+        .button-group .btn-confirm:hover, .button-group .btn-cancel:hover {
+            opacity: 0.9;
+        }
