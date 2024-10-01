@@ -242,4 +242,13 @@ footer {
         background-color: transparent; /* สีพื้นหลังเมื่อชี้ */
     }
 
-
+.notification-dot {
+    
+    top: -5px;
+    right: -5px;
+    height: 12px;
+    width: 12px;
+    background-color: red;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+}

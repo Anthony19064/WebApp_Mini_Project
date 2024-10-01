@@ -18,6 +18,8 @@ namespace WebApp_Mini_Project.Models
         // Photo
         public byte[]? Picture { get; set; }
 
+        public bool IsRead { get; set; } = false;
+
 
         // คุณสมบัติการนำทาง (ไม่บังคับ) เพื่อเชื่อมโยงกับโมเดลบัญชีผู้ใช้
         [ForeignKey("UserID")]
