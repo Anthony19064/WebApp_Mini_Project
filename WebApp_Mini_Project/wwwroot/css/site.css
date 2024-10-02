@@ -254,19 +254,22 @@ footer {
 
 
 }
+.chat-container {
+    position: relative; /* ทำให้ container หลักมีตำแหน่ง relative */
+    height: 1000px; /* ตัวอย่างความสูงของ container */
+}
+
 .chat-popup {
-    display: none; /* Keep it hidden until triggered */
-    position: fixed; /* Fixed position for it to stay at the same spot when scrolling */
-    bottom: 500px; /* Adjust to move the chat popup upwards */
-    right: 170px; /* Position it closer to the edge of the screen */
-    border: 1px solid #000000; /* Same border */
-    border-radius: 10px; /* Keep the rounded corners */
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* Same shadow */
-    width: 300px; /* Same width */
-    height: 420px; /* Same height */
-    z-index: 1000; /* Ensures the chat box stays above other content */
-    animation: slideUp 0.3s ease-out;
-    font-family: 'thaifont', sans-serif;
+    display: none; /* ซ่อน popup ในตอนเริ่มต้น */
+    position: absolute; /* ควบคุมให้ตำแหน่งสัมพันธ์กับ container */
+    top: 35px; /* ค่าตำแหน่งจากด้านล่างของ container */
+    right: 160px; /* ค่าตำแหน่งจากด้านขวาของ container */
+    border: 0px solid #000000; /* กำหนด border */
+    border-radius: 10px; /* มุมโค้ง */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* เงา */
+    width: 300px; /* ความกว้าง */
+    height: 420px; /* ความสูง */
+    z-index: 1000; /* ให้แน่ใจว่าอยู่ด้านบนของเนื้อหาอื่น */
     background: white;
 }
 
@@ -305,6 +308,18 @@ footer {
     font-size: 20px;
 }
 
+    /* Styling the scrollbar */
+    .chat-popup-body::-webkit-scrollbar {
+        width: 12px; /* ความกว้างของ scrollbar */
+    }
+
+    .chat-popup-body::-webkit-scrollbar-track {
+         
+        border-radius: 10px; /* ขอบมน */
+    }
+
+
+
 .chat-popup-footer {
     padding: 10px;
     border-top: 1px solid #ddd;
@@ -332,6 +347,8 @@ footer {
     margin-right: 10px; /* เว้นระยะห่างระหว่างรูปกับข้อความ */
     width: 40px; /* ขนาดของรูปโปรไฟล์ */
     height: 40px; /* ขนาดของรูปโปรไฟล์ */
+    padding-left:2px;
+    margin-left:10px;
 }
 
 /* สไตล์สำหรับข้อความ */
