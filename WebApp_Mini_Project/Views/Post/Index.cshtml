@@ -144,7 +144,7 @@
                                 <p><b>เกม</b> : @post.Game</p>
                                 <p><b>รายละเอียด</b> : @post.Details</p>
                             </div>
-                            @if (post.status != true || post.User_list.Contains(ID))
+                            @if (post.status != true || post.User_list.Contains(ID) || post.User_id == ViewBag.UserID)
                             {
                                 <button class="card-button join-room-button" data-id="@post.ID" disabled style="opacity: 0.6; cursor: default;">
                                     <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
@@ -157,13 +157,6 @@
                                     <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                                 </button>
                             }
-                            else
-                            {
-                                <button class="card-button join-room-button" data-id="@post.ID" disabled style=" cursor: default; ">
-                                    <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
-                                </button>
-                            }
-
 
                         </div>
                     </div>
