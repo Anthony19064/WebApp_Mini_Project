@@ -604,5 +604,10 @@
     margin-left: 15px
 
 }
+.title-body {
+    font-family: 'thaifont', sans-serif;
+    font-size: 50px;
+    letter-spacing: 6px;
+}
 
 
