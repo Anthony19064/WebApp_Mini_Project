@@ -413,14 +413,15 @@
     position: fixed; /* Fixed position for it to stay at the same spot when scrolling */
     bottom: 500px; /* Adjust to move the chat popup upwards */
     right: 170px; /* Position it closer to the edge of the screen */
-    border: 2px solid #000000; /* Same border */
+    border: 1px solid #000000; /* Same border */
     border-radius: 10px; /* Keep the rounded corners */
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* Same shadow */
     width: 300px; /* Same width */
-    height: 400px; /* Same height */
-    background-color: #fff; /* Same white background */
+    height: 420px; /* Same height */
     z-index: 1000; /* Ensures the chat box stays above other content */
     animation: slideUp 0.3s ease-out;
+    font-family: 'thaifont', sans-serif;
+    background: white;
 }
 
 /* Add a sliding effect when the chat pops up */
@@ -443,7 +444,9 @@
 
 
 .chat-popup-header {
-    background-color: #fffdfb;
+    background: linear-gradient(to bottom, #FF6699, #f89b28);
+    font-family: 'thaifont', sans-serif;
+    font-size:28px;
     padding: 20px;
     border-radius: 9px 9px 0 0;
     color: black;
@@ -455,11 +458,16 @@
     height: 320px;
     overflow-y: auto;
     color: black;
+    background: white;
+    font-size:20px;
+    
 }
 
 .chat-popup-footer {
     padding: 10px;
     border-top: 1px solid #ddd;
+    background: #d0f8f2;
+
 }
 
 .chat-popup-footer input {
@@ -486,11 +494,18 @@
 
 /* สไตล์สำหรับข้อความ */
 .chat-notice span {
-    background-color: #f1f1f1; /* สีพื้นหลังของข้อความ */
+    /* สีพื้นหลังของข้อความ */
     border-radius: 10px;
     padding: 8px 12px;
     max-width: 70%; /* กำหนดความกว้างสูงสุดของข้อความ */
     word-wrap: break-word; /* พับคำที่ยาวเกินไป */
+   
+}
+
+.chat-notice {
+    background: #eca8a8;
+    border-radius: 20px;
+    padding: 4px;
 }
 
 /*/-------------------------------------------CHATBOARD---------------------------------------------------/*/
