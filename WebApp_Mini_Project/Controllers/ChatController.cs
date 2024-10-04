@@ -36,7 +36,6 @@ namespace WebApp_Mini_Project.Controllers
                 return BadRequest("Message cannot be empty."); // ส่งกลับข้อผิดพลาดถ้าข้อความว่างเปล่า
             }
             obj.User_id = account.ID;
-            obj.ProfilePicture = account.ProfilePicture;
             obj.CreatedAt = DateTime.Now;
 
             _db.Chats.Add(obj);
@@ -54,7 +53,6 @@ namespace WebApp_Mini_Project.Controllers
                     chat.User_id,
                     chat.Message,
                     CreatedAt = chat.CreatedAt.ToString("o"), // ส่งในรูปแบบ ISO 8601
-                    ProfilePicture = chat.ProfilePicture
                 })
                 .ToList();
 

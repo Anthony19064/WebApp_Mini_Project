@@ -366,17 +366,19 @@
                     $.each(data.chats, function (index, chat) {
                         var user = chat.user_id || "Unknown User";
                         var user_name = ''
+                        var imageBase64 = ''
                         $.each(data.account, function (index, account) {
 
                             if (user == account.id) {
                                 user_name = account.username;
+                                imageBase64 = account.profilePicture ? 'data:image/png;base64,' + account.profilePicture : '/Image/User_icon.png';
                             }
                         });
                         var message = chat.message || "No message";
                         var createdAt = new Date(chat.createdAt);
                         var timeString = createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // แสดงเวลาในรูปแบบ HH:mm
 
-                        var imageBase64 = chat.profilePicture ? 'data:image/png;base64,' + chat.profilePicture : '/Image/User_icon.png';
+                        // var imageBase64 = chat.profilePicture ? 'data:image/png;base64,' + chat.profilePicture : '/Image/User_icon.png';
                         var ownMessageClass = (String(chat.user_id) === String('@ViewBag.UserID')) ? 'own-message' : 'other-message';
                         $('#chatMessages').prepend(
 

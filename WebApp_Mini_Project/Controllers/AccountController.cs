@@ -43,7 +43,7 @@ namespace WebApp_Mini_Project.Controllers
                     {
                         if(profilePicture == null)
                         {
-                            var defaultImagePath = "wwwroot/Image/User_icon.png"; // ระบุ path ของรูปภาพเริ่มต้น
+                            var defaultImagePath = "wwwroot/Image/Logo_web.png"; // ระบุ path ของรูปภาพเริ่มต้น
                             obj.ProfilePicture = System.IO.File.ReadAllBytes(defaultImagePath);
                         }
                         // Handle the image file

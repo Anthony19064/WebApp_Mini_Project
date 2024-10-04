@@ -321,13 +321,8 @@
 
 /* Body Styles */
 body {
-    /*    margin-bottom: 200px;*/
     background-color: #FFF0F5;
-    /*background-image: url('https://wallpapers-clan.com/wp-content/uploads/2024/08/sanrio-cute-hello-kitty-pink-gif-desktop-wallpaper-preview.gif');
-    background-size: cover;*/ /* Optional: makes the image cover the entire background */
-    /*background-repeat: no-repeat;*/ /* Prevents the image from repeating */
-    /*background-position: center;*/ /* Centers the image */
-    /*color: #333;*/ /* Text color */
+
 }
 /* Edit Popup */
 .edit-popup {

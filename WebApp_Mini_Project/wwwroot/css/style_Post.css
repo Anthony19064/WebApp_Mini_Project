@@ -7,7 +7,7 @@
 
 @font-face {
     font-family: 'story'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
-    src: url('../font/StoryElementRegular-X3RWa.ttf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    src: url('../font/RainyThin-Regular.ttf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
     font-weight: normal; /* น้ำหนักของฟอนต์ */
     font-style: normal; /* สไตล์ของฟอนต์ */
 }
@@ -489,8 +489,8 @@
         letter-spacing: 0px;
     }
 
-    .chat-message .message{
-        font-family: 'thaifont' , sans-serif;
+    .chat-message .message {
+        font-family: 'story', sans-serif;
         font-size: 20px;
         margin: 0px 3px 0px 3px;
         color: dimgrey;
