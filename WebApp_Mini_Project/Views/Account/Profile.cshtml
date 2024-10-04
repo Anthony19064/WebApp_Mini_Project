@@ -35,20 +35,18 @@
 
             <!-- Form Section (Right) -->
             <div class="form-section">
-                <form id="profileForm" class="profile-form">
+                <div class="profile-form">
+                    <label>Username</label>
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="@Model.Account.Username" disabled>
+                        
+                        <div class="text-container">@Model.Account.Username</div> <!-- เปลี่ยนจาก input เป็นข้อความ -->
                     </div>
+                    <label>Email</label>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" value="********" disabled>
+                        
+                        <div class="text-container"> @Model.Account.Email</div> <!-- เปลี่ยนจาก input เป็นข้อความ -->
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="@Model.Account.Email" disabled>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -410,14 +408,13 @@
             document.getElementById("editPopup").style.display = "none";
         }
 
-        // Generic function to scroll left
         function scrollLeft(containerSelector) {
             console.log("Scrolling left...");
             const container = document.querySelector(containerSelector);
             if (container) {
                 container.scrollBy({
-                    left: -226,
-                    behavior: 'smooth'
+                    left: -226, // ปรับระยะทางการเลื่อนที่นี่
+                    behavior: 'smooth' // เพิ่มการเลื่อนที่นุ่มนวล
                 });
             }
         }
@@ -428,8 +425,8 @@
             const container = document.querySelector(containerSelector);
             if (container) {
                 container.scrollBy({
-                    left: 226,
-                    behavior: 'smooth'
+                    left: 226, // ปรับระยะทางการเลื่อนที่นี่
+                    behavior: 'smooth' // เพิ่มการเลื่อนที่นุ่มนวล
                 });
             }
         }
