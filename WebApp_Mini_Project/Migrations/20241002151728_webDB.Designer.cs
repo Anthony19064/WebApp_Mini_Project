@@ -12,8 +12,8 @@ using WebApp_Mini_Project.Data;
 namespace WebApp_Mini_Project.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240929104347_CreateDB")]
-    partial class CreateDB
+    [Migration("20241002151728_webDB")]
+    partial class webDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,9 @@ namespace WebApp_Mini_Project.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .IsRequired()
