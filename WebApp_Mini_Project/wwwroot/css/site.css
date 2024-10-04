@@ -251,4 +251,117 @@ footer {
     background-color: red;
     border-radius: 50%;
     display: none; /* ซ่อนจุดแจ้งเตือนเริ่มต้น */
+
+
+}
+.chat-container {
+    position: relative; /* ทำให้ container หลักมีตำแหน่ง relative */
+    height: 1000px; /* ตัวอย่างความสูงของ container */
+}
+
+.chat-popup {
+    display: none; /* ซ่อน popup ในตอนเริ่มต้น */
+    position: absolute; /* ควบคุมให้ตำแหน่งสัมพันธ์กับ container */
+    top: 35px; /* ค่าตำแหน่งจากด้านล่างของ container */
+    right: 160px; /* ค่าตำแหน่งจากด้านขวาของ container */
+    border: 0px solid #000000; /* กำหนด border */
+    border-radius: 10px; /* มุมโค้ง */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* เงา */
+    width: 300px; /* ความกว้าง */
+    height: 420px; /* ความสูง */
+    z-index: 1000; /* ให้แน่ใจว่าอยู่ด้านบนของเนื้อหาอื่น */
+    background: white;
+}
+
+/* Add a sliding effect when the chat pops up */
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+
+.chat-popup-header {
+    background: linear-gradient(to bottom, #FF6699, #f89b28);
+    font-family: 'thaifont', sans-serif;
+    font-size: 28px;
+    padding: 20px;
+    border-radius: 9px 9px 0 0;
+    color: black;
+    text-align: center;
+}
+
+.chat-popup-body {
+    padding: 10px;
+    height: 320px;
+    overflow-y: auto;
+    color: black;
+    background: white;
+    font-size: 20px;
+}
+
+    /* Styling the scrollbar */
+    .chat-popup-body::-webkit-scrollbar {
+        width: 12px; /* ความกว้างของ scrollbar */
+    }
+
+    .chat-popup-body::-webkit-scrollbar-track {
+         
+        border-radius: 10px; /* ขอบมน */
+    }
+
+
+
+.chat-popup-footer {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: #d0f8f2;
+}
+
+    .chat-popup-footer input {
+        width: 80%;
+        padding: 5px;
+    }
+
+    .chat-popup-footer button {
+        width: 15%;
+        padding: 5px;
+        background-color: #ffffff;
+        border: 1px;
+        color: white;
+        cursor: pointer;
+    }
+
+
+/* สไตล์สำหรับรูปโปรไฟล์ */
+.chat-notice img {
+    border-radius: 50%; /* ทำให้รูปโปรไฟล์เป็นวงกลม */
+    margin-right: 10px; /* เว้นระยะห่างระหว่างรูปกับข้อความ */
+    width: 40px; /* ขนาดของรูปโปรไฟล์ */
+    height: 40px; /* ขนาดของรูปโปรไฟล์ */
+    padding-left:2px;
+    margin-left:10px;
+}
+
+/* สไตล์สำหรับข้อความ */
+.chat-notice span {
+    /* สีพื้นหลังของข้อความ */
+    border-radius: 10px;
+    padding: 8px 12px;
+    max-width: 70%; /* กำหนดความกว้างสูงสุดของข้อความ */
+    word-wrap: break-word; /* พับคำที่ยาวเกินไป */
+}
+
+.chat-notice {
+    background: #eca8a8;
+    border-radius: 20px;
+    padding: 4px;
 }
