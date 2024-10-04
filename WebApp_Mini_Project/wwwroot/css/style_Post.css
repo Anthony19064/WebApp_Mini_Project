@@ -408,90 +408,7 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-.chat-popup {
-    display: none; /* Keep it hidden until triggered */
-    position: fixed; /* Fixed position for it to stay at the same spot when scrolling */
-    bottom: 500px; /* Adjust to move the chat popup upwards */
-    right: 170px; /* Position it closer to the edge of the screen */
-    border: 2px solid #000000; /* Same border */
-    border-radius: 10px; /* Keep the rounded corners */
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* Same shadow */
-    width: 300px; /* Same width */
-    height: 400px; /* Same height */
-    background-color: #fff; /* Same white background */
-    z-index: 1000; /* Ensures the chat box stays above other content */
-    animation: slideUp 0.3s ease-out;
-}
 
-/* Add a sliding effect when the chat pops up */
-@keyframes slideUp {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-.floating-button img {
-    width: 50px;
-    height: 50px;
-}
-
-
-
-.chat-popup-header {
-    background-color: #fffdfb;
-    padding: 20px;
-    border-radius: 9px 9px 0 0;
-    color: black;
-    text-align: center;
-}
-
-.chat-popup-body {
-    padding: 10px;
-    height: 320px;
-    overflow-y: auto;
-    color: black;
-}
-
-.chat-popup-footer {
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
-
-.chat-popup-footer input {
-    width: 80%;
-    padding: 5px;}
-
-    .chat-popup-footer button {
-        width: 15%;
-        padding: 5px;
-        background-color: #ffffff;
-        border: 1px;
-        color: white;
-        cursor: pointer;
-    }
-
-
-    /* สไตล์สำหรับรูปโปรไฟล์ */
-.chat-notice img {
-    border-radius: 50%; /* ทำให้รูปโปรไฟล์เป็นวงกลม */
-    margin-right: 10px; /* เว้นระยะห่างระหว่างรูปกับข้อความ */
-    width: 40px; /* ขนาดของรูปโปรไฟล์ */
-    height: 40px; /* ขนาดของรูปโปรไฟล์ */
-}
-
-/* สไตล์สำหรับข้อความ */
-.chat-notice span {
-    background-color: #f1f1f1; /* สีพื้นหลังของข้อความ */
-    border-radius: 10px;
-    padding: 8px 12px;
-    max-width: 70%; /* กำหนดความกว้างสูงสุดของข้อความ */
-    word-wrap: break-word; /* พับคำที่ยาวเกินไป */
-}
 
 /*/-------------------------------------------CHATBOARD---------------------------------------------------/*/
 
@@ -686,6 +603,11 @@
     padding-top: 20px;
     margin-left: 15px
 
+}
+.title-body {
+    font-family: 'thaifont', sans-serif;
+    font-size: 50px;
+    letter-spacing: 6px;
 }
 
 

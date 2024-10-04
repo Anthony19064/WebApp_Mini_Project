@@ -123,6 +123,8 @@ namespace WebApp_Mini_Project.Controllers
                 Account = account,
                 Account_list = accounts
             };
+            int userid = account.ID;
+            ViewBag.UserID = userid;
             return View(viewModel);
         }
 

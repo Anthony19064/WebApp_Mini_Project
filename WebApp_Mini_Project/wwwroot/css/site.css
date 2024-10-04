@@ -1,8 +1,15 @@
 @font-face {
-    font-family: 'testfont'; /* µÑé§ª×èÍ¿Í¹µì·Õè¤Ø³µéÍ§¡ÒÃãªé */
-    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* àÊé¹·Ò§ä»ÂÑ§ä¿Åì¿Í¹µì */
-    font-weight: normal; /* ¹éÓË¹Ñ¡¢Í§¿Í¹µì */
-    font-style: normal; /* ÊäµÅì¢Í§¿Í¹µì */
+    font-family: 'testfont'; 
+    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+@font-face {
+    font-family: 'rain'; 
+    src: url('../font/RainyThin-Regular.ttf') format('woff2'), 
+    font-weight: normal; 
+    font-style: normal; 
 }
 
 html, body {
@@ -251,4 +258,138 @@ footer {
     background-color: red;
     border-radius: 50%;
     display: none; /* ซ่อนจุดแจ้งเตือนเริ่มต้น */
+
+
+}
+.chat-container {
+    position: relative; /* ทำให้ container หลักมีตำแหน่ง relative */
+    height: 1000px; /* ตัวอย่างความสูงของ container */
+}
+
+.chat-popup {
+    display: none; /* ซ่อน popup ในตอนเริ่มต้น */
+    position: absolute; /* ควบคุมให้ตำแหน่งสัมพันธ์กับ container */
+    top: 35px; /* ค่าตำแหน่งจากด้านล่างของ container */
+    right: 160px; /* ค่าตำแหน่งจากด้านขวาของ container */
+    border-radius: 9px 9px 0px 0px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* เงา */
+    width: 300px; /* ความกว้าง */
+    height: 100px; /* ความสูง */
+    z-index: 1000; /* ให้แน่ใจว่าอยู่ด้านบนของเนื้อหาอื่น */
+    background: white;
+}
+
+/* Add a sliding effect when the chat pops up */
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+
+.chat-popup-header {
+    position: relative; /* ทำให้สามารถใช้ position absolute ในลูกหลานได้ */
+    background: linear-gradient(to right, #FF6699, #f89b28);
+    font-family: 'thaifont', sans-serif;
+    padding: 5px 0;
+    font-size: 25px;
+    border-radius: 9px 9px 0 0;
+    color: white;
+    text-align: center;
+    letter-spacing: 8px;
+}
+
+    .chat-popup-header span {
+        cursor: pointer;
+        position: absolute; /* เปลี่ยนเป็น absolute */
+        right: 10px; /* ระยะห่างจากด้านขวา */
+    }
+
+.chat-popup-body {
+    padding: 10px;
+    height: 320px;
+    width: auto;
+    overflow-y: auto;
+    color: white;
+    background: white;
+    font-size: 20px;
+    border-radius: 0px 0px 9px 9px;
+}
+
+    .chat-popup-body::-webkit-scrollbar {
+        width: 7px; /* ความกว้างของ scrollbar */
+        
+    }
+
+    .chat-popup-body::-webkit-scrollbar-track {
+        border-radius: 10px; /* ขอบมน */
+    }
+
+    .chat-popup-body::-webkit-scrollbar-thumb {
+        margin-right: 2px;
+        background: #A9A9A9; /* สีของ thumb (สีเทา) */
+        border-radius: 10px; /* ขอบมน */
+    }
+
+        .chat-popup-body::-webkit-scrollbar-thumb:hover {
+            background: #808080; /* สีเมื่อ hover */
+        }
+
+
+
+.chat-popup-footer {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: #d0f8f2;
+}
+
+    .chat-popup-footer input {
+        width: 80%;
+        padding: 5px;
+    }
+
+    .chat-popup-footer button {
+        width: 15%;
+        padding: 5px;
+        background-color: #ffffff;
+        border: 1px;
+        color: white;
+        cursor: pointer;
+    }
+
+
+/* สไตล์สำหรับรูปโปรไฟล์ */
+.chat-notice img {
+    border-radius: 50%; /* ทำให้รูปโปรไฟล์เป็นวงกลม */
+    margin-right: 10px; /* เว้นระยะห่างระหว่างรูปกับข้อความ */
+    width: 40px; /* ขนาดของรูปโปรไฟล์ */
+    height: 40px; /* ขนาดของรูปโปรไฟล์ */
+    padding-left: 2px;
+    margin-left: 10px;
+    object-fit: cover;
+}
+
+/* สไตล์สำหรับข้อความ */
+.chat-notice span {
+    /* สีพื้นหลังของข้อความ */
+    border-radius: 10px;
+    padding: 8px 12px;
+    max-width: 70%; /* กำหนดความกว้างสูงสุดของข้อความ */
+    word-wrap: break-word; /* พับคำที่ยาวเกินไป */
+    font-family: 'rain', sans-serif;
+    font-size: 20px;
+}
+
+.chat-notice {
+    background: #eca8a8;
+    border-radius: 20px;
+    padding: 4px;
 }

@@ -21,7 +21,7 @@
 
 /* Profile Container */
 .profile-container {
-    background: linear-gradient(#FF66FF, #FF66CC, #FF6699);
+    background: linear-gradient(to bottom, #FF6699, #FF6699, #f89b28);
     color: white;
     width: 80vw; /* ลดความกว้างจาก 100vw เป็น 80vw */
     max-width: 1200px; /* กำหนดความกว้างสูงสุด */
@@ -170,37 +170,60 @@
     align-items: center; /* จัดกึ่งกลางแนวตั้ง */
 }
 
+.form-section {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .profile-form {
-    width: 100%; /* ทำให้ฟอร์มใช้พื้นที่ทั้งหมดของ form-section */
-    max-width: 500px; /* กำหนดความกว้างสูงสุด */
+    width: 100%;
+    max-width: 400px;
+    font-family: 'testfont', sans-serif; /* ฟอนต์เดียว */
+    font-size: 25px;
+    max-width: 100%;
+
 }
 
     .profile-form .form-group {
         margin: 15px 0;
-        width: 100%; /* ทำให้กลุ่มฟอร์มมีความกว้างเต็ม */
+        width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; /* จัดกึ่งกลางแนวนอน */
-        margin-left: 70px;
+        align-items: flex-start;
+        
     }
 
         .profile-form .form-group label {
             display: block;
-            font-size: 16px;
             margin-bottom: 5px;
-            text-align: left !important; /* จัดกึ่งกลางข้อความ */
+            text-align: left;
             color: white;
+            
         }
 
-        .profile-form .form-group input {
-            width: 80%;
-            padding: 8px;
-            font-size: 14px;
-            border: none;
-            border-radius: 15px; /* ลบ border radius */
-            color: white;
-            text-align: left; /* จัดกึ่งกลางข้อความภายใน input */
+        .profile-form .form-group  {
+            font-size: 28px;
+            background: white; /* Gradient สี */
+            padding: 2px;
+            border: none; /* ไม่ต้องการขอบของ div */
+            border-radius:20px;
+            width: 100%; /* ทำให้ข้อความเต็มความกว้าง */
+            display: inline-block; /* เพื่อให้ padding และ shadow แสดงผลอย่างถูกต้อง */
+            text-align: center;
         }
+.text-container {
+    text-align: center;
+    background: linear-gradient(to right, #FF6699, #f89b28); /* Gradient สี */
+    -webkit-background-clip: text; /* ทำให้ background ใช้กับข้อความ */
+    -webkit-text-fill-color: transparent; /* ทำให้ข้อความโปร่งใสเพื่อแสดง gradient */
+    white-space: nowrap; /* ห้ามให้ข้อความแตกบรรทัด */
+    overflow: visible; /* แสดงข้อความทั้งหมด */
+    max-width: 100%; /* กำหนดความกว้างสูงสุด */
+    display: inline-block; /* ใช้ inline-block เพื่อให้ความกว้างเหมาะสมกับเนื้อหา */
+}
 
 .buttons {
     text-align: center;
@@ -443,6 +466,7 @@ h2 {
     align-items: center;
     margin-top: 40px; /* เพิ่มระยะห่างด้านบนเพื่อไม่ให้ทับกับ label */
     word-wrap: break-word; /* ทำให้คำยาว ๆ ถูกตัดบรรทัด */
+    transition: transform 0.9s ease; /* ปรับให้เวลาสั้นลงเพื่อความนุ่มนวล */
 }
 
 /* Scroll Buttons */
@@ -460,12 +484,13 @@ h2 {
     border-radius: 50%; /* ทำให้ปุ่มเป็นวงกลม */
     font-size: 24px;
     z-index: 1;
-    transition: transform 0.3s ease;
+    transition: transform 0.7s ease; /* ลดระยะเวลาให้สั้นลง */
 }
 
     .scroll-button.left,
     .scroll-button-join.left {
         left: -40px;
+        
     }
 
     .scroll-button.right,
@@ -665,7 +690,6 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้เมนู */
     transition: background-color 0.3s, transform 0.3s; /* เพิ่มเอฟเฟกต์ */
 }
 
@@ -772,92 +796,6 @@ h2 {
         }
 }
 
-
-
-
-
-/*------------ NOTICE ---------------------*/
-
-.chat-popup {
-    display: none; /* Keep it hidden until triggered */
-    position: fixed; /* Fixed position for it to stay at the same spot when scrolling */
-    bottom: 500px; /* Adjust to move the chat popup upwards */
-    right: 170px; /* Position it closer to the edge of the screen */
-    border: 2px solid #000000; /* Same border */
-    border-radius: 10px; /* Keep the rounded corners */
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* Same shadow */
-    width: 300px; /* Same width */
-    height: 400px; /* Same height */
-    background-color: #fff; /* Same white background */
-    z-index: 1000; /* Ensures the chat box stays above other content */
-    animation: slideUp 0.3s ease-out;
-}
-
-/* Add a sliding effect when the chat pops up */
-@keyframes slideUp {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-
-.chat-popup-header {
-    background-color: #fffdfb;
-    padding: 20px;
-    border-radius: 9px 9px 0 0;
-    color: black;
-    text-align: center;
-}
-
-.chat-popup-body {
-    padding: 10px;
-    height: 320px;
-    overflow-y: auto;
-    color: black;
-}
-
-.chat-popup-footer {
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
-
-    .chat-popup-footer input {
-        width: 80%;
-        padding: 5px;
-    }
-
-    .chat-popup-footer button {
-        width: 15%;
-        padding: 5px;
-        background-color: #ffffff;
-        border: 1px;
-        color: white;
-        cursor: pointer;
-    }
-
-
-/* สไตล์สำหรับรูปโปรไฟล์ */
-.chat-notice img {
-    border-radius: 50%; /* ทำให้รูปโปรไฟล์เป็นวงกลม */
-    margin-right: 10px; /* เว้นระยะห่างระหว่างรูปกับข้อความ */
-    width: 40px; /* ขนาดของรูปโปรไฟล์ */
-    height: 40px; /* ขนาดของรูปโปรไฟล์ */
-}
-
-/* สไตล์สำหรับข้อความ */
-.chat-notice span {
-    background-color: #f1f1f1; /* สีพื้นหลังของข้อความ */
-    border-radius: 10px;
-    padding: 8px 12px;
-    max-width: 70%; /* กำหนดความกว้างสูงสุดของข้อความ */
-    word-wrap: break-word; /* พับคำที่ยาวเกินไป */
-}
 
 
 /* delete form */

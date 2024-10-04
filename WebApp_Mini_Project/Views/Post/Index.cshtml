@@ -8,7 +8,7 @@
 
 <main class="main-container">
     <section class="search-section">
-        <h2>หาเพื่อนเล่นเกมส์ดีที่สุดในประเทศไทย</h2>
+        <div class="title-body">หาเพื่อนเล่นเกมส์ดีที่สุดในประเทศไทย</div>
         <input type="text" placeholder="พิมพ์เพื่อค้นหา..." class="search-bar">
     </section>
 
@@ -78,7 +78,8 @@
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
             {
-                if (post.timeout > DateTime.Now && post.Count_person < post.Max_person && post.status == true)
+                if (post.timeout > DateTime.Now && post.Count_person < post.Max_person && post.status == true )
+
                 {
                     <div class="card-container2" id="card-container">
                         <div class="card">
