@@ -84,12 +84,9 @@ namespace WebApp_Mini_Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-<<<<<<< HEAD
-=======
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
->>>>>>> 6bc2413f15e6ac585fb80986ff71acf68b59d988
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
