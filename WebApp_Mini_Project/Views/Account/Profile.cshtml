@@ -159,7 +159,12 @@
                 if (post.User_list.Contains(Model.Account.ID))
                 {
                     <div class="card-join">
-
+                        <div class="card-menu" onclick="toggleCardMenu(event)">
+                            <span>⋮</span>
+                            <ul class="card-menu-options">
+                                <li> <a asp-controller="Post" asp-action="Unjoin" asp-route-id="@post.ID" asp-route-userId="@ViewBag.UserID">ยกเลิกเข้าร่วม</a> </li>
+                            </ul>
+                        </div>
                         @{
                             int ID = 0;
                             if (ViewBag.UserID != null)

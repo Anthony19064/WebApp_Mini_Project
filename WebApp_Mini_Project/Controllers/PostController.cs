@@ -248,6 +248,26 @@ public class PostController : HomeController
             return NotFound();
         }
     }
+
+    public IActionResult Unjoin(int id, int userID)
+    {
+        var post = _db.Posts.SingleOrDefault(a => a.ID == id);
+        if (post != null)
+        {
+            if (post.User_list.Contains(userID))
+            {
+                post.User_list.Remove(userID);
+                post.Count_person--;
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Profile", "Account");
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+
     [HttpPost]
     public IActionResult MarkAllNotificationsAsRead()
     {
