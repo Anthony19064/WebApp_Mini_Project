@@ -1,9 +1,10 @@
 ﻿@font-face {
-    font-family: 'main'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
-    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
-    font-weight: normal; /* น้ำหนักของฟอนต์ */
-    font-style: normal; /* สไตล์ของฟอนต์ */
+    font-family: 'main';
+    src: url('../font/SpenbebGame-R9q46.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
 }
+
 
 @font-face {
     font-family: 'story'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
@@ -14,7 +15,7 @@
 
 @font-face {
     font-family: 'thaifont'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
-    src: url('../font/TCS 4KhobKhun Bold.ttf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    src: url('../font/RainyThin-Regular.ttf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
     font-weight: normal; /* น้ำหนักของฟอนต์ */
     font-style: normal; /* สไตล์ของฟอนต์ */
 }
@@ -461,7 +462,7 @@ h2 {
     align-items: center;
     margin-top: 40px; /* เพิ่มระยะห่างด้านบนเพื่อไม่ให้ทับกับ label */
     word-wrap: break-word; /* ทำให้คำยาว ๆ ถูกตัดบรรทัด */
-    transition: transform 0.9s ease; /* ปรับให้เวลาสั้นลงเพื่อความนุ่มนวล */
+    transition: transform 0.9s ease; /* ลดระยะเวลาให้สั้นลง */
 }
 
 /* Scroll Buttons */
@@ -479,7 +480,7 @@ h2 {
     border-radius: 50%; /* ทำให้ปุ่มเป็นวงกลม */
     font-size: 24px;
     z-index: 1;
-    transition: transform 0.7s ease; /* ลดระยะเวลาให้สั้นลง */
+    transition: transform 0.3s ease; /* ลดระยะเวลาให้สั้นลง */
 }
 
     .scroll-button.left,
@@ -525,14 +526,9 @@ h2 {
     padding: 20px; /* เพิ่ม padding แทน margin ซ้ายขวา */
     gap: 25px;
     min-height: 475px; /* ความสูงขั้นต่ำให้ container คงที่ */
-}
-.card-container {
-    margin-bottom: 10px; /* ระยะห่างคงที่ระหว่าง card-container กับ card-container-join */
+    margin-bottom: 10px;
 }
 
-.card-container-join {
-    margin-top: 10px; /* ระยะห่างคงที่ด้านบน */
-}
 
 /* ซ่อนการ์ดเมื่อไม่มีโพสต์ */
 .card.hidden,
