@@ -56,7 +56,7 @@
     <!-- Card Container for User's Own Posts -->
 
     <div class="card-container-wrapper">
-        <button class="scroll-button left" onclick="scrollLeft('.card-container')"><</button>
+        <button class="scroll-button left"><</button>
         <div class="card-label">
             <h2>โพสของคุณ</h2>
         </div>
@@ -141,12 +141,12 @@
                 }
             }
         </div>
-        <button class="scroll-button right" onclick="scrollRight('.card-container')">></button>
+        <button class="scroll-button right" >></button>
     </div>
 
     <!-- Card Container for Joined Posts -->
     <div class="card-container-wrapper-join">
-        <button class="scroll-button-join left" onclick="scrollLeft('.card-container-join')"><</button>
+        <button class="scroll-button-join left" ><</button>
         <div class="card-label-join">
             <h2>โพสที่เข้าร่วม</h2>
         </div>
@@ -230,7 +230,7 @@
                 }
             }
         </div>
-        <button class="scroll-button-join right" onclick="scrollRight('.card-container-join')">></button>
+        <button class="scroll-button-join right">></button>
     </div>
 
 
@@ -399,16 +399,13 @@
             document.getElementById("editPopup").style.display = "block";
         }
 
-        function deletePost(id) {
-
-        }
 
         // Function to close the edit popup
         function closeEditPopup() {
             document.getElementById("editPopup").style.display = "none";
         }
 
-        function scrollLeft(containerSelector) {
+        function scrollleft(containerSelector) {
             console.log("Scrolling left...");
             const container = document.querySelector(containerSelector);
             if (container) {
@@ -433,7 +430,7 @@
 
         // Attach event listeners to scroll buttons
         document.querySelectorAll('.scroll-button.left').forEach(button => {
-            button.addEventListener('click', () => scrollLeft('.card-container'));
+            button.addEventListener('click', () => scrollleft('.card-container'));
         });
 
         document.querySelectorAll('.scroll-button.right').forEach(button => {
@@ -441,7 +438,7 @@
         });
 
         document.querySelectorAll('.scroll-button-join.left').forEach(button => {
-            button.addEventListener('click', () => scrollLeft('.card-container-join'));
+            button.addEventListener('click', () => scrollleft('.card-container-join'));
         });
 
         document.querySelectorAll('.scroll-button-join.right').forEach(button => {

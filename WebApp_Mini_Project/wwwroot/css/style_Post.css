@@ -14,7 +14,7 @@
 
 @font-face {
     font-family: 'thaifont'; /* ตั้งชื่อฟอนต์ที่คุณต้องการใช้ */
-    src: url('../font/TCS 4KhobKhun Bold.ttf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
+    src: url('../font/RainyThin-Regular.ttf') format('woff2'), /* เส้นทางไปยังไฟล์ฟอนต์ */
     font-weight: normal; /* น้ำหนักของฟอนต์ */
     font-style: normal; /* สไตล์ของฟอนต์ */
 }
