@@ -102,6 +102,7 @@ public class PostController : HomeController
         // ดึงข้อมูลการแจ้งเตือนเฉพาะของผู้ใช้ที่ล็อกอินอยู่
         var notifications = _db.Notices
             .Where(n => n.UserID == account.ID) // ดึงการแจ้งเตือนของผู้ใช้ที่ล็อกอิน
+            .Take(10)
             .Select(n => new
             {
                 senderUsername = _db.Accounts.FirstOrDefault(a => a.ID == n.UserID).Username, // ผู้ส่ง
@@ -109,6 +110,7 @@ public class PostController : HomeController
                 picture = n.Picture != null ? Convert.ToBase64String(n.Picture) : null // รูปภาพ (แปลงเป็น Base64)
             })
             .ToList();
+
         var hasnewnotifications = _db.Notices
             .Where(n => n.UserID == account.ID && !n.IsRead) // ดึงการแจ้งเตือนของผู้ใช้ที่ล็อกอิน
             .Select(n => new
@@ -118,7 +120,10 @@ public class PostController : HomeController
                 picture = n.Picture != null ? Convert.ToBase64String(n.Picture) : null // รูปภาพ (แปลงเป็น Base64)
             })
             .ToList();
+
         bool newNotification = hasnewnotifications.Any();
+
+        notifications.Reverse();
         // ส่งข้อมูลกลับในรูปแบบ JSON
         return Json(new { success = true, notifications, newNotification });
     }
@@ -173,7 +178,7 @@ public class PostController : HomeController
             var notice = new Notice
             {
                 UserID = account.ID,
-                Message = $"คุณได้เข้าร่วม เลขห้อง : {obj.Id_room}",
+                Message = $"คุณได้เข้าร่วมปาร์ตี้<br>เลขห้อง : {obj.Id_room}",
                 Picture = own_post.ProfilePicture // ต้องมีค่าจริงในที่นี้
             };
             // บันทึกการแจ้งเตือนลงในฐานข้อมูล

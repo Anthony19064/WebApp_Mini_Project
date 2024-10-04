@@ -21,7 +21,7 @@
 
 /* Profile Container */
 .profile-container {
-    background: linear-gradient(#FF66FF, #FF66CC, #FF6699);
+    background: linear-gradient(to bottom, #FF6699, #FF6699, #f89b28);
     color: white;
     width: 80vw; /* ลดความกว้างจาก 100vw เป็น 80vw */
     max-width: 1200px; /* กำหนดความกว้างสูงสุด */

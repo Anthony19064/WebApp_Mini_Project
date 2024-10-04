@@ -1,8 +1,15 @@
 @font-face {
-    font-family: 'testfont'; /* µÑé§ª×èÍ¿Í¹µì·Õè¤Ø³µéÍ§¡ÒÃãªé */
-    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), /* àÊé¹·Ò§ä»ÂÑ§ä¿Åì¿Í¹µì */
-    font-weight: normal; /* ¹éÓË¹Ñ¡¢Í§¿Í¹µì */
-    font-style: normal; /* ÊäµÅì¢Í§¿Í¹µì */
+    font-family: 'testfont'; 
+    src: url('../font/SpenbebGame-R9q46.otf') format('woff2'), 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+@font-face {
+    font-family: 'rain'; 
+    src: url('../font/RainyThin-Regular.ttf') format('woff2'), 
+    font-weight: normal; 
+    font-style: normal; 
 }
 
 html, body {
@@ -264,11 +271,10 @@ footer {
     position: absolute; /* ควบคุมให้ตำแหน่งสัมพันธ์กับ container */
     top: 35px; /* ค่าตำแหน่งจากด้านล่างของ container */
     right: 160px; /* ค่าตำแหน่งจากด้านขวาของ container */
-    border: 0px solid #000000; /* กำหนด border */
-    border-radius: 10px; /* มุมโค้ง */
+    border-radius: 9px 9px 0px 0px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* เงา */
     width: 300px; /* ความกว้าง */
-    height: 420px; /* ความสูง */
+    height: 100px; /* ความสูง */
     z-index: 1000; /* ให้แน่ใจว่าอยู่ด้านบนของเนื้อหาอื่น */
     background: white;
 }
@@ -290,33 +296,52 @@ footer {
 
 
 .chat-popup-header {
-    background: linear-gradient(to bottom, #FF6699, #f89b28);
+    position: relative; /* ทำให้สามารถใช้ position absolute ในลูกหลานได้ */
+    background: linear-gradient(to right, #FF6699, #f89b28);
     font-family: 'thaifont', sans-serif;
-    font-size: 28px;
-    padding: 20px;
+    padding: 5px 0;
+    font-size: 25px;
     border-radius: 9px 9px 0 0;
-    color: black;
+    color: white;
     text-align: center;
+    letter-spacing: 8px;
 }
+
+    .chat-popup-header span {
+        cursor: pointer;
+        position: absolute; /* เปลี่ยนเป็น absolute */
+        right: 10px; /* ระยะห่างจากด้านขวา */
+    }
 
 .chat-popup-body {
     padding: 10px;
     height: 320px;
+    width: auto;
     overflow-y: auto;
-    color: black;
+    color: white;
     background: white;
     font-size: 20px;
+    border-radius: 0px 0px 9px 9px;
 }
 
-    /* Styling the scrollbar */
     .chat-popup-body::-webkit-scrollbar {
-        width: 12px; /* ความกว้างของ scrollbar */
+        width: 7px; /* ความกว้างของ scrollbar */
+        
     }
 
     .chat-popup-body::-webkit-scrollbar-track {
-         
         border-radius: 10px; /* ขอบมน */
     }
+
+    .chat-popup-body::-webkit-scrollbar-thumb {
+        margin-right: 2px;
+        background: #A9A9A9; /* สีของ thumb (สีเทา) */
+        border-radius: 10px; /* ขอบมน */
+    }
+
+        .chat-popup-body::-webkit-scrollbar-thumb:hover {
+            background: #808080; /* สีเมื่อ hover */
+        }
 
 
 
@@ -347,8 +372,9 @@ footer {
     margin-right: 10px; /* เว้นระยะห่างระหว่างรูปกับข้อความ */
     width: 40px; /* ขนาดของรูปโปรไฟล์ */
     height: 40px; /* ขนาดของรูปโปรไฟล์ */
-    padding-left:2px;
-    margin-left:10px;
+    padding-left: 2px;
+    margin-left: 10px;
+    object-fit: cover;
 }
 
 /* สไตล์สำหรับข้อความ */
@@ -358,6 +384,8 @@ footer {
     padding: 8px 12px;
     max-width: 70%; /* กำหนดความกว้างสูงสุดของข้อความ */
     word-wrap: break-word; /* พับคำที่ยาวเกินไป */
+    font-family: 'rain', sans-serif;
+    font-size: 20px;
 }
 
 .chat-notice {

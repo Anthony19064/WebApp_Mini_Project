@@ -78,7 +78,8 @@
     <div class="card-container" id="card-container">
         @foreach (var post in Model.Posts)
             {
-                if (post.timeout > DateTime.Now && post.Count_person < post.Max_person && post.status == true)
+                if (post.timeout > DateTime.Now && post.Count_person < post.Max_person && post.status == true )
+
                 {
                     <div class="card-container2" id="card-container">
                         <div class="card">
