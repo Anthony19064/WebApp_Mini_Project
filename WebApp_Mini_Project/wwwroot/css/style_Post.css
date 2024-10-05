@@ -89,8 +89,7 @@
     flex-direction: column; /* แก้ไขให้เรียงในแนวตั้ง */
     align-items: center; /* จัดกลางในแนวนอน */
     width: 400px;
-    height: auto;
-    overflow: hidden;
+    height: 450px;
     margin: 15px;
 }
 
