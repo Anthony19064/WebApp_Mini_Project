@@ -72,14 +72,13 @@
             </div>
         </div>
     </div>
-    
+
 
     <div class="test">
-    <div class="card-container" id="card-container">
-        @foreach (var post in Model.Posts)
+        <div class="card-container" id="card-container">
+            @foreach (var post in Model.Posts)
             {
-                if (post.timeout > DateTime.Now && post.Count_person < post.Max_person && post.status == true )
-
+                if (post.timeout > DateTime.Now && post.Count_person < post.Max_person && post.status == true)
                 {
                     <div class="card-container2" id="card-container">
                         <div class="card">
@@ -90,25 +89,17 @@
                                     ID = ViewBag.UserID;
                                 }
 
-
                                 foreach (var account in Model.Account)
                                 {
-                                    if (account.ProfilePicture != null)
+                                    if (account.ProfilePicture != null && post.User_id == account.ID)
                                     {
-                                        if (post.User_id == account.ID)
-                                        {
-                                            var base64String = Convert.ToBase64String(account.ProfilePicture);
-                                            var imgSrc = $"data:image/jpeg;base64,{base64String}";
-                                            <img src="@imgSrc" alt="logo" class="card-logo" />
-                                        }
+                                        var base64String = Convert.ToBase64String(account.ProfilePicture);
+                                        var imgSrc = $"data:image/jpeg;base64,{base64String}";
+                                        <img src="@imgSrc" alt="logo" class="card-logo" />
                                     }
-
                                 }
-                            
 
-
-
-                        var timeAgo = DateTime.Now - post.timeCreate;
+                                var timeAgo = DateTime.Now - post.timeCreate;
                                 string timeAgoString;
 
                                 if (timeAgo.TotalDays >= 1)
@@ -116,7 +107,6 @@
                                     var daysAgo = (int)timeAgo.TotalDays;
                                     timeAgoString = $"{daysAgo} วันที่แล้ว";
                                 }
-
                                 else if (timeAgo.TotalHours >= 1)
                                 {
                                     var hoursAgo = (int)timeAgo.TotalHours;
@@ -127,20 +117,17 @@
                                     var minutesAgo = (int)timeAgo.TotalMinutes;
                                     timeAgoString = $"{minutesAgo} นาทีที่แล้ว";
                                 }
-
                             }
+
                             @foreach (var account in Model.Account)
                             {
-
                                 if (account.ID == post.User_id)
-
                                 {
                                     <p id="user"> @account.Username</p>
                                 }
                             }
                             <p id="time">@timeAgoString</p>
                             <div class="card-content">
-
                                 <p><b>ชื่อห้อง</b> : @post.Name_room</p>
                                 <p><b>เกม</b> : @post.Game</p>
                                 <p><b>รายละเอียด</b> : @post.Details</p>
@@ -150,7 +137,6 @@
                                 <button class="card-button join-room-button" data-id="@post.ID" disabled style="opacity: 0.6; cursor: default;">
                                     <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                                 </button>
-                                
                             }
                             else if (post.User_id != ID && post.status == true)
                             {
@@ -158,15 +144,11 @@
                                     <span id="person-count-@post.ID">@post.Count_person/@post.Max_person</span>
                                 </button>
                             }
-
                         </div>
                     </div>
                 }
-     
-
-        }
-
-    </div>
+            }
+        </div>
 
         <div class="chat-board-container">
             <div class="chat-board-header">
@@ -180,9 +162,8 @@
                 <button type="button" id="sendMessageBtn" class="btn-chat">Send</button>
             </div>
         </div>
+    </div>
 
-
-      </div>
 
 
 
@@ -196,19 +177,27 @@
     const userSession = '@ViewBag.Usersession'; // session
     const popup = document.getElementById('popup'); // form
 
+    // รีเซ็ตสถานะของ popup เมื่อโหลดหน้า
+    window.onload = function () {
+        popup.style.display = 'none'; // รีเซ็ตให้ pop-up ซ่อน
+    };
+
     // ฟังก์ชั่นเปิด Form Post
     popupBtn.addEventListener('click', function () {
+        console.log("Popup button clicked");
         if (!userSession) { // เช็คว่ามี session ในระบบไหม
-            window.location.href = '/Account/Login'; //ถ้าไม่มีจะให้ไป login
+            window.location.href = '/Account/Login'; // ถ้าไม่มีจะให้ไป login
         } else {
-            popup.style.display = 'flex'; // ถ้ามีจะให้เปิด form
+            console.log("User session exists, opening popup");
+            popup.style.display = 'flex'; // เปิด form
         }
     });
+
     // ฟังก์ชั่นปิด Form Post
     closePopup.addEventListener('click', function () {
-        popup.style.display = 'none';
+        console.log("Closing popup");
+        popup.style.display = 'none'; // ซ่อน form
     });
-
     //----------------------------------Search------------------------------------
 
     document.addEventListener("DOMContentLoaded", function () {

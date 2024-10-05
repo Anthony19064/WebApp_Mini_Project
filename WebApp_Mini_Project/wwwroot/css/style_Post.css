@@ -611,3 +611,172 @@
 }
 
 
+/* ================== Responsive Section ================== */
+/* Mobile (up to 768px) */
+/* Responsive styles for mobile screens */
+/* สำหรับหน้าจอที่มีความกว้างสูงสุด 768px */
+@media only screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        margin: auto; /* รีเซ็ตค่า margin ของ body */
+        padding: 0; /* รีเซ็ตค่า padding ของ body */
+
+    }
+
+    .search-section {
+        width: 100%; /* ทำให้ search-section กว้างเต็มหน้าจอ */
+        margin: 0; /* รีเซ็ต margin */
+        padding: 0; /* รีเซ็ต padding */
+        margin-bottom: 10px;
+    }
+
+    .search-bar {
+        width: 250px;
+    }
+
+    .refresh-btn {
+        width: 150px;
+        margin-top: 0px;
+    }
+
+    .popup-form {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .test {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: nowrap; /* ทำให้การ์ดเรียงในแนวนอน */
+        overflow-x: auto; /* Scroll แนวนอน */
+        overflow-y: hidden; /* ปิด scroll แนวตั้ง */
+        gap: 10px; /* ลดช่องว่างระหว่างการ์ด */
+        width: 100%; /* ใช้ความกว้างเต็มหน้าจอสำหรับมือถือ */
+        padding: 10px; /* ปรับ padding ให้เหมาะสม */
+        height: auto; /* ปรับขนาดสูงอัตโนมัติ */
+        margin-left: 0; /* รีเซ็ตค่า margin-left บนมือถือ */
+    }
+
+    .card {
+        width: 100%;
+        margin-bottom: 10px;
+        min-width: 250px; /* ขนาดขั้นต่ำของการ์ดเพื่อให้เลื่อนได้ในแนวนอน */
+        flex: 0 0 auto;
+    }
+
+    .chat-board-container {
+        width: 100%; /* ปรับให้กว้างเต็มหน้าจอ */
+        height: 60vh; /* ปรับความสูงให้สัมพันธ์กับหน้าจอมือถือ */
+        margin-right: 0;
+        right: 0;
+    }
+
+    .chat-board-input {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-top: 1px solid #ccc;
+        box-sizing: border-box;
+        position: sticky; /* ให้ input ติดกับขอบล่างของหน้าจอ */
+        bottom: 0; /* ติดขอบล่าง */
+        width: 100%; /* เต็มความกว้าง */
+        margin-top: 0;
+    }
+
+    #chatInput {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-right: 5px;
+    }
+
+    .chat-board-header p {
+        font-size: 25px; /* ลดขนาด font ของ header บนมือถือ */
+        letter-spacing: 5px;
+    }
+
+    .btn-chat {
+        width: 100%;
+    }
+
+    .title-body {
+        font-size: 30px; /* ลดขนาดฟอนต์ให้เล็กลงบนมือถือ */
+    }
+
+    .popup-background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6); /* เพิ่มความทึบ */
+        z-index: 9999;
+    }
+
+    .popup-form {
+        width: 90%; /* ปรับขนาดฟอร์มให้เต็มพื้นที่ 90% ของหน้าจอ */
+        max-width: 400px; /* ตั้งค่าขนาดสูงสุด */
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow-y: auto;
+    }
+
+        .popup-form h3 {
+            font-size: 20px; /* ลดขนาดหัวข้อ */
+            margin-bottom: 15px;
+        }
+
+        .popup-form label {
+            font-size: 16px; /* ลดขนาดตัวอักษร */
+            margin-bottom: 5px;
+        }
+
+        .popup-form input,
+        .popup-form select {
+            width: 100%; /* ปรับให้ input และ select ใช้เต็มความกว้าง */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .popup-form button {
+            width: 100%; /* ปรับปุ่มให้เต็มความกว้าง */
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .popup-background .drops {
+        display: none; /* ซ่อนลูกเล่นพื้นหลังที่ไม่จำเป็นบนมือถือ */
+    }
+    .popup {
+        display: none; /* ทำให้แน่ใจว่า pop-up ถูกซ่อนตามปกติ */
+    }
+}
+
+
+
+
