@@ -785,6 +785,11 @@ h2 {
         .profile-form .form-group input {
             width: 100%;
         }
+    .popup-header img {
+        width: 100%; /* ลดขนาดภาพลงบนมือถือ */
+        margin-left:0px;
+    }
+
 }
 
 
@@ -872,3 +877,4 @@ h2 {
         .button-group .btn-confirm:hover, .button-group .btn-cancel:hover {
             opacity: 0.9;
         }
+
