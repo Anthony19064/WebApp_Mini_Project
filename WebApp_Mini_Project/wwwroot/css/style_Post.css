@@ -50,19 +50,18 @@
 
 .card-container {
     display: flex;
-    justify-content: left;
+    justify-content: flex-start; /* ใช้ flex-start แทน left เพื่อให้สอดคล้องกับมาตรฐาน CSS */
     flex-wrap: wrap;
     gap: 20px;
     padding: 0 20px;
-    width: 1400px;
-    margin-left: 20px;
-    overflow-y: auto;
-    height: 600px;
-    border-radius: 10px;
-    box-sizing: border-box;
-    overflow-y: auto;
-
+    width: 1400px; /* ความกว้างของคอนเทนเนอร์ */
+    margin-left: 20px; /* ระยะห่างจากขอบซ้าย */
+    overflow-y: auto; /* ปรับการเลื่อนในแนวตั้ง */
+    height: 600px; /* ความสูงของคอนเทนเนอร์ */
+    border-radius: 10px; /* มุมมน */
+    box-sizing: border-box; /* รวม padding และ border ในขนาด */
 }
+
 
     /* กำหนด scrollbar แบบกำหนดเอง */
     .card-container::-webkit-scrollbar {
@@ -90,7 +89,8 @@
     flex-direction: column; /* แก้ไขให้เรียงในแนวตั้ง */
     align-items: center; /* จัดกลางในแนวนอน */
     width: 400px;
-    height: 400px; /* ปรับให้ความสูงตามเนื้อหา */
+    height: auto;
+    overflow: hidden;
     margin: 15px;
 }
 
