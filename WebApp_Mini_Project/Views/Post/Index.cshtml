@@ -29,7 +29,7 @@
             <h3>กรอกข้อมูลห้อง</h3>
             <form method="POST" asp-controller="Post" asp-action="Create">
                 <label asp-for="NewPost.Name_room">ชื่อห้อง :</label>
-                <input type="text" asp-for="NewPost.Name_room" required>
+                <input type="text" asp-for="NewPost.Name_room" maxlength="30" required>
                 <label asp-for="NewPost.Id_room">เลขห้อง :</label>
                 <input type="text" asp-for="NewPost.Id_room" required>
 
@@ -43,7 +43,7 @@
                 </select>
 
                 <label asp-for="NewPost.Details">รายละเอียด :</label>
-                <input type="text" asp-for="NewPost.Details" required>
+                <input type="text" asp-for="NewPost.Details" maxlength="30"  required>
 
                 <label asp-for="NewPost.Max_person">จำนวนสมาชิก :</label>
                 <select asp-for="NewPost.Max_person">
