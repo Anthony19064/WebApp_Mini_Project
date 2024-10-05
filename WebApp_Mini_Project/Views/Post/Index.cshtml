@@ -43,7 +43,8 @@
                 </select>
 
                 <label asp-for="NewPost.Details">รายละเอียด :</label>
-                <input type="text" asp-for="NewPost.Details" required>
+                <input type="text" asp-for="NewPost.Details" required id="detailsInput">
+                <span id="charCountMessage" style="color: red;"></span>
 
                 <label asp-for="NewPost.Max_person">จำนวนสมาชิก :</label>
                 <select asp-for="NewPost.Max_person">
@@ -61,7 +62,7 @@
                 <input type="date" asp-for="NewPost.dayend" value="@dateValue" required>
                 <input type="time" id="duration" asp-for="NewPost.timeend" value="@timeValue" required>
 
-                <button type="submit">ยืนยัน</button>
+                <<button type="submit" id="submitButton" disabled>ยืนยัน</button>
             </form>
             <div class="drops">
                 <div class="drop drop-1"></div>
@@ -407,6 +408,30 @@
             popup.style.display = 'none';
         }
     });
+
+
+   //---------------------------------------------------จำกัดตัวอักษรไม่เกิน 100 ตัวอักษร----------------
+
+    document.getElementById("detailsInput").addEventListener("input", function () {
+        const inputText = this.value;
+        const charCount = inputText.length; // นับจำนวนตัวอักษร
+
+        // เช็คจำนวนตัวอักษรและแสดงข้อความเตือน
+        const message = document.getElementById("charCountMessage");
+        const submitButton = document.getElementById("submitButton");
+
+        if (charCount < 50) {
+            message.textContent = "จำนวนตัวอักษรต้องไม่น้อยกว่า 50 ตัว";
+            submitButton.disabled = true; // ปิดปุ่ม
+        } else if (charCount > 100) {
+            message.textContent = "จำนวนตัวอักษรต้องไม่เกิน 100 ตัว";
+            submitButton.disabled = true; // ปิดปุ่ม
+        } else {
+            message.textContent = ""; // ลบข้อความเตือน
+            submitButton.disabled = false; // เปิดปุ่ม
+        }
+    });
+
 
 </script>
 
