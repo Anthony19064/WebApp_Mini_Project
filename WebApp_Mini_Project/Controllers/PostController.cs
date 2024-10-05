@@ -175,6 +175,13 @@ public class PostController : HomeController
                 Message = $"คุณได้เข้าร่วม เลขห้อง : {obj.Id_room}",
                 Picture = own_post.ProfilePicture // ต้องมีค่าจริงในที่นี้
             };
+            var notice2owner = new Notice
+            {
+                UserID = obj.User_id,
+                Message = $"{account.Username}ได้เข้าร่วมเลขห้อง : {obj.Id_room} ของคุณ",
+                Picture = account.ProfilePicture // ต้องมีค่าจริงในที่นี้
+            };
+            _db.Notices.Add(notice2owner);
 
 
 
