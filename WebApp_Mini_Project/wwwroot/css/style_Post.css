@@ -360,7 +360,6 @@
     height: 65px;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -597,12 +596,11 @@
         margin-left: 10px;
     }
 
-.test {
+.content {
     display: flex;
     justify-content: space-between;
     padding-top: 20px;
     margin-left: 15px
-
 }
 .title-body {
     font-family: 'thaifont', sans-serif;
@@ -632,6 +630,7 @@
 
     .search-bar {
         width: 250px;
+        margin-top: 30px;
     }
 
     .refresh-btn {
@@ -644,9 +643,11 @@
         margin: 0 auto;
     }
 
-    .test {
+    .content {
         flex-direction: column;
         align-items: center;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .card-container {
@@ -654,11 +655,12 @@
         flex-wrap: nowrap; /* ทำให้การ์ดเรียงในแนวนอน */
         overflow-x: auto; /* Scroll แนวนอน */
         overflow-y: hidden; /* ปิด scroll แนวตั้ง */
-        gap: 10px; /* ลดช่องว่างระหว่างการ์ด */
+        gap: 30px; /* ลดช่องว่างระหว่างการ์ด */
         width: 100%; /* ใช้ความกว้างเต็มหน้าจอสำหรับมือถือ */
-        padding: 10px; /* ปรับ padding ให้เหมาะสม */
         height: auto; /* ปรับขนาดสูงอัตโนมัติ */
         margin-left: 0; /* รีเซ็ตค่า margin-left บนมือถือ */
+        scrollbar-color: darkgrey #f1f1f1;
+        margin-bottom: 10px;
     }
 
     .card {
@@ -666,12 +668,14 @@
         margin-bottom: 10px;
         min-width: 250px; /* ขนาดขั้นต่ำของการ์ดเพื่อให้เลื่อนได้ในแนวนอน */
         flex: 0 0 auto;
+        height: 450px;
     }
 
     .chat-board-container {
         width: 100%; /* ปรับให้กว้างเต็มหน้าจอ */
         height: 60vh; /* ปรับความสูงให้สัมพันธ์กับหน้าจอมือถือ */
-        margin-right: 0;
+        margin: 0px;
+        margin-top: 10px;
         right: 0;
     }
 
@@ -681,7 +685,6 @@
         padding: 10px;
         border-top: 1px solid #ccc;
         box-sizing: border-box;
-        position: sticky; /* ให้ input ติดกับขอบล่างของหน้าจอ */
         bottom: 0; /* ติดขอบล่าง */
         width: 100%; /* เต็มความกว้าง */
         margin-top: 0;
@@ -697,15 +700,16 @@
 
     .chat-board-header p {
         font-size: 25px; /* ลดขนาด font ของ header บนมือถือ */
-        letter-spacing: 5px;
+        letter-spacing: 10px;
     }
 
     .btn-chat {
-        width: 100%;
+        width: 20%;
     }
 
     .title-body {
-        font-size: 30px; /* ลดขนาดฟอนต์ให้เล็กลงบนมือถือ */
+        padding-top: 20px;
+        font-size: 25px; /* ลดขนาดฟอนต์ให้เล็กลงบนมือถือ */
     }
 
     .popup-background {
