@@ -21,6 +21,9 @@ namespace WebApp_Mini_Project.Models
         // IsRead สำหรับการแจ้งเตือนการอ่าน
         public bool IsRead { get; set; } = false;
 
+        // เจ้าของโพส
+        public int? RecipientID { get; set; } // ไอดีผู้รับการแจ้งเตือน (เช่น เจ้าของโพสต์)
+
 
         // คุณสมบัติการนำทาง (ไม่บังคับ) เพื่อเชื่อมโยงกับโมเดลบัญชีผู้ใช้
         [ForeignKey("UserID")]
