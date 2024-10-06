@@ -179,7 +179,7 @@ public class PostController : HomeController
             {
                 UserID = account.ID,
                 Message = $"คุณได้เข้าร่วมปาร์ตี้ <br> เลขห้อง : {obj.Id_room}",
-                Picture = account.ProfilePicture // ต้องมีค่าจริงในที่นี้
+                Picture = own_post.ProfilePicture // ต้องมีค่าจริงในที่นี้
             };
             _db.Notices.Add(joinerNotice);
 
@@ -271,6 +271,10 @@ public class PostController : HomeController
             {
                 post.User_list.Remove(userID);
                 post.Count_person--;
+                if (post.Count_person < post.Max_person)
+                {
+                    post.status = true;
+                }
                 _db.SaveChanges();
             }
             return RedirectToAction("Profile", "Account");
