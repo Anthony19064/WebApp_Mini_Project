@@ -101,22 +101,24 @@ public class PostController : HomeController
 
         // ดึงข้อมูลการแจ้งเตือนเฉพาะของผู้ใช้ที่ล็อกอินอยู่
         var notifications = _db.Notices
-            .Where(n => n.UserID == account.ID) // ดึงการแจ้งเตือนของผู้ใช้ที่ล็อกอิน
+            .Where(n => n.UserID == account.ID || n.RecipientID == account.ID) // เพิ่มเงื่อนไขดึงการแจ้งเตือนที่ผู้ใช้ล็อกอิน หรือเป็นเจ้าของโพสต์
             .OrderByDescending(n => n.ID) // เรียงตาม ID โดยสมมุติว่า ID เพิ่มขึ้นเรื่อยๆ
             .Take(10) // ดึงแค่ 10 ตัวล่าสุด
             .Select(n => new
             {
                 senderUsername = _db.Accounts.FirstOrDefault(a => a.ID == n.UserID).Username, // ผู้ส่ง
+                recipientUsername = _db.Accounts.FirstOrDefault(a => a.ID == n.RecipientID).Username, // ผู้รับ (เจ้าของโพสต์)
                 message = n.Message, // ข้อความแจ้งเตือน
                 picture = n.Picture != null ? Convert.ToBase64String(n.Picture) : null // รูปภาพ (แปลงเป็น Base64)
             })
             .ToList();
 
         var hasnewnotifications = _db.Notices
-            .Where(n => n.UserID == account.ID && !n.IsRead) // ดึงการแจ้งเตือนที่ยังไม่อ่าน
+            .Where(n => (n.UserID == account.ID || n.RecipientID == account.ID) && !n.IsRead) // ดึงการแจ้งเตือนที่ยังไม่อ่าน
             .Select(n => new
             {
                 senderUsername = _db.Accounts.FirstOrDefault(a => a.ID == n.UserID).Username, // ผู้ส่ง
+                recipientUsername = _db.Accounts.FirstOrDefault(a => a.ID == n.RecipientID).Username, // ผู้รับ (เจ้าของโพสต์)
                 message = n.Message, // ข้อความแจ้งเตือน
                 picture = n.Picture != null ? Convert.ToBase64String(n.Picture) : null // รูปภาพ (แปลงเป็น Base64)
             })
@@ -127,6 +129,7 @@ public class PostController : HomeController
         // ส่งข้อมูลกลับในรูปแบบ JSON
         return Json(new { success = true, notifications, newNotification });
     }
+
 
 
 
@@ -167,6 +170,7 @@ public class PostController : HomeController
         else
         {
             var own_post = _db.Accounts.Find(obj.User_id);
+
             // อัพเดทข้อมูล
             obj.Count_person++; // เพิ่มจำนวนผู้เข้าร่วม
             obj.User_list.Add(account.ID); // เพิ่มผู้ใช้ในรายการ
@@ -175,15 +179,23 @@ public class PostController : HomeController
                 obj.status = false;
             }
 
-            // สร้างการแจ้งเตือน
-            var notice = new Notice
+            // สร้างการแจ้งเตือนสำหรับผู้เข้าร่วม
+            var joinerNotice = new Notice
             {
                 UserID = account.ID,
                 Message = $"คุณได้เข้าร่วมปาร์ตี้ <br> เลขห้อง : {obj.Id_room}",
-                Picture = own_post.ProfilePicture // ต้องมีค่าจริงในที่นี้
+                Picture = account.ProfilePicture // ต้องมีค่าจริงในที่นี้
             };
-            // บันทึกการแจ้งเตือนลงในฐานข้อมูล
-            _db.Notices.Add(notice);
+            _db.Notices.Add(joinerNotice);
+
+            // สร้างการแจ้งเตือนสำหรับเจ้าของโพสต์
+            var ownerNotice = new Notice
+            {
+                UserID = own_post.ID,
+                Message = $"{account.Username} ได้เข้าร่วมปาร์ตี้",
+                Picture = account.ProfilePicture != null ? account.ProfilePicture : null // รูปโปรไฟล์ของผู้ที่เข้าร่วม
+            };
+            _db.Notices.Add(ownerNotice); // เพิ่มแจ้งเตือนให้เจ้าของโพสต์
         }
 
         _db.SaveChanges();
@@ -197,6 +209,7 @@ public class PostController : HomeController
             roomId = obj.Id_room  // ส่งค่า Id_room กลับไปด้วย
         });
     }
+
 
 
 
